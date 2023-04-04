@@ -1,0 +1,27 @@
+.navbar {
+  margin-bottom: 0;
+  border-radius: 0;
+  padding: 10px 20px 10px 20px;
+}
+footer {
+  background-color: #555;
+  color: white;
+  padding: 15px;
+}
+.navbar-brand {
+  color: white !important;
+  font-size: x-large;
+}
+#myNavbar {
+  float: right !important;
+}
+
+@media (max-width: 768px) {
+  #myNavbar {
+    text-align: center;
+    width: 100%;
+  }
+  #myNavbar li {
+    border-bottom: 1px solid white;
+  }
+}
