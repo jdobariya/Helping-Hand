@@ -6,8 +6,12 @@ const exportedMethods = {
   async addEvent (
     event_name,
     description,
-    date,
-    time,
+    releaseDate,
+    releaseTime,
+    registerExpireDate,
+    registerEXpireTime,
+    HostDate,
+    HostTime,
     location,
     hostInfo,
     tags,
@@ -28,12 +32,33 @@ const exportedMethods = {
 
   },
 
-  // will return all app's events which have all the tags(Array)
+  // will return all app's events which have all the tags
   async getAllAppEventsWithTags(tags) {
 
   },
+
+  // will return all app's events which is past
+  async getAllAppEventsPast(currentDate, currentTime) {
+
+  },
+
+  // will return all app's events which is current
+  async getAllAppEventsCurrent(currentDate, currentTime) {
+
+  },
   
-  async getAllAppEvents() {
+  // will return all app's events which is past and have all the tags
+  async getAllAppEventsPastWithTags(currentDate, currentTime) {
+
+  },
+  
+  // will return all app's events which is current and have all the tags
+  async getAllAppEventsCurrentWithTags(currentDate, currentTime) {
+
+  },
+
+  // will return all events which is sorted first by date then by time
+  async getAllAppEventsAndSortByStartDate() {
 
   },
 
