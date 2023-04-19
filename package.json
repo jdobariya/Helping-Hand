@@ -21,7 +21,7 @@
   "homepage": "https://github.com/jdobariya/Helping-Hand#readme",
   "dependencies": {
     "express": "^4.18.2",
-    "handlebars": "^4.7.7",
+    "express-handlebars": "^7.0.6",
     "mongodb": "^5.1.0"
   }
 }

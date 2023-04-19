@@ -66,4 +66,4 @@ export function isUserAdult(d) {
     age--;
   }
   return age >= 18;
-}f
+}
