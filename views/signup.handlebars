@@ -1,0 +1,16 @@
+<main >
+    <h1 class="title">{{title}}</h1>
+    <form id="signup_form" action="/signup" method="POST">
+        <label for="first_name">First Name</label>
+        <input type="text" name="first_name" id="first_name" required/>
+        <label for="last_name">Last Name</label>
+        <input type="text" name="last_name" id="last_name" required/>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required/>
+        <label for="repeat_password">Reenter Password</label>
+        <input type="password" name="repeat_password" id="repeat_password" required/>
+        <button type="submit" onclick="onSubmitClicked()">Sign Up</button>
+    </form>
+    <p id="error_message"></p>
+    <script src="../public/js/signup.js"></script>
+</main>
