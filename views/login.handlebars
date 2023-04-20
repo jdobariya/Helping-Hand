@@ -1,34 +1,12 @@
-<section class="Form my-4 mx-5">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-5">
-                <img src="../public/images/banner.jpeg" class="img-responsive" alt="">
-            </div>
-            <div class="col-lg-7">
-                <form>
-                    <div class="form-row">
-                        <div class="col-lg-7">
-                            <input type="email" class="form-control" placeholder="Email Address">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-lg-7">
-                            <input type="password" class="form-control" placeholder="*********">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-lg-7">
-                            <button type="button" class="btn1">Login</button>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-lg-7">
-                            <a href="#">Forgot Password</a>
-                            <p>Don't have an Account? <a href="#">Register here</a></p>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</section>
+<main >
+    <h1 class="title">{{title}}</h1>
+    <form id="login_form" action="/login" method="POST">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" required/>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required/>
+        <button type="submit" value="Submit" onclick="onSubmitClicked()">Login</button>
+    </form>
+    <p id="error_message"></p>
+    <script src="../public/js/login.js"></script>
+</main>
