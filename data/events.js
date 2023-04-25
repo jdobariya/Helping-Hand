@@ -33,13 +33,8 @@ const exportedMethods = {
       host_info,);
 
     const now = new Date();
-    const nowYear = now.getFullYear();
-    const nowMonth = now.getMonth() + 1;
-    const nowDay = now.getDay();
-    const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-    const amPm = now.getHours() >= 12 ? 'PM' : 'AM';
     
-    const release_time = `${nowMonth}/${nowDay}/${nowYear} ${timeString} ${amPm}`;
+    const release_time = now.getTime();
 
     const newEvent = {
       event_name,
@@ -118,7 +113,15 @@ const exportedMethods = {
 
   },
 
-  async getEventsByTag() {
+  async getEventsByTag(tags) {
+
+  },
+
+  async addFeedback(eventId, feedback) {
+
+  },
+
+  async addStory(eventId, story) {
 
   }
 };
