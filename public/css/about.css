@@ -1,0 +1,43 @@
+.about-column {
+  float: left;
+  width: 25%;
+  margin-bottom: 16px;
+  padding: 0 8px;
+}
+
+.about-card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin: 25px;
+}
+.about-card img {
+  height: 250px;
+  max-height: 450px;
+}
+.about-section {
+  padding: 50px;
+  text-align: center;
+  background-color: #474e5d;
+  color: white;
+}
+
+.about-container {
+  padding: 0 16px;
+}
+
+.about-card .about-container::after,
+.about-row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.about-card .title {
+  color: grey;
+}
+
+@media screen and (max-width: 650px) {
+  .about-column {
+    width: 100%;
+    display: block;
+  }
+}
