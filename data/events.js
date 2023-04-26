@@ -155,15 +155,6 @@ const exportedMethods = {
     return events;
   },
 
-  // will return all app's events which have all the tags
-  async getAllAppEventsByTags(tags) {
-    tags = validation.isValidArray(tags);
-    const eventCollection = await events();
-    const eventsWithTags = eventCollection.find({ "tags": { $in: tags } });
-
-    return eventsWithTags;
-  },
-
   async addVolunteers(event_id, volunteer_id) {
     validation.checkId(event_id);
     event_id = event_id.trim(event_id);
@@ -171,23 +162,51 @@ const exportedMethods = {
     volunteer_id = volunteer_id.trim();
 
     const eventCollection = await events();
-    const userCollection = await users();
     
     const event = await eventCollection.findOne({ _id: new ObjectId(event_id) });
     if (!event) throw `Error: event with id ${event_id} not found`;
 
     if(event.volunteers.includes(volunteer_id)) {
-      throw `Error: volunteer with ${volunteer_id} id is already in events.volunteers array`;
+      throw `Error: volunteer with ${volunteer_id} id is already in event.volunteers array`;
     }
 
     event.volunteers.push(volunteer_id);
-    let newEvent = await eventCollection.findOneAndUpdate(
-      {_id: ObjectId(_id)},
-      {$set: updatedEventData},
+    let updateInfo = await eventCollection.findOneAndUpdate(
+      {_id: ObjectId(event_id)},
+      {$set: {volunteers: event.volunteers}},
       {returnDocument: 'after'}
     );
-    if (newEvent.lastErrorObject.n === 0)
+    if (updateInfo.lastErrorObject.n === 0)
       throw [404, `Could not update the event with id ${_id}`];
+
+    return updateInfo.value;
+  },
+
+  async addLikes(event_id, volunteer_id) {
+    validation.checkId(event_id);
+    event_id = event_id.trim(event_id);
+    validation.checkId(volunteer_id);
+    volunteer_id = volunteer_id.trim();
+
+    const eventCollection = await events();
+
+    const event = await eventCollection.findOne({ _id: new ObjectId(event_id) });
+    if (!event) throw `Error: event with id ${event_id} not found`;
+
+    if(event.likes.includes(volunteer_id)) {
+      throw `Error: volunteer with ${volunteer_id} id is already in event.likes array`;
+    }
+
+    event.likes.push(volunteer_id);
+    let updateInfo = await eventCollection.findOneAndUpdate(
+      {_id: ObjectId(event_id)},
+      {$set: {likes: event.likes}},
+      {returnDocument: 'after'}
+    );
+    if (updateInfo.lastErrorObject.n === 0)
+      throw [404, `Could not update the event with id ${_id}`];
+
+    return updateInfo.value;
   },
 
   filterExpired(events, needExpired) {
