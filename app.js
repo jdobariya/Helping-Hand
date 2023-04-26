@@ -30,6 +30,20 @@ app.use(rewriteUnsupportedBrowserMethods);
 app.engine('handlebars', exphbs.engine({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
+import session from 'express-session';
+app.use(session({
+    name: 'AuthCookie',
+    secret: 'some secret string!',
+    resave: false,
+    saveUninitialized: false
+}))
+
+import { logger } from './middleware.js';
+
+app.use(logger)
+
+// add the middleware functions from middleware.js here 
+
 configRoutes(app)
 
 const server = app.listen(3000, async () => {
