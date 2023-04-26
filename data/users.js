@@ -47,84 +47,53 @@ let exportedMethods = {
   },
 
   async addUser(
-    firstName,
-    lastName,
-    user_contact,
-    user_email,
-    user_password,
-    user_bio = "",
-    user_skills = [],
-    user_address = "",
-    user_past_events = [],
-    user_current_events = [],
-    user_past_hosted_events=[],
-    user_current_hosted_events=[],
-    isHost,
-    user_user_story = [],
-    user_user_feedback = []
+    first_name,
+    last_name,
+    email,
+    password,
+    isHost
   ) {
-    let{
-      first_name,
-      last_name,
-      contact,
-      email,
-      bio,
-      skills,
-      address,
-      past_events,
-      current_events,
-      past_hosted_events,
-      current_hosted_events,
-      user_story,
-      user_feedback    
-    } = validation.checkInputs(
-      firstName,
-      lastName,
-      user_contact,
-      user_email,
-      user_bio,
-      user_skills,
-      user_address,
-      user_past_events,
-      user_current_events,
-      user_past_hosted_events,
-      user_current_hosted_events,
-      user_user_story,
-      user_user_feedback
-    );
-    let password = await bcrypt.hash(user_password,16);
+    first_name = validation.isValidString(first_name);
+    validation.isValidName(first_name);
+    last_name = validation.isValidString(last_name);
+    validation.isValidName(last_name);
+    email = validation.isValidString(email.trim().toLowerCase());
+    validation.isValidEmail(email);
+    password = validation.isValidString(password);
+    validation.validatePassword(password);
+    
+    let hashedPassword = await bcrypt.hash(password,10);
+
     let user_since = new Date().getFullYear();
-    let userData=await this.getAllUsers()
-    let emails=userData.map(user => user.email);
-    if(emails.includes(email))
-    {
-      throw "Error: User already exist"
-    }
-    let newUser = {
-      first_name,
-      last_name,
-      contact,
-      email,
-      password,
-      bio,
-      skills,
-      address,
-      past_events,
-      current_events,
-      past_hosted_events,
-      current_hosted_events,
-      user_since,
-      isHost,
-      user_story,
-      user_feedback
-    };
+
     const usersCollection = await users();
-    const insertUser = await usersCollection.insertOne(newUser);
-    if (!insertUser.insertedId) throw "Failed Inserting a user";
-    let newId=insertUser.insertedId;
-    console.log(newId)
-    return await this.getUserById(newId.toString());
+    let info = await usersCollection.findOne({email: email})
+    if(info) throw "Email already exists";
+    
+    let newUser = {
+      first_name: first_name,
+      last_name: last_name,
+      contact: "",
+      email: email,
+      password: hashedPassword,
+      bio: "",
+      skills: [],
+      address: "",
+      past_events: [],
+      current_events: [],
+      past_hosted_events: [],
+      current_hosted_events: [],
+      user_since: user_since,
+      isHost: isHost,
+      user_story: [],
+      user_feedback: []
+    };
+
+    const insertInfo = await usersCollection.insertOne(newUser);
+    if (!insertInfo.insertedId || !insertInfo.acknowledged) throw "Failed Inserting a user";
+    else return true
   },
+
   async removeUser(id) {
     validation.isValidId(id);
     id=id.trim()
