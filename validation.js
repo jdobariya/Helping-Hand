@@ -87,6 +87,13 @@ export function isValidEmail(email) {
   throw "Error: invalid email"
 }
 
+export function isValidName(name){
+  if(name.length < 2) throw "Name cannot be less than 2 characters";
+  if(name.length > 25) throw "Name cannot be more than 25 characters";
+  if(name.trim().length === 0) throw "Name cannot be empty";
+  if(!isNaN(name)) throw "Name cannot be a number";
+}
+
 export function isValidTime(time, timeName) {
   if(typeof time !== 'string') {
     throw `Error: ${timeName} is not a string`;
@@ -228,12 +235,6 @@ export function isValidNumber(num, numName) {
   }
 }
 
-export function isValidName(name){
-  if(name.length < 2) throw "Name cannot be less than 2 characters";
-  if(name.length > 25) throw "Name cannot be more than 25 characters";
-  if(name.trim().length === 0) throw "Name cannot be empty";
-  if(!isNaN(name)) throw "Name cannot be a number";
-}
 
 export function checkInputs(
   first_name,
