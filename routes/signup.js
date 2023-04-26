@@ -1,6 +1,6 @@
 import {Router} from "express";
 import { isValidEmail, isValidName, isValidString, validatePassword } from "../validation.js";
-
+import usersData from "../data/users.js";
 
 const router = Router();
 
@@ -10,12 +10,13 @@ router.route("/").get((req, res) => {
     })
 })
 
-router.route("/").post((req, res) => {
+router.route("/").post( async (req, res) => {
     let firstName = req.body.first_name;
     let lastName = req.body.last_name;
     let email = req.body.email;
     let password = req.body.password;
     let repeatPassword = req.body.repeat_password;
+    let role = req.body.role;
 
   try{
     firstName = isValidString(firstName);
@@ -33,18 +34,27 @@ router.route("/").post((req, res) => {
 
     repeatPassword = isValidString(repeatPassword);
     if(repeatPassword !== password) throw 'Passwords do not match'
+
+    role = isValidString(role);
+    if(role !== 'host' && role !== 'volunteer') throw 'Invalid role'
   }catch(e){
     res.status(400).render('signup', {title: 'Sign Up', error: e});
   }
 
   try{
     // add the user to the database
-    // if they are valid, redirect to the home page
+    const isHost = role === 'host' ? true : false;
+    const result = await usersData.addUser(firstName, lastName, email, password, isHost)
+    if(result){
+      res.redirect("/home");
+    }else{
+      res.status(500).render('signup', {title: 'Sign Up', error: 'Internal Server Error'});
+    }
 
-    console.log(firstName, lastName, email, password, repeatPassword);
+    console.log(firstName, lastName, email, password, repeatPassword, role);
     res.redirect("/home");
   }catch(e){
-    res.status(400).render('login', {title: 'Login', error: e});
+    res.status(400).render('signup', {title: 'Sign Up', error: e});
   }
 })
 
