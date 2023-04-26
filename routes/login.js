@@ -26,9 +26,7 @@ router.route("/").post((req, res) => {
   try{
     // check the credentials against the database
     // if they are valid, redirect to the home page
-    if(email !== credentials.email) throw "Email is incorrect";
-    if(password !== credentials.password) throw "Password is incorrect";
-
+    
     console.log(email, password);
     res.redirect("/home");
   }catch(e){
