@@ -1,24 +1,37 @@
-import {users, events} from '../config/mongoCollections.js';
+import {users,events} from '../config/mongoCollections.js';
 import { ObjectId } from 'mongodb';
 import * as validation from '../validation.js'; 
-import userInfo from './users.js'
+
 const exportedMethods = {
   async addEvent (
     event_name,
     description,
-    releaseDate,
-    releaseTime,
-    registerExpireDate,
-    registerEXpireTime,
-    hostDate,
-    hostTime,
-    location,
-    hostInfo,
     tags,
+    application_deadline,
+    host_time,
+    location,
+    host_info,
   ){
+    let {
+      event_name,
+      description,
+      tags,
+      application_deadline,
+      host_time,
+      location,
+      host_info,
+      stories,
+      feedbacks,
+      likes
+    } = validation.checkEventsInputs(
+      event_name,
+      description,
+      tags,
+      application_deadline,
+      host_time,
+      location,
+      host_info,);
 
-<<<<<<< Updated upstream
-=======
     const now = new Date();
     
     const release_time = now.getTime();
@@ -43,20 +56,10 @@ const exportedMethods = {
     let newId=insertUser.insertedId.toString();
     console.log(newId)
     return await this.getEventById(newId);
->>>>>>> Stashed changes
   },
 
   async removeEvent(id) {
-    // validation.isValidId(id.toString())
-    // const eventsCollection=await events();
-    // id=id.trim()
-    // const deletionInfo = await eventsCollection.findOneAndDelete({
-    //   _id: new ObjectId(id),
-    // });
-    // if (deletionInfo.lastErrorObject.n === 0)
-    //   throw [404, `Error: Could not delete an event with id of ${id}`];
 
-    // return true;
   },
 
   async updateEventPatch(id, updatedEvent) {
@@ -68,6 +71,10 @@ const exportedMethods = {
 
   },
 
+  // will return all app's events which have all the tags
+  async getAllAppEventsWithTags(tags) {
+
+  },
 
   // will return all app's events which is past
   async getAllAppEventsPast(currentDate, currentTime) {
@@ -102,6 +109,7 @@ const exportedMethods = {
 
   },
 
+ 
   async getEventById(id) {
     // validation.isValidId(id);
     // id=id.trim()
@@ -188,8 +196,6 @@ const exportedMethods = {
         throw e
       }
       return {updatedStory:true}
-
+    }
   }
-};
-
 export default exportedMethods;
