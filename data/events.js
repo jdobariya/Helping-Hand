@@ -155,6 +155,115 @@ const exportedMethods = {
     return events;
   },
 
+  filterExpired(events, needExpired) {
+    if(needExpired) {
+      return events.filter(event => new Date(event.application_deadline) < new Date());
+    }else {
+      return events.filter(event => new Date(event.application_deadline) >= new Date());
+    }
+  },
+
+  sortByTime(events, needNearestToFurthest) {
+    if(needNearestToFurthest) {
+      events.sort((a, b) => new Date(b.host_time) - new Date(a.host_time));
+      return events;
+    }else {
+      events.sort((a, b) => new Date(a.host_time) - new Date(b.host_time));
+      return events;
+    }
+  },
+
+  async getAllFeedbacksByEventId(_id) {
+    validation.checkId(_id);
+    _id = _id.trim();
+
+    const eventCollection = await events();
+    const event = eventCollection.findOne({ _id: new ObjectId(_id) });
+    if(!event) {
+      throw `Error: event with ${_id} not found`;
+    }
+
+    return event.feedbacks;
+  },
+
+  async getFeedbackByFeedbackId(_id) {
+    validation.checkId(_id);
+    _id = _id.trim();
+
+    const eventCollection = await events();
+    const event = eventCollection.findOne({ "feedbacks._id": new ObjectId(_id) });
+    if(!event) {
+      throw `Error: feedback with ${_id} not found`;
+    }
+
+    for(let feedback of event.feedbacks) {
+      if(feedback._id.toString() === _id) {
+        feedback._id = feedback._id.toString();
+        return feedback;
+      }
+    }
+  },
+
+  async getAllStoriesByEventId() {
+    validation.checkId(_id);
+    _id = _id.trim();
+
+    const eventCollection = await events();
+    const event = eventCollection.findOne({ _id: new ObjectId(_id) });
+    if(!event) {
+      throw `Error: event with ${_id} not found`;
+    }
+
+    return event.stories;
+  },
+
+  async getAllStoriesByVolunteerId(_id) {
+    validation.checkId(_id);
+    _id = _id.trim();
+
+    const eventCollection = await events();
+    const events = eventCollection.find({ "stories.volunteer_id": _id }).toArray();
+    if(!events) {
+      throw `Error: volunteer with ${_id} has no story`;
+    }
+
+    const stories = []; 
+    for(let event of events) {
+      for(let story of event.stories) {
+        if(story.volunteer_id === _id) {
+          story._id = story._id.toString();
+          stories.push(story);
+        }
+      }
+    }
+
+    return stories;
+  },
+
+  async removeStory(_id) {
+    validation.checkId(_id);
+    _id = _id.trim();
+
+    const eventCollection = await events();
+    const event = eventCollection.findOne({ "stories._id": new Object(_id) });
+    if(!event) {
+      throw `Error: story with ${_id} not found`;
+    }
+
+    event.stories.filter(story => story._id.toString() === _id);
+
+    const unpdateInfo = eventCollection.findOneAndUpdate(
+      {_id: event._id},
+      {$set: {stories: event.stories}},
+      {returnDocument: "after"}
+    );
+
+    if (unpdateInfo.lastErrorObject.n === 0)
+      throw [404, `Could not remove the story with id ${_id}`];
+
+    return unpdateInfo.value;
+  },
+
   async addVolunteers(event_id, volunteer_id) {
     validation.checkId(event_id);
     event_id = event_id.trim(event_id);
@@ -207,26 +316,7 @@ const exportedMethods = {
       throw [404, `Could not update the event with id ${_id}`];
 
     return updateInfo.value;
-  },
-
-  filterExpired(events, needExpired) {
-    if(needExpired) {
-      return events.filter(event => new Date(event.application_deadline) < new Date());
-    }else {
-      return events.filter(event => new Date(event.application_deadline) >= new Date());
-    }
-  },
-
-  sortByTime(events, needNearestToFurthest) {
-    if(needNearestToFurthest) {
-      events.sort((a, b) => new Date(b.host_time) - new Date(a.host_time));
-      return events;
-    }else {
-      events.sort((a, b) => new Date(a.host_time) - new Date(b.host_time));
-      return events;
-    }
-  },
-
+  }
 };
 
 export default exportedMethods;
