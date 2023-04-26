@@ -1,4 +1,4 @@
-import {events} from '../config/mongoCollections.js';
+import {events, users} from '../config/mongoCollections.js';
 import { ObjectId } from 'mongodb';
 import * as validation from '../validation.js'; 
 
@@ -58,24 +58,24 @@ const exportedMethods = {
     return await this.getEventById(newId);
   },
 
-  async removeEventById(id) {
-    id = validation.isValidId(id);
-    id = id.trim();
+  async removeEventById(_id) {
+    _id = validation.isValidId(_id);
+    _id = _id.trim();
 
     const eventsCollection = await events();
     const deletionInfo = await eventsCollection.findOneAndDelete({
-      _id: new ObjectId(id),
+      _id: new ObjectId(_id),
     });
     if (deletionInfo.lastErrorObject.n === 0){
-      throw [404, `Error: Could not delete event with id of ${id}`];
+      throw [404, `Error: Could not delete event with id of ${_id}`];
     }
     
-    return {removeId: id, isRemoved: true};
+    return {removeId: _id, isRemoved: true};
   },
 
-  async updateEventPatch(id, updatedEvent) {
-    validation.isValidId(id);
-    id = id.trim();
+  async updateEventPatch(_id, eventInfo) {
+    validation.isValidId(_id);
+    _id = vid.trim();
 
     const updatedEventData = {};
     if(eventInfo.event_name) {
@@ -108,12 +108,12 @@ const exportedMethods = {
 
     const eventCollection = await events();
     let newEvent = await eventCollection.findOneAndUpdate(
-      {_id: ObjectId(id)},
+      {_id: ObjectId(_id)},
       {$set: updatedEventData},
       {returnDocument: 'after'}
     );
     if (newEvent.lastErrorObject.n === 0)
-      throw [404, `Could not update the event with id ${id}`];
+      throw [404, `Could not update the event with id ${_id}`];
 
     return newEvent.value;
   },
@@ -124,35 +124,70 @@ const exportedMethods = {
     return await eventCollection.find({}).toArray();
   },
   
-  async getEventByEventId(id) {
-    validation.checkId(id);
-    id = id.trim();
+  async getEventByEventId(_id) {
+    validation.checkId(_id);
+    _id = _id.trim();
     const eventCollection = await events();
-    const event = await eventCollection.findOne({_id: ObjectId(id)});
+    const event = await eventCollection.findOne({_id: ObjectId(_id)});
 
-    if (!event) throw 'Error: event not found';
+    if (!event) throw `Error: event with id ${_id} not found`;
 
     return event;
   },
 
-  async getAllEventsByHostId(id) {
-    validation.checkId(id);
-    id = id.trim();
+  async getAllEventsByHostId(_id) {
+    validation.checkId(_id);
+    _id = _id.trim();
 
     const eventCollection = await events();
-    const events = eventCollection.find({ "host_info.host_id": id }).toArray();
+    const events = eventCollection.find({ "host_info.host_id": _id }).toArray();
     
     return events;
   },
 
-  async getAllEventsByVolunteerId(id) {
-    validation.checkId(id);
-    id = id.trim();
+  async getAllEventsByVolunteerId(_id) {
+    validation.checkId(_id);
+    _id = _id.trim();
 
     const eventCollection = await events();
-    const events = eventCollection.find({ "volunteers": id }).toArray();
+    const events = eventCollection.find({ "volunteers": _id }).toArray();
     
     return events;
+  },
+
+  // will return all app's events which have all the tags
+  async getAllAppEventsByTags(tags) {
+    tags = validation.isValidArray(tags);
+    const eventCollection = await events();
+    const eventsWithTags = eventCollection.find({ "tags": { $in: tags } });
+
+    return eventsWithTags;
+  },
+
+  async addVolunteers(event_id, volunteer_id) {
+    validation.checkId(event_id);
+    event_id = event_id.trim(event_id);
+    validation.checkId(volunteer_id);
+    volunteer_id = volunteer_id.trim();
+
+    const eventCollection = await events();
+    const userCollection = await users();
+    
+    const event = await eventCollection.findOne({ _id: new ObjectId(event_id) });
+    if (!event) throw `Error: event with id ${event_id} not found`;
+
+    if(event.volunteers.includes(volunteer_id)) {
+      throw `Error: volunteer with ${volunteer_id} id is already in events.volunteers array`;
+    }
+
+    event.volunteers.push(volunteer_id);
+    let newEvent = await eventCollection.findOneAndUpdate(
+      {_id: ObjectId(_id)},
+      {$set: updatedEventData},
+      {returnDocument: 'after'}
+    );
+    if (newEvent.lastErrorObject.n === 0)
+      throw [404, `Could not update the event with id ${_id}`];
   },
 
   filterExpired(events, needExpired) {
@@ -163,8 +198,8 @@ const exportedMethods = {
     }
   },
 
-  sortByTime(events, isNearestToFurthest) {
-    if(isNearestToFurthest) {
+  sortByTime(events, needNearestToFurthest) {
+    if(needNearestToFurthest) {
       events.sort((a, b) => new Date(b.host_time) - new Date(a.host_time));
       return events;
     }else {
@@ -173,39 +208,6 @@ const exportedMethods = {
     }
   },
 
-  // will return all app's events which have all the tags
-  async getAllAppEventsWithTags(tags) {
-
-  },
-
-  // will return all app's events which is past
-  async getAllAppEventsPast(currentDate, currentTime) {
-
-  },
-
-  // will return all app's events which is current
-  async getAllAppEventsCurrent(currentDate, currentTime) {
-
-  },
-  
-  // will return all app's events which is past and have all the tags
-  async getAllAppEventsPastWithTags(currentDate, currentTime) {
-
-  },
-  
-  // will return all app's events which is current and have all the tags
-  async getAllAppEventsCurrentWithTags(currentDate, currentTime) {
-
-  },
-
-  // will return all events which is sorted first by date then by time
-  async getAllAppEventsAndSortByStartDate() {
-
-  },
-
-  async getEventsByTag(tags) {
-
-  },
 };
 
 export default exportedMethods;
