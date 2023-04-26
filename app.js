@@ -38,11 +38,13 @@ app.use(session({
     saveUninitialized: false
 }))
 
-import { logger } from './middleware.js';
+import { logger, redirectLogin, redirectSignup } from './middleware.js';
 
 app.use(logger)
 
 // add the middleware functions from middleware.js here 
+app.get('/login', redirectLogin)
+app.get('/signup', redirectSignup)
 
 configRoutes(app)
 

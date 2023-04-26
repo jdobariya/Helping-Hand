@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { isValidEmail, isValidString, validatePassword } from "../validation.js";
+import usersData from "../data/users.js";
 
 const router = Router();
 
@@ -9,7 +10,7 @@ router.route("/").get((req, res) => {
   });
 });
 
-router.route("/").post((req, res) => {
+router.route("/").post(async (req, res) => {
   let email = req.body.email;
   let password = req.body.password;
 
@@ -26,9 +27,13 @@ router.route("/").post((req, res) => {
   try{
     // check the credentials against the database
     // if they are valid, redirect to the home page
-    
-    console.log(email, password);
-    res.redirect("/home");
+
+    const result = await usersData.verifyUser(email, password)
+    if(result){
+      console.log(email, password);
+      req.session.loggedIn = true;
+      res.redirect("/home");
+    }
   }catch(e){
     res.status(400).render('login', {title: 'Login', error: e});
   }
