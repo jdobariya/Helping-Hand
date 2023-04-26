@@ -1,0 +1,33 @@
+<main>
+  <h1 class="title">{{title}}</h1>
+  <form
+    id="login_form"
+    action="/login"
+    method="POST"
+    onsubmit="onSubmitClicked()"
+  >
+    <label for="email">Email</label>
+    <input
+      type="email"
+      name="email"
+      id="email"
+      required
+      placeholder="Enter your email"
+    />
+    <label for="password">Password</label>
+    <input
+      type="password"
+      name="password"
+      id="password"
+      required
+      minlength="8"
+      placeholder="Enter your password"
+    />
+    <button type="submit" value="Submit">Login</button>
+
+    <a href="forgotpassword" class="register-link">Forgot password</a>
+    <a href="/singup" class="register-link">Don't have an account? Sign Up</a>
+  </form>
+  <p id="error_message">{{error}}</p>
+  <script src="../public/js/login.js"></script>
+</main>
