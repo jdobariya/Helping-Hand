@@ -235,6 +235,7 @@ export function isValidNumber(num, numName) {
   }
 }
 
+
 export function checkInputs(
   first_name,
     last_name,
@@ -301,52 +302,4 @@ export function checkInputs(
     user_story,
   user_feedback}
 
-}
-
-export function checkEventsInputs(
-  event_name,
-  description,
-  tags,
-  application_deadline,
-  host_time,
-  location,
-  host_info,
-  stories = [],
-  feedbacks = [],
-  likes = 0
-) {
-  event_name = isValidString(event_name);
-  description = isValidString(description);
-  tags = isValidArray(tags, "tags");
-  application_deadline = isValidTime(application_deadline, "application_deadline");
-  host_time = isValidTime(host_time, "host_time");
-  location = isValidLocation(location, "location");
-  host_info = isValidHostInfo(host_info, "host_info");
-
-  if(stories.length !== 0) {
-    for(let i = 1; i < stories.length; i++) {
-      stories[i] = isValidStory(stories[i]);
-    }
-  }
-
-  if(feedbacks.length !== 0) {
-    for(let i = 1; i < feedbacks.length; i++) {
-      feedbacks[i] = isValidFeedback(feedbacks[i]);
-    }
-  }
-
-  isValidNumber(likes);
-
-  return {
-    event_name,
-    description,
-    tags,
-    application_deadline,
-    host_time,
-    location,
-    host_info,
-    stories,
-    feedbacks,
-    likes
-  };
 }
