@@ -300,8 +300,8 @@ export function checkInputs(
     past_hosted_events,
     current_hosted_events,
     user_story,
-  user_feedback}
-
+    user_feedback}
+    
 }
 
 export function checkEventsInputs(
