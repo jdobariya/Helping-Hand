@@ -304,9 +304,10 @@ export function checkEventsInputs(
   host_time,
   location,
   host_info,
+  volunteers = [],
   stories = [],
   feedbacks = [],
-  likes = 0
+  likes = []
 ) {
   event_name = isValidString(event_name);
   description = isValidString(description);
@@ -337,6 +338,7 @@ export function checkEventsInputs(
     application_deadline,
     host_time,
     location,
+    volunteers,
     host_info,
     stories,
     feedbacks,
