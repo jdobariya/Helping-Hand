@@ -235,6 +235,7 @@ export function isValidNumber(num, numName) {
   }
 }
 
+
 export function checkInputs(
   first_name,
     last_name,
