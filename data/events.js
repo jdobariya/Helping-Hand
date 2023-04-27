@@ -7,7 +7,6 @@ const exportedMethods = {
   async addEvent(
     event_name,
     description,
-    tags,
     application_deadline,
     host_time,
     location,
@@ -16,7 +15,6 @@ const exportedMethods = {
     let {
       event_name,
       description,
-      tags,
       application_deadline,
       host_time,
       location,
@@ -27,7 +25,6 @@ const exportedMethods = {
     } = validation.checkEventsInputs(
       event_name,
       description,
-      tags,
       application_deadline,
       host_time,
       location,
@@ -41,7 +38,6 @@ const exportedMethods = {
     const newEvent = {
       event_name,
       description,
-      tags,
       release_time,
       application_deadline,
       host_time,
