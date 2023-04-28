@@ -32,7 +32,7 @@ router.route("/").post(async (req, res) => {
     if(result){
       console.log(email, password);
       req.session.loggedIn = true;
-      res.redirect("/home");
+      res.render("homepage",{user:req.session.loggedIn});
     }
   }catch(e){
     res.status(400).render('login', {title: 'Login', error: e});

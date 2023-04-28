@@ -2,6 +2,8 @@ import { users, events } from "../config/mongoCollections.js";
 import userData from "./users.js";
 import { ObjectId } from "mongodb";
 import * as validation from "../validation.js";
+import e from "express";
+
 
 
 const exportedMethods = {
@@ -11,7 +13,9 @@ const exportedMethods = {
     application_deadline,
     host_time,
     location,
-    host_info
+    host_info,
+    alt_text,
+    image_url
   ) {
     let tempEvent = validation.checkEventsInputs(
       event_name,
@@ -38,6 +42,8 @@ const exportedMethods = {
       stories: tempEvent.stories,
       feedbacks: tempEvent.feedbacks,
       likes: tempEvent.likes,
+      alt_text,image_url
+
     };
 
     const eventsCollection = await events();
@@ -50,6 +56,7 @@ const exportedMethods = {
   async removeEventById(_id) {
     _id = validation.isValidId(_id);
     _id = _id.trim();
+
 
     const eventsCollection = await events();
     const deletionInfo = await eventsCollection.findOneAndDelete({
@@ -110,7 +117,16 @@ const exportedMethods = {
   // will return all app's events
   async getAllAppEvents() {
     const eventCollection = await events();
-    return await eventCollection.find({}).toArray();
+
+
+    let all= await eventCollection.find({}).toArray();
+    all=all.map(element=>
+      {
+        element._id=element._id.toString();
+        return element
+      })
+    return all
+
   },
   
   async getEventByEventId(_id) {
@@ -121,14 +137,17 @@ const exportedMethods = {
 
     if (!event) throw `Error: event with id ${_id} not found`;
 
+
     return event;
   },
 
   async getAllEventsByHostId(_id) {
+
     validation.isValidId(_id);
     _id = _id.trim();
 
     const eventCollection = await events();
+
     const events = eventCollection.find({ "host_info.host_id": _id }).toArray();
     
     return events;
@@ -280,6 +299,7 @@ const exportedMethods = {
     return updateInfo.value;
   },
 
+
   async addLikes(event_id, volunteer_id) {
     validation.isValidId(event_id);
     event_id = event_id.trim(event_id);
@@ -373,5 +393,6 @@ const exportedMethods = {
     return { updatedStory: true };
   },
 };
+
 
 export default exportedMethods;

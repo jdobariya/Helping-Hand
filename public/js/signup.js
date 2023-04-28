@@ -1,5 +1,9 @@
 function onSubmitClicked(){
   let errorMessage = document.getElementById('error_message');
+  let signupform=document.getElementById('signup_form')
+  if(signupform)
+  {
+  registration.addEventListener('submit', async (event) => {
   event.preventDefault();
   
   try{
@@ -29,7 +33,7 @@ function onSubmitClicked(){
     errorMessage.hidden = false;
     errorMessage.innerHTML = e;
   }
-  
+  })}
 }
 
 function checkString(strVal, varName) {
@@ -69,3 +73,4 @@ function checkPassword(password){
   if(!password.match(/[0-9]/)) throw "Password must contain at least one number";
   if(!password.match(/[!@#$%^&*]/)) throw "Password must contain at least one special character";
 }
+signupform.submit()

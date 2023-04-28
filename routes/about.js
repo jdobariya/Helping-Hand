@@ -4,9 +4,15 @@ import {} from "../validation.js";
 const router = Router();
 
 router.route("/").get((req, res) => {
-  res.render("about", {
-    title: "About Us",
-  });
+  if(req.session &&req.session.loggedIn)
+  {
+    return res.render('about',{title:"About us",user:true})
+    
+  }
+  else
+  {
+  return  res.render('about',{title:"About us",user:false})
+  }
 });
 
 export default router;
