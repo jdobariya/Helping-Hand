@@ -46,7 +46,7 @@ Welcome to the world of Helping Hand, a web application that aims to bring peopl
 + Display past and future events organized by the host
 
 Name  - Github username |
-+Nikhil Varma Bandaru - bnkvarma9,
-+Weijin liu- will65536,
-+Jaydeep Dobariya- jdobariya,
-+Jay Talekar-JayTalekar
+Nikhil Varma Bandaru - bnkvarma9,
+Weijin liu- will65536,
+Jaydeep Dobariya- jdobariya,
+Jay Talekar-JayTalekar
