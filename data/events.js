@@ -1,4 +1,5 @@
 import { users, events } from "../config/mongoCollections.js";
+import userData from "./users.js";
 import { ObjectId } from "mongodb";
 import * as validation from "../validation.js";
 
@@ -12,18 +13,7 @@ const exportedMethods = {
     location,
     host_info
   ) {
-    let {
-      e_name,
-      des,
-      a_deadline,
-      h_time,
-      loc,
-      volun,
-      h_info,
-      stor,
-      fbacks,
-      li,
-    } = validation.checkEventsInputs(
+    let tempEvent = validation.checkEventsInputs(
       event_name,
       description,
       application_deadline,
@@ -37,24 +27,24 @@ const exportedMethods = {
     const rele_time = now.getTime();
 
     const newEvent = {
-      event_name: e_name,
-      description: des,
+      event_name: tempEvent.event_name,
+      description: tempEvent.description,
       release_time: rele_time,
-      application_deadline: a_deadline,
-      host_time: h_time,
-      location: loc,
-      volunteers: volun,
-      host_info: h_info,
-      stories: stor,
-      feedbacks: fbacks,
-      likes: li,
+      application_deadline: tempEvent.application_deadline,
+      host_time: tempEvent.host_time,
+      location: tempEvent.location,
+      volunteers: tempEvent.volunteers,
+      host_info: tempEvent.host_info,
+      stories: tempEvent.stories,
+      feedbacks: tempEvent.feedbacks,
+      likes: tempEvent.likes,
     };
 
     const eventsCollection = await events();
     const insertEvent = await eventsCollection.insertOne(newEvent);
     if (!insertEvent.insertedId) throw "Failed Inserting a event";
-    let newId=insertUser.insertedId.toString();
-    return await this.getEventById(newId);
+    let newId=insertEvent.insertedId.toString();
+    return await this.getEventByEventId(newId);
   },
 
   async removeEventById(_id) {
@@ -107,7 +97,7 @@ const exportedMethods = {
 
     const eventCollection = await events();
     let newEvent = await eventCollection.findOneAndUpdate(
-      {_id: ObjectId(_id)},
+      {_id: new ObjectId(_id)},
       {$set: updatedEventData},
       {returnDocument: 'after'}
     );
@@ -124,10 +114,10 @@ const exportedMethods = {
   },
   
   async getEventByEventId(_id) {
-    validation.checkId(_id);
+    validation.isValidId(_id);
     _id = _id.trim();
     const eventCollection = await events();
-    const event = await eventCollection.findOne({_id: ObjectId(_id)});
+    const event = await eventCollection.findOne({_id: new ObjectId(_id)});
 
     if (!event) throw `Error: event with id ${_id} not found`;
 
@@ -135,7 +125,7 @@ const exportedMethods = {
   },
 
   async getAllEventsByHostId(_id) {
-    validation.checkId(_id);
+    validation.isValidId(_id);
     _id = _id.trim();
 
     const eventCollection = await events();
@@ -145,7 +135,7 @@ const exportedMethods = {
   },
 
   async getAllEventsByVolunteerId(_id) {
-    validation.checkId(_id);
+    validation.isValidId(_id);
     _id = _id.trim();
 
     const eventCollection = await events();
@@ -173,7 +163,7 @@ const exportedMethods = {
   },
 
   async getAllFeedbacksByEventId(_id) {
-    validation.checkId(_id);
+    validation.isValidId(_id);
     _id = _id.trim();
 
     const eventCollection = await events();
@@ -186,7 +176,7 @@ const exportedMethods = {
   },
 
   async getFeedbackByFeedbackId(_id) {
-    validation.checkId(_id);
+    validation.isValidId(_id);
     _id = _id.trim();
 
     const eventCollection = await events();
@@ -204,7 +194,7 @@ const exportedMethods = {
   },
 
   async getAllStoriesByEventId() {
-    validation.checkId(_id);
+    validation.isValidId(_id);
     _id = _id.trim();
 
     const eventCollection = await events();
@@ -217,7 +207,7 @@ const exportedMethods = {
   },
 
   async getAllStoriesByVolunteerId(_id) {
-    validation.checkId(_id);
+    validation.isValidId(_id);
     _id = _id.trim();
 
     const eventCollection = await events();
@@ -240,7 +230,7 @@ const exportedMethods = {
   },
 
   async removeStory(_id) {
-    validation.checkId(_id);
+    validation.isValidId(_id);
     _id = _id.trim();
 
     const eventCollection = await events();
@@ -264,9 +254,9 @@ const exportedMethods = {
   },
 
   async addVolunteers(event_id, volunteer_id) {
-    validation.checkId(event_id);
+    validation.isValidId(event_id);
     event_id = event_id.trim(event_id);
-    validation.checkId(volunteer_id);
+    validation.isValidId(volunteer_id);
     volunteer_id = volunteer_id.trim();
 
     const eventCollection = await events();
@@ -280,7 +270,7 @@ const exportedMethods = {
 
     event.volunteers.push(volunteer_id);
     let updateInfo = await eventCollection.findOneAndUpdate(
-      {_id: ObjectId(event_id)},
+      {_id: new ObjectId(event_id)},
       {$set: {volunteers: event.volunteers}},
       {returnDocument: 'after'}
     );
@@ -291,9 +281,9 @@ const exportedMethods = {
   },
 
   async addLikes(event_id, volunteer_id) {
-    validation.checkId(event_id);
+    validation.isValidId(event_id);
     event_id = event_id.trim(event_id);
-    validation.checkId(volunteer_id);
+    validation.isValidId(volunteer_id);
     volunteer_id = volunteer_id.trim();
 
     const eventCollection = await events();
@@ -307,7 +297,7 @@ const exportedMethods = {
 
     event.likes.push(volunteer_id);
     let updateInfo = await eventCollection.findOneAndUpdate(
-      {_id: ObjectId(event_id)},
+      {_id: new ObjectId(event_id)},
       {$set: {likes: event.likes}},
       {returnDocument: 'after'}
     );
