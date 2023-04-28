@@ -307,7 +307,6 @@ export function checkInputs(
 export function checkEventsInputs(
   event_name,
   description,
-  tags,
   application_deadline,
   host_time,
   location,
@@ -319,7 +318,6 @@ export function checkEventsInputs(
 ) {
   event_name = isValidString(event_name);
   description = isValidString(description);
-  tags = isValidArray(tags, "tags");
   application_deadline = isValidTime(application_deadline, "application_deadline");
   host_time = isValidTime(host_time, "host_time");
   location = isValidLocation(location, "location");
@@ -342,7 +340,6 @@ export function checkEventsInputs(
   return {
     event_name,
     description,
-    tags,
     application_deadline,
     host_time,
     location,
