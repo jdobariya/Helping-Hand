@@ -13,15 +13,16 @@ const exportedMethods = {
     host_info
   ) {
     let {
-      event_name,
-      description,
-      application_deadline,
-      host_time,
-      location,
-      host_info,
-      stories,
-      feedbacks,
-      likes,
+      e_name,
+      des,
+      a_deadline,
+      h_time,
+      loc,
+      volun,
+      h_info,
+      stor,
+      fbacks,
+      li,
     } = validation.checkEventsInputs(
       event_name,
       description,
@@ -33,20 +34,20 @@ const exportedMethods = {
 
     const now = new Date();
 
-    const release_time = now.getTime();
+    const rele_time = now.getTime();
 
     const newEvent = {
-      event_name,
-      description,
-      release_time,
-      application_deadline,
-      host_time,
-      location,
-      volunteers,
-      host_info,
-      stories,
-      feedbacks,
-      likes,
+      event_name: e_name,
+      description: des,
+      release_time: rele_time,
+      application_deadline: a_deadline,
+      host_time: h_time,
+      location: loc,
+      volunteers: volun,
+      host_info: h_info,
+      stories: stor,
+      feedbacks: fbacks,
+      likes: li,
     };
 
     const eventsCollection = await events();
