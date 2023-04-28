@@ -52,7 +52,7 @@ router.route("/").post( async (req, res) => {
     }
 
     console.log(firstName, lastName, email, password, repeatPassword, role);
-    res.redirect("/home");
+    res.redirect("/login");
   }catch(e){
     res.status(400).render('signup', {title: 'Sign Up', error: e});
   }

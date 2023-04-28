@@ -105,7 +105,7 @@ export function isValidTime(time, timeName) {
     throw `Error: ${timeName} should not be empty string`;
   }
 
-  const regex = /^\d{2}\/\d{2}\/\d{4} \d{2}:\d{2} (AM|PM)$/;
+  const regex = /^\d{2}\/\d{2}\/\d{4} \d{1,2}:\d{2} (AM|PM)$/;
   if (!regex.test(time)) {
     throw `Error: ${timeName} is not in valid format`;
   }
@@ -122,7 +122,7 @@ export function isValidTime(time, timeName) {
   if(month >= 1 && month <= 12 &&
   day >= 1 && day <= new Date(year, month, 0).getDate() &&
   year >= currentYear && year <= currentYear + 3 &&
-  hour >= 0 && hour <= 12 &&
+  hour >= 0 && hour <= 24 &&
   minute >= 0 && minute <= 59) {
     return time;
   }else {
@@ -130,48 +130,48 @@ export function isValidTime(time, timeName) {
   }
 }
 
-export function isValidLocation(location, locationName) {
+export function isValidLocation(location) {
   const keys = Object.keys(location);
   
   if(keys.length !== 4) {
-    throw `Error: ${locationName} object must have "address", "city", "state" and "zipcode" four keys`;
+    throw `Error: location object must have "address", "city", "state" and "zipcode" four keys`;
   }
 
   const expectedKeys = ["address", "city", "state", "zipcode"];
   for(const key of expectedKeys) {
     if(!keys.includes(key)) {
-      throw `Error: ${locationName} object must have "address", "city", "state" and "zipcode" four keys`;
+      throw `Error: location object must have "address", "city", "state" and "zipcode" four keys`;
     }
   }
 
   for(const key of expectedKeys) {
     location[key] = location[key].trim();
     if(location[key].length === 0) {
-      throw "Error: ${locationName} object has empty string value";
+      throw "Error: location object has empty string value";
     }
   }
 
   return location;
 }
 
-export function isValidHostInfo(hostInfo, hostInfoName) {
+export function isValidHostInfo(hostInfo) {
   const keys = Object.keys(hostInfo);
 
   if(keys.length !== 3) {
-    throw `Error: ${hostInfoName} object must have "hostId", "hostName", "contact" three keys`;
+    throw `Error: hostInfo object must have "host_id", "host_name", "contact" three keys`;
   }
 
-  const expectedKeys = ["hostId", "hostName", "contact"];
+  const expectedKeys = ["host_id", "host_name", "contact"];
   for(const key of expectedKeys) {
     if(!keys.includes(key)) {
-      throw `Error: ${locationName} object must have "hostId", "hostName", "contact" three keys`;
+      throw `Error: hostInfo object must have "host_id", "host_name", "contact" three keys`;
     }
   }
 
-  hostInfo.hostId = hostInfo.hostId.trim();
-  isValidId(hostInfo.hostId);
+  hostInfo.host_id = hostInfo.host_id.trim();
+  isValidId(hostInfo.host_id);
 
-  hostInfo.hostName = isValidString(hostInfo.hostName);
+  hostInfo.host_name = isValidString(hostInfo.host_name);
 
   hostInfo.contact = hostInfo.contact.trim().toLowerCase()
   isValidEmail(hostInfo.contact);
@@ -228,13 +228,6 @@ export function isValidFeedback(feedback) {
 
   return feedback;
 }
-
-export function isValidNumber(num, numName) {
-  if(typeof num !== 'number' || Number.isNaN(num)) {
-    throw `Error: ${numName} is not a number`;
-  }
-}
-
 
 export function checkInputs(
   first_name,
@@ -300,6 +293,51 @@ export function checkInputs(
     past_hosted_events,
     current_hosted_events,
     user_story,
-  user_feedback}
+    user_feedback}
+    
+}
 
+export function checkEventsInputs(
+  event_name,
+  description,
+  application_deadline,
+  host_time,
+  location,
+  host_info,
+  volunteers = [],
+  stories = [],
+  feedbacks = [],
+  likes = []
+) {
+  event_name = isValidString(event_name);
+  description = isValidString(description);
+  application_deadline = isValidTime(application_deadline, "application_deadline");
+  host_time = isValidTime(host_time, "host_time");
+  location = isValidLocation(location, "location");
+  host_info = isValidHostInfo(host_info, "host_info");
+
+  if(stories.length !== 0) {
+    for(let i = 1; i < stories.length; i++) {
+      stories[i] = isValidStory(stories[i]);
+    }
+  }
+
+  if(feedbacks.length !== 0) {
+    for(let i = 1; i < feedbacks.length; i++) {
+      feedbacks[i] = isValidFeedback(feedbacks[i]);
+    }
+  }
+
+  return {
+    event_name,
+    description,
+    application_deadline,
+    host_time,
+    location,
+    volunteers,
+    host_info,
+    stories,
+    feedbacks,
+    likes
+  };
 }
