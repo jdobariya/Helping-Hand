@@ -5,6 +5,7 @@ import * as validation from "../validation.js";
 import e from "express";
 
 
+
 const exportedMethods = {
   async addEvent(
     event_name,
@@ -42,6 +43,7 @@ const exportedMethods = {
       feedbacks: tempEvent.feedbacks,
       likes: tempEvent.likes,
       alt_text,image_url
+
     };
 
     const eventsCollection = await events();
@@ -54,6 +56,7 @@ const exportedMethods = {
   async removeEventById(_id) {
     _id = validation.isValidId(_id);
     _id = _id.trim();
+
 
     const eventsCollection = await events();
     const deletionInfo = await eventsCollection.findOneAndDelete({
@@ -115,6 +118,7 @@ const exportedMethods = {
   async getAllAppEvents() {
     const eventCollection = await events();
 
+
     let all= await eventCollection.find({}).toArray();
     all=all.map(element=>
       {
@@ -122,6 +126,7 @@ const exportedMethods = {
         return element
       })
     return all
+
   },
   
   async getEventByEventId(_id) {
@@ -132,14 +137,17 @@ const exportedMethods = {
 
     if (!event) throw `Error: event with id ${_id} not found`;
 
+
     return event;
   },
 
   async getAllEventsByHostId(_id) {
+
     validation.isValidId(_id);
     _id = _id.trim();
 
     const eventCollection = await events();
+
     const events = eventCollection.find({ "host_info.host_id": _id }).toArray();
     
     return events;
@@ -291,6 +299,7 @@ const exportedMethods = {
     return updateInfo.value;
   },
 
+
   async addLikes(event_id, volunteer_id) {
     validation.isValidId(event_id);
     event_id = event_id.trim(event_id);
@@ -384,5 +393,6 @@ const exportedMethods = {
     return { updatedStory: true };
   },
 };
+
 
 export default exportedMethods;
