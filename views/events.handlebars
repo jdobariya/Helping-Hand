@@ -1,0 +1,30 @@
+<main id="events">
+  <div class="row-container">
+    {{#each rowEvents}}
+      <div class="row">
+        {{#each colEvents}}
+          {{#each event}}
+            <div class="col">
+
+              <div class="card">
+                <img
+                  src="../public/images/beach_clean_graphic.avif"
+                  class="card-img-top"
+                  alt="..."
+                />
+                <div class="card-body">
+                  <h5 class="card-title"><a
+                      href="event/{{_id}}"
+                    >{{event_name}}</a></h5>
+                  <p class="card-text">Some quick example text to build on the
+                    card title and make up the bulk of the card's content.</p>
+                  <a href="#" class="like-btn"><i class="fa fa-heart"></i></a>
+                </div>
+              </div>
+            </div>
+          {{/each}}
+        {{/each}}
+      </div>
+    {{/each}}
+  </div>
+</main>

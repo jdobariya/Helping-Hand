@@ -24,6 +24,10 @@
 .about-container {
   padding: 0 16px;
 }
+.about-container h2 {
+  margin-top: 5px;
+  font-size: 25px;
+}
 
 .about-card .about-container::after,
 .about-row::after {
@@ -32,7 +36,7 @@
   display: table;
 }
 
-.about-card .title {
+.about-card .sub-title {
   color: grey;
 }
 
