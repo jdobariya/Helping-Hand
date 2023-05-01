@@ -19,16 +19,15 @@ function getEventsInRow(events) {
       eventsInRow.push(events[i]);
     }
   }
-  return eventRows;
-}
-router.route("/").get(async (req, res) => {
-  let events = await eventData.getAllAppEvents();
-  let eventRows = eventRows;
   if (eventsInRow.length > 0) {
     eventsCol["row"] = eventsInRow;
     eventRows.push(eventsCol);
   }
-
+  return eventRows;
+}
+router.route("/").get(async (req, res) => {
+  let events = await eventData.getAllAppEvents();
+  let eventRows = getEventsInRow(events);
   if (req.session && req.session.loggedIn) {
     return res.render("events", {
       title: "Browse Events",
