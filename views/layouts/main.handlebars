@@ -117,20 +117,25 @@
       "&copy; " + new Date().getFullYear() + " Helping Hands, Inc";
     </script>
     <script>
-      var eventSliderIndex = 2; $(".card").css({"max-width":
-      "33%","display":"none"}); for(let card=0;card < 3;card++ ){
-      $(`.card-${card}`).css( "display","" ); } $("#pre").html("<");
-      $("#next").html(">"); $("#pre").prop('disabled', true);
-      document.getElementById("next").addEventListener("click", (event)=>{
-      $("#pre").prop('disabled', false); eventSliderIndex++;
-      if($(".card").length-1 === eventSliderIndex ){ $("#next").prop('disabled',
-      true); } $(`.card-${eventSliderIndex}`).css( "display","" );
-      $(`.card-${eventSliderIndex-3}`).css( "display","none" ); } )
-      document.getElementById("pre").addEventListener("click", (event)=>{
+      var eventSliderIndex = 2; 
+      $(".homepage-events .card").css({"max-width":
+      "33%","display":"none"}); 
+      for(let card=0;card < 3;card++ ){
+      $(`.homepage-events .card-${card}`).css( "display","" ); }
+
+      $("#pre").html("<"); $("#next").html(">"); 
+      $("#pre").prop('disabled',true); 
+      document.getElementById("next").addEventListener("click",
+      function (event){ $("#pre").prop('disabled', false); eventSliderIndex++;
+      if($(".homepage-events .card").length-1 === eventSliderIndex ){
+      $("#next").prop('disabled', true); } $(`.homepage-events
+      .card-${eventSliderIndex}`).css( "display","" ); $(`.homepage-events
+      .card-${eventSliderIndex-3}`).css( "display","none" ); } )
+      document.getElementById("pre").addEventListener("click", function(event){
       $("#next").prop('disabled', false); if(eventSliderIndex === 3){
-      $("#pre").prop('disabled', true)}; $(`.card-${eventSliderIndex}`).css(
-      "display","none" ); $(`.card-${eventSliderIndex-3}`).css( "display","" );
-      eventSliderIndex--;})
+      $("#pre").prop('disabled', true)}; $(`.homepage-events
+      .card-${eventSliderIndex}`).css( "display","none" ); $(`.homepage-events
+      .card-${eventSliderIndex-3}`).css( "display","" ); eventSliderIndex--;})
     </script>
   </body>
 

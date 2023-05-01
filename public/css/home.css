@@ -145,3 +145,14 @@
   background-color: transparent;
   border: 0;
 }
+
+.homepage-events .card{
+  border: 0;
+}
+
+@media screen and (max-width: 500px) {
+  .homepage-events .card{
+    min-width: 100%;
+    max-width: 100%;
+  }
+}
