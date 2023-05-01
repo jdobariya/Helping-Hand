@@ -4,7 +4,7 @@ import { eventData } from "../data/index.js";
 
 const router = Router();
 
-function getEventsInRow(events) {
+export function getEventsInRow(events) {
   let eventRows = [];
   let eventsCol = {};
   let eventsInRow = [];

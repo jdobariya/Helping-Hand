@@ -43,12 +43,9 @@
     font-size: 3rem !important;
   }
 }
-.homepage-events {
-  position: absolute;
-  width: 100%;
-  bottom: -100;
-  left: 0;
-  height: 45vh;
+.homepage-events h3 {
+  margin-top: 30px;
+  text-align: center;
 }
 #event-name {
   padding-top: 5px;
@@ -135,4 +132,16 @@
   .about-column {
     width: 100%;
   }
+}
+
+#sliderControls {
+  justify-content: center;
+  display: flex;
+}
+
+.control-btn {
+  margin: 5px 10px 5px 10px;
+  font-size: 2rem;
+  background-color: transparent;
+  border: 0;
 }
