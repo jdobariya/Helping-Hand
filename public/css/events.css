@@ -16,6 +16,12 @@
   min-height: 350px;
 }
 
+.card .card-title a {
+  text-decoration: none !important;
+}
+.card .card-title a:hover {
+  color: crimson;
+}
 .row-container {
   margin: 20px 30px 20px 30px;
 }
@@ -59,8 +65,15 @@
   margin: 20px 0px 10px 0px;
 }
 
+.filter {
+  margin: 25px 0px 10px 50px;
+}
+
 .search form {
   margin: 0;
+}
+.search input {
+  padding-right: 40px !important;
 }
 
 .search form button {
@@ -72,11 +85,27 @@
   border: none;
   cursor: pointer;
   border-radius: 5px 0px;
-  margin: -37px;
+  margin: -35px;
 }
 
 #searchAndFilter {
   justify-content: center;
   display: flex;
-  margin: 0px 0px 0px -25px;
+}
+
+@media screen and (max-width: 500px) {
+  #searchAndFilter {
+    left: 50%;
+    transform: translate(-50%);
+    position: absolute;
+    display: block;
+  }
+
+  .row-container {
+    margin-top: 100px;
+  }
+
+  .search {
+    margin-left: -18px;
+  }
 }

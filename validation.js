@@ -307,7 +307,7 @@ export function checkEventsInputs(
   volunteers = [],
   stories = [],
   feedbacks = [],
-  likes = []
+  likes = 0
 ) {
   event_name = isValidString(event_name);
   description = isValidString(description);
