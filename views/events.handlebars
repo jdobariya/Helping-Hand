@@ -9,6 +9,17 @@
           </i>
         </button>
       </form>
+
+    </div>
+    <div class="filter">
+      <form>
+        <label for="filter">Filter:</label>
+        <select name="filter" id="filter">
+          <option value="popularity">Popularity</option>
+          <option value="recent" selected>Most Recent</option>
+          <option value="due">Due soon</option>
+        </select>
+      </form>
     </div>
 
   </div>
@@ -27,9 +38,9 @@
                 <h5 class="card-title"><a
                     href="event/{{_id}}"
                   >{{event_name}}</a></h5>
-                <p class="card-text">Some quick example text to build on the
-                  card title and make up the bulk of the card's content.</p>
-                <a href="#" class="like-btn"><i class="fa fa-heart"></i></a>
+                <p class="card-text">{{description}}</p>
+                <p>{{likes}}&nbsp;<i class="fa fa-heart"></i></p>
+                <p><span>Registration Deadline:</span>&nbsp;{{application_deadline}}</p>
               </div>
             </div>
           </div>
