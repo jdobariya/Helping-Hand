@@ -1,7 +1,7 @@
 body {
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
 }
 * {
   box-sizing: border-box;
@@ -13,7 +13,6 @@ body {
 }
 footer {
   background-color: #555;
-  position: fixed;
   color: white;
   padding: 10px;
   width: 100%;
@@ -21,6 +20,7 @@ footer {
   bottom: 0;
   margin-top: auto;
 }
+
 .navbar-brand {
   color: white !important;
   font-size: x-large;
@@ -28,7 +28,7 @@ footer {
 #myNavbar {
   float: right !important;
 }
-li.search input[type=text] {
+li.search input[type="text"] {
   padding: 10px;
   padding-right: 500px;
   font-size: 17px;
@@ -42,7 +42,7 @@ li.search button {
   float: left;
   width: 10%;
   padding: 14px;
-  background: #2196F3;
+  background: #2196f3;
   color: white;
   font-size: 17px;
   border: 1px solid grey;
@@ -69,4 +69,3 @@ li.search::after {
     border-bottom: 1px solid white;
   }
 }
-

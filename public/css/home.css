@@ -20,13 +20,16 @@
   color: rgb(3, 2, 56);
 }
 
-
-#home-container p{
+#home-container p {
   font-size: 3rem;
 }
-#home-container p:hover{
+#home-container p:hover {
   font-size: 4rem;
-  text-shadow: 1px 1px 0px rgb(244, 235, 235), 2px 2px 0px rgb(245, 238, 238), 3px 3px 0px rgb(5, 5, 5), 4px 4px 0px #fff, 5px 5px 0px #fff, 6px 6px 0px #fff, 7px 7px 0px rgb(10, 10, 10), 8px 8px 0px rgb(11, 11, 11), 9px 9px 0px #fff, 10px 10px 0px #fff, 11px 11px 0px #fff, 12px 12px 0px #fff, 13px 13px 0px #fff, 14px 14px 0px #fff, 15px 15px 0px #fff;
+  text-shadow: 1px 1px 0px rgb(244, 235, 235), 2px 2px 0px rgb(245, 238, 238),
+    3px 3px 0px rgb(5, 5, 5), 4px 4px 0px #fff, 5px 5px 0px #fff,
+    6px 6px 0px #fff, 7px 7px 0px rgb(10, 10, 10), 8px 8px 0px rgb(11, 11, 11),
+    9px 9px 0px #fff, 10px 10px 0px #fff, 11px 11px 0px #fff, 12px 12px 0px #fff,
+    13px 13px 0px #fff, 14px 14px 0px #fff, 15px 15px 0px #fff;
 }
 #home-container p:last-child {
   float: right;
@@ -40,26 +43,20 @@
     font-size: 3rem !important;
   }
 }
-.homepage-events
-{
-  position: absolute;
-  width:100%;
-  bottom:-100;
-  left:0;
-  height:45vh;
+.homepage-events h3 {
+  margin-top: 30px;
+  text-align: center;
 }
-#event-name
-{
+#event-name {
   padding-top: 5px;
   padding-left: 10px;
   font-size: 18pt;
   font-weight: bolder;
 }
-#city-name
-{
+#city-name {
   padding-left: 10px;
   padding-bottom: 25px;
-  color:rgb(64, 118, 13);
+  color: rgb(64, 118, 13);
 }
 .dropdown-menu {
   background-color: #f8f9fa;
@@ -77,7 +74,8 @@
   transition: all 0.2s ease-in-out;
 }
 
-.dropdown-item:hover, .dropdown-item:focus {
+.dropdown-item:hover,
+.dropdown-item:focus {
   background-color: #e9ecef;
   color: #212529;
 }
@@ -94,7 +92,8 @@
   color: #fff;
 }
 
-.dropdown-menu > .active > .dropdown-item:hover, .dropdown-menu > .active > .dropdown-item:focus {
+.dropdown-menu > .active > .dropdown-item:hover,
+.dropdown-menu > .active > .dropdown-item:focus {
   background-color: #0069d9;
 }
 
@@ -108,10 +107,9 @@
   transform: scale(1.1);
 }
 
-
-#ending
-{
-  color:rgb(214, 31, 31)
+#ending {
+  color: rgb(214, 31, 31);
+  display: block;
 }
 .about-row {
   display: flex;
@@ -133,5 +131,28 @@
 @media screen and (max-width: 480px) {
   .about-column {
     width: 100%;
+  }
+}
+
+#sliderControls {
+  justify-content: center;
+  display: flex;
+}
+
+.control-btn {
+  margin: 5px 10px 5px 10px;
+  font-size: 2rem;
+  background-color: transparent;
+  border: 0;
+}
+
+.homepage-events .card{
+  border: 0;
+}
+
+@media screen and (max-width: 500px) {
+  .homepage-events .card{
+    min-width: 100%;
+    max-width: 100%;
   }
 }

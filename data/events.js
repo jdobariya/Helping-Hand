@@ -156,7 +156,8 @@ const exportedMethods = {
     _id = _id.trim();
 
     const eventCollection = await events();
-    const eventsArray = await eventCollection.find({ "volunteers": _id }).toArray();
+
+    const eventsArray = await eventCollection.find({ "volunteers": { $in: [_id] } }).toArray();
     
     return eventsArray;
   },
@@ -270,7 +271,7 @@ const exportedMethods = {
     return unpdateInfo.value;
   },
 
-  async addVolunteers(event_id, volunteer_id) {
+  async addVolunteerToEvent(event_id, volunteer_id) {
     validation.isValidId(event_id);
     event_id = event_id.trim(event_id);
     validation.isValidId(volunteer_id);
