@@ -59,9 +59,9 @@ const constructorMethod = (app) => {
   app.use("/search",searchRoute);
   app.use("/landing",landingRoute);
     app.use("/profile",profileRoute);
-  app.use("*", (req, res) => {
+ app.use("*", (req, res) => {
     res.render("error")
-  app.use("/profile", profileRoute);
-});
+
+  });
 }
 export default constructorMethod;
