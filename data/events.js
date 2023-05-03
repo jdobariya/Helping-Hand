@@ -4,6 +4,7 @@ import * as validation from "../validation.js";
 
 
 
+
 const exportedMethods = {
   async addEvent(
     event_name,
@@ -391,6 +392,17 @@ const exportedMethods = {
     }
     return { updatedStory: true };
   },
+  async getEventByKeyword(keyword)
+{
+  const regex = new RegExp(keyword, "i");
+  keyword=keyword.trim()
+  let array =await this.getAllAppEvents();
+    const filteredArray = array.filter(obj => {
+      return validation.searchObject(obj,regex);
+    });
+    console.log(filteredArray)
+  return filteredArray;
+}
 };
 
 

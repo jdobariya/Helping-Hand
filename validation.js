@@ -341,3 +341,18 @@ export function checkEventsInputs(
     likes
   };
 }
+export function searchObject(obj,regex) {
+  for (const prop in obj) {
+    if (typeof obj[prop] === "object") {
+      if (searchObject(obj[prop],regex)) {
+        return true;
+      }}
+     else if (obj[prop])
+    {
+      if(regex.test(obj[prop])) {
+      return true;
+  }
+  }}
+  return false;
+}
+

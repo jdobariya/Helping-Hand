@@ -70,10 +70,36 @@ import { logger, redirectLogin, redirectSignup, redirectLogout,redirectProfile }
 app.use(logger)
 
 // add the middleware functions from middleware.js here 
-app.get('/login', redirectLogin)
-app.get('/signup', redirectSignup)
+app.get('/login', redirectLogin);
+app.get('/signup', redirectSignup);
+app.get('/logout',(req,res,next)=>
+{
+  if(!req.session)
+  {
+    return res.redirect('/login');
+  }
+  next()
+});
+app.get('/landing',(req,res,next)=>
+{
+  if(!req.session)
+  {
+    return res.redirect('/login')
+  }
+  next();
+});
+app.get('/profile',(req,res,next)=>
+{
+  if(!req.session)
+  {
+    return res.redirect('/login')
+  }
+  next()
+})
+=======
 app.get('/logout', redirectLogout);
 app.get('/profile', redirectProfile)
+
 configRoutes(app)
 
 const server = app.listen(3000, async () => {

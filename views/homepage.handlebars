@@ -7,26 +7,30 @@
   </div>
 
   <section class="homepage-events">
-    <h3>Recent Events</h3>
+    <h3 id="popular">Popular Events</h3>
+
     <div class="row-container">
       <div class="row">
 
         {{#each allEvents}}
-
           <div class="card card-{{@index}}">
+            <a id="eventA" href="event/{{_id}}">
             <img
               src="/public/images/{{image_url}}"
-              class="card-img-top"
-              alt="..."
+              class="image"
+              alt="{{alt}}"
             />
             <div class="card-body">
-              <h5 class="card-title"><a
-                  href="event/{{_id}}"
-                >{{event_name}}</a></h5>
+              <h5 class="card-title">
+                {{event_name}}</h5>
+                 <p id="city-name">{{location.city}}</h4>
                 <p class="card-text">{{description}}</p>
                 <p>{{likes}}&nbsp;<i class="fa fa-heart"></i></p>
                 <p><span>Registration Deadline:</span>&nbsp;{{application_deadline}}</p>
             </div>
+
+              </a>
+
           </div>
 
         {{else}}

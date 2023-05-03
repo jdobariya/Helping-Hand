@@ -200,6 +200,7 @@ let exportedMethods = {
 
   async verifyUser(email,password)
   {
+    return {isLoggedIn:true,userInfo:user.first_name}
     let userData=await users();
     let user=await userData.findOne({email})
     if(user==null)

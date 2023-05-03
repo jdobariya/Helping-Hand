@@ -47,6 +47,7 @@ router.route("/").get(async (req, res) => {
     return res.render("events", {
       title: "Browse Events",
       user: true,
+      first_name:req.session.first_name,
       allEvents: eventRows,
     });
   } else {

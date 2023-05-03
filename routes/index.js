@@ -2,6 +2,11 @@ import loginRoutes from "./login.js";
 import eventsRoutes from "./events.js";
 import aboutRoutes from "./about.js";
 import signUpRoutes from "./signup.js";
+import logoutRoute from "./logout.js";
+import { eventData } from "../data/index.js";
+import eventRoutes from "./event.js";
+import searchRoute from './search.js';
+import landingRoute from './landing.js';
 import profileRoute from './profile.js';
 import logoutRoute from "./logout.js";
 import { eventData } from "../data/index.js";
@@ -37,6 +42,7 @@ const constructorMethod = (app) => {
         title: "Helping Hands",
         user: true,
         allEvents: events,
+        first_name:req.session.first_name
       });
     } else {
       return res.render("homepage", {
@@ -52,6 +58,10 @@ const constructorMethod = (app) => {
   app.use("/event", eventRoutes);
   app.use("/about", aboutRoutes);
   app.use("/signup", signUpRoutes);
+  app.use("/search",searchRoute);
+  app.use("/landing",landingRoute);
+  app.use("*", (req, res) => {
+    res.render("error")
   app.use("/profile", profileRoute);
 
   app.use("*", (req, res) => {
