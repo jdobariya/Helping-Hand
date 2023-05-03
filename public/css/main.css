@@ -67,6 +67,10 @@ footer {
   }
 li.search input[type="text"] {
   padding: 10px;
+  float:left;
+  }
+li.search input[type="text"] {
+  padding: 10px;
   float: left;
 }
 #searchForm
