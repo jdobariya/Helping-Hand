@@ -21,39 +21,41 @@ router.route("/").get(async (req, res) => {
     }
 );
 
-router.route("/").post(async (req, res) => {
-    const id = req.session.user_id;
+router.route("/").patch(async (req, res) => {
+    try{
+        const id = req.session.user_id;
 
-    let first_name = validation.isValidString(req.body.first_name);
-    validation.isValidName(first_name);
-    let last_name = validation.isValidString(req.body.last_name);
-    validation.isValidName(last_name);
-    let email = validation.isValidString(req.body.email);
-    validation.isValidEmail(email);
-    let contact = validation.isValidString(req.body.contact);
-    let bio = validation.isValidString(req.body.bio);
-    let skills = validation.isValidArray(req.body.skills);
-    let address = validation.isValidString(req.body.address);
-
-    const userInfo = {
-        first_name: first_name,
-        last_name: last_name,
-        email: email,
-        contact: contact,
-        bio: bio,
-        skills: skills,
-        address: address,
-    };
-
-    const updatedUser = await usersData.updateUserProfile(
-        id,
-        userInfo
-    );
-
-    res.render("profile", {
-        title: "Profile",
-        user: updatedUser,
-    });
+        let first_name = validation.isValidString(req.body.first_name);
+        validation.isValidName(first_name);
+        let last_name = validation.isValidString(req.body.last_name);
+        validation.isValidName(last_name);
+        let email = validation.isValidString(req.body.email);
+        validation.isValidEmail(email);
+        let contact = validation.isValidString(req.body.contact);
+        let bio = validation.isValidString(req.body.bio);
+        let skills = req.body.skills? req.body.skills: [];
+        skills = validation.isValidArray(skills);
+        let address = validation.isValidString(req.body.address);
+    
+        const userInfo = {
+            first_name: first_name,
+            last_name: last_name,
+            email: email,
+            contact: contact,
+            bio: bio,
+            skills: skills,
+            address: address,
+        };
+    
+        await usersData.updateUserProfile(
+            id,
+            userInfo
+        );
+    
+        res.json({success: true});
+    }catch(e){
+        res.json({success: false, error: e});
+    }
 });
 
 export default router;

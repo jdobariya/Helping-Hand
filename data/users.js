@@ -122,12 +122,12 @@ let exportedMethods = {
       let email = validation.isValidString(userInfo.email.trim().toLowerCase());
       validation.isValidEmail(email);
       let bio = validation.isValidString(userInfo.bio);
-      let skills = validation.isValidArray(userInfo.skills);
+      let skills = validation.isValidArray(userInfo.skills, 'skills');
       let address = validation.isValidString(userInfo.address);
 
       const usersCollection = await users();
       const user = await usersCollection.findOne({ _id: new ObjectId(id) });
-      if (user) throw `Error: No user found with id ${id}`;
+      if (!user) throw `Error: No user found with id ${id}`;
 
       user.first_name = first_name;
       user.last_name = last_name;
@@ -139,7 +139,7 @@ let exportedMethods = {
 
       const updatedInfo = await usersCollection.updateOne({ _id: new ObjectId(id) }, {$set: user}, {returnDocument: "after"});
 
-      if(updatedInfo.lastErrorObject.n === 0) throw `Error: Could not update user with id ${id}`;
+      if(!updatedInfo.acknowledged) throw `Error: Could not update user with id ${id}`;
 
       return updatedInfo.value
   },

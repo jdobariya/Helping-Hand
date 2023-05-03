@@ -103,12 +103,12 @@
                 </div>
               </div>
             </div>
-
+          
             <div class="row">
-                <div class="col">
+                <div class="col" id="skill_badges">
                     {{#each skills}}
-                        <span class="bg-info mx-1 p-2 rounded-3">
-                            {{this}} 
+                        <span class="bg-info m-1 p-2 rounded-3 skill_badge">
+                            {{this}} <button id="{{this}}" type="button" class="btn-close" aria-label="Remove"></button>
                         </span>
                     {{/each}}
                 </div>
@@ -135,12 +135,15 @@
                 value="submit"
               >Save Profile</button>
             </div>
+
+            <div id="result_div" class="m-2 text-center">
+            </div>
           </div>
         </form>
       </div>
       <div class="col-md-4">
         <div class="p-3 py-5">
-          <div class="d-flex justify-content-between align-items-center experience">
+          <div class="d-flex justify-content-between align-items-center">
             {{#if isHost}}
                 <h4>Past Hosted Events</h4>
             {{else}}
@@ -166,5 +169,5 @@
     </div>
   </div>
 
-  <script src="../public/js/profile.js" />
+  <script src="../public/js/profile.js" >
 {{/with}}
