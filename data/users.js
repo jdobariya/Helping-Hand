@@ -208,7 +208,7 @@ let exportedMethods = {
     }
     if(await bcrypt.compare(password,user.password))
     {
-      return true
+      return user._id
     }
     throw "Password incorrect!"
   }
