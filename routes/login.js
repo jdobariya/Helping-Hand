@@ -34,7 +34,8 @@ router.route("/").post(async (req, res) => {
       req.session.loggedIn = true;
       req.session.first_name=fname;
       //console.log(result.first_name)
-      res.render("homepage",{user:req.session.loggedIn,first_name:req.session.first_name});
+      //res.render("homepage",{user:req.session.loggedIn,first_name:req.session.first_name});
+      res.redirect('/home')
     }
   }catch(e){
     res.status(400).render('login', {title: 'Login', error: e});
