@@ -2,9 +2,11 @@ import loginRoutes from "./login.js";
 import eventsRoutes from "./events.js";
 import aboutRoutes from "./about.js";
 import signUpRoutes from "./signup.js";
+import profileRoute from './profile.js';
 import logoutRoute from "./logout.js";
 import { eventData } from "../data/index.js";
 import eventRoutes from "./event.js";
+
 const constructorMethod = (app) => {
   app.get("/", (req, res) => {
     return res.redirect("/home");
@@ -50,9 +52,10 @@ const constructorMethod = (app) => {
   app.use("/event", eventRoutes);
   app.use("/about", aboutRoutes);
   app.use("/signup", signUpRoutes);
+  app.use("/profile", profileRoute);
 
   app.use("*", (req, res) => {
-    res.send({ Error: "Resource not found" });
+    res.redirect("/home");
   });
 };
 

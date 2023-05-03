@@ -19,10 +19,15 @@ export function redirectSignup(req, res, next) {
     else next();
 }
 
-// export function redirectLogout(req, res, next){
-//     if (req.session && req.session.loggedIn) {
-//         next();
-//     }else{
-//         res.redirect('/login');
-//     }
-// }
+export function redirectProfile(req, res, next) {
+    if (req.session && req.session.loggedIn) next();
+    else res.redirect('/login');
+}
+
+export function redirectLogout(req, res, next){
+    if (req.session && req.session.loggedIn) {
+        next();
+    }else{
+        res.redirect('/login');
+    }
+}
