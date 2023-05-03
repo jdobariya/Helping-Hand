@@ -8,9 +8,7 @@ import eventRoutes from "./event.js";
 import searchRoute from './search.js';
 import landingRoute from './landing.js';
 import profileRoute from './profile.js';
-import logoutRoute from "./logout.js";
-import { eventData } from "../data/index.js";
-import eventRoutes from "./event.js";
+
 
 const constructorMethod = (app) => {
   app.get("/", (req, res) => {
@@ -67,6 +65,6 @@ const constructorMethod = (app) => {
   app.use("*", (req, res) => {
     res.redirect("/home");
   });
-};
-
+});
+}
 export default constructorMethod;

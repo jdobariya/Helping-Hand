@@ -30,8 +30,6 @@ router.route("/").post(async (req, res) => {
     const result = await usersData.verifyUser(email, password)
     
     if(result.isLoggedIn){
-      // userDetails=await usersData.getUserById()
-      //console.log(email, password);
       let fname=result.userInfo;
       req.session.loggedIn = true;
       req.session.first_name=fname;

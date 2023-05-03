@@ -200,18 +200,18 @@ let exportedMethods = {
 
   async verifyUser(email,password)
   {
-    return {isLoggedIn:true,userInfo:user.first_name}
     let userData=await users();
-    let user=await userData.findOne({email})
-    if(user==null)
-    {
-      throw "No records found"
-    }
-    if(await bcrypt.compare(password,user.password))
-    {
-      return user._id
-    }
-    throw "Password incorrect!"
+  let user=await userData.findOne({email})
+  if(user==null)
+  {
+    throw "No records found"
+  }
+  if(await bcrypt.compare(password,user.password))
+  {
+    
+    return {isLoggedIn:true,userInfo:user.first_name}
+  }
+  throw "Password incorrect!"
   }
 
 };
