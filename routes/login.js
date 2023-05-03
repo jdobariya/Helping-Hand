@@ -30,11 +30,10 @@ router.route("/").post(async (req, res) => {
     const result = await usersData.verifyUser(email, password)
     
     if(result.isLoggedIn){
-      let fname=result.userInfo;
       req.session.loggedIn = true;
-      req.session.first_name=fname;
-      //console.log(result.first_name)
-      //res.render("homepage",{user:req.session.loggedIn,first_name:req.session.first_name});
+      req.session.first_name=result.userInfo.first_name;
+      req.session.user_id=result.userInfo._id;
+      
       res.redirect('/home')
     }
   }catch(e){
