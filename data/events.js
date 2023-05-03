@@ -1,8 +1,7 @@
-import { users, events } from "../config/mongoCollections.js";
-import userData from "./users.js";
+import { events } from "../config/mongoCollections.js";
 import { ObjectId } from "mongodb";
 import * as validation from "../validation.js";
-import e from "express";
+
 
 
 
@@ -148,9 +147,9 @@ const exportedMethods = {
 
     const eventCollection = await events();
 
-    const events = eventCollection.find({ "host_info.host_id": _id }).toArray();
+    const eventsArray = await eventCollection.find({ "host_info.host_id": _id }).toArray();
     
-    return events;
+    return eventsArray;
   },
 
   async getAllEventsByVolunteerId(_id) {
@@ -158,9 +157,10 @@ const exportedMethods = {
     _id = _id.trim();
 
     const eventCollection = await events();
-    const events = eventCollection.find({ "volunteers": _id }).toArray();
+
+    const eventsArray = await eventCollection.find({ "volunteers": { $in: [_id] } }).toArray();
     
-    return events;
+    return eventsArray;
   },
 
   filterExpired(events, needExpired) {
@@ -272,7 +272,7 @@ const exportedMethods = {
     return unpdateInfo.value;
   },
 
-  async addVolunteers(event_id, volunteer_id) {
+  async addVolunteerToEvent(event_id, volunteer_id) {
     validation.isValidId(event_id);
     event_id = event_id.trim(event_id);
     validation.isValidId(volunteer_id);

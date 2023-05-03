@@ -7,6 +7,11 @@ import { eventData } from "../data/index.js";
 import eventRoutes from "./event.js";
 import searchRoute from './search.js';
 import landingRoute from './landing.js';
+import profileRoute from './profile.js';
+import logoutRoute from "./logout.js";
+import { eventData } from "../data/index.js";
+import eventRoutes from "./event.js";
+
 const constructorMethod = (app) => {
   app.get("/", (req, res) => {
     return res.redirect("/home");
@@ -57,6 +62,10 @@ const constructorMethod = (app) => {
   app.use("/landing",landingRoute);
   app.use("*", (req, res) => {
     res.render("error")
+  app.use("/profile", profileRoute);
+
+  app.use("*", (req, res) => {
+    res.redirect("/home");
   });
 };
 

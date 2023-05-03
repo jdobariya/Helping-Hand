@@ -43,7 +43,8 @@
     font-size: 3rem !important;
   }
 }
-.homepage-events {
+
+.homepage-events h3 {
   margin-top: 30px;
   text-align: center;
 }
@@ -174,6 +175,11 @@ color:black;
 #ending
 {
   color:rgb(214, 31, 31)
+  }
+
+#ending {
+  color: rgb(214, 31, 31);
+  display: block;
 }
 .about-row {
   display: flex;
@@ -225,5 +231,25 @@ color:black;
   to {
     transform: scale(5);
     opacity: 0;
+#sliderControls {
+  justify-content: center;
+  display: flex;
+}
+
+.control-btn {
+  margin: 5px 10px 5px 10px;
+  font-size: 2rem;
+  background-color: transparent;
+  border: 0;
+}
+
+.homepage-events .card{
+  border: 0;
+}
+
+@media screen and (max-width: 500px) {
+  .homepage-events .card{
+    min-width: 100%;
+    max-width: 100%;
   }
 }

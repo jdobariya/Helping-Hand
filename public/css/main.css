@@ -62,6 +62,8 @@ footer {
 #searchValue
 {
   width:70%;
+  }
+li.search input[type="text"] {
   padding: 10px;
   float: left;
 }
@@ -75,7 +77,7 @@ footer {
   float: left;
   width: 10%;
   padding: 14px;
-  background: #2196F3;
+  background: #2196f3;
   color: white;
   font-size: 17px;
   border: 1px solid grey;
@@ -91,4 +93,14 @@ footer {
   content: "";
   clear: both;
   display: table;
+}
+
+@media (max-width: 768px) {
+  #myNavbar {
+    text-align: center;
+    width: 100%;
+  }
+  #myNavbar li {
+    border-bottom: 1px solid white;
+  }
 }
