@@ -8,6 +8,7 @@
 
   <section class="homepage-events">
     <h3 id="popular">Popular Events</h3>
+
     <div class="row-container">
       <div class="row">
 
@@ -17,7 +18,7 @@
             <img
               src="/public/images/{{image_url}}"
               class="image"
-              alt="..."
+              alt="{{alt}}"
             />
             <div class="card-body">
               <h5 class="card-title">
@@ -27,7 +28,9 @@
                 <p>{{likes}}&nbsp;<i class="fa fa-heart"></i></p>
                 <p><span>Registration Deadline:</span>&nbsp;{{application_deadline}}</p>
             </div>
+
               </a>
+
           </div>
 
         {{else}}
