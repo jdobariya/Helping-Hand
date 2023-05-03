@@ -29,10 +29,15 @@ router.route("/").post(async (req, res) => {
     // if they are valid, redirect to the home page
 
     const result = await usersData.verifyUser(email, password)
-    if(result){
-      console.log(email, password);
+    
+    if(result.isLoggedIn){
+      // userDetails=await usersData.getUserById()
+      //console.log(email, password);
+      let fname=result.userInfo;
       req.session.loggedIn = true;
-      res.render("homepage",{user:req.session.loggedIn});
+      req.session.first_name=fname;
+      //console.log(result.first_name)
+      res.render("homepage",{user:req.session.loggedIn,first_name:req.session.first_name});
     }
   }catch(e){
     res.status(400).render('login', {title: 'Login', error: e});

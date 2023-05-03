@@ -216,7 +216,8 @@ async verifyUser(email,password)
   }
   if(await bcrypt.compare(password,user.password))
   {
-    return true
+    
+    return {isLoggedIn:true,userInfo:user.first_name}
   }
   throw "Password incorrect!"
 

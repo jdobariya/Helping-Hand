@@ -1,7 +1,7 @@
 body {
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
 }
 * {
   box-sizing: border-box;
@@ -9,11 +9,11 @@ body {
 .navbar {
   margin-bottom: 0;
   border-radius: 0;
-  padding: 10px 20px 10px 20px;
+  float:right;
+  padding: 10px 60px 10px 20px;
 }
 footer {
   background-color: #555;
-  position: fixed;
   color: white;
   padding: 10px;
   width: 100%;
@@ -21,6 +21,7 @@ footer {
   bottom: 0;
   margin-top: auto;
 }
+
 .navbar-brand {
   color: white !important;
   font-size: x-large;
@@ -28,17 +29,49 @@ footer {
 #myNavbar {
   float: right !important;
 }
-li.search input[type=text] {
-  padding: 10px;
-  padding-right: 500px;
-  font-size: 17px;
-  border: 1px solid grey;
-  float: left;
-  width: 80%;
-  background: #f1f1f1;
+
+
+@media (max-width: 768px) {
+  #myNavbar {
+    width: 100%;
+  }
+  #myNavbar li {
+    border-bottom: 1px solid white;
+  }
+}
+.navbar-brand{
+  position: relative;
 }
 
-li.search button {
+.navbar-brand:hover::before {
+  content: "\1F64C"; /* Unicode value for hands emoji */
+  position: absolute;
+  top: -8;
+  left: 120%;
+  transform: translateX(-50%);
+  font-size: 30px;
+}
+
+.dropdown-item
+{
+  text-decoration: none;
+  font-size: 13px;
+}
+
+
+#searchValue
+{
+  width:70%;
+  padding: 10px;
+  float: left;
+}
+#searchForm
+{
+
+  padding-left: 150px;
+}
+
+#searchButton{
   float: left;
   width: 10%;
   padding: 14px;
@@ -50,23 +83,12 @@ li.search button {
   cursor: pointer;
 }
 
-li.search button:hover {
+#searchButton:hover {
   background: #0b7dda;
 }
 
-li.search::after {
+#searchButton::after {
   content: "";
   clear: both;
   display: table;
 }
-
-@media (max-width: 768px) {
-  #myNavbar {
-    text-align: center;
-    width: 100%;
-  }
-  #myNavbar li {
-    border-bottom: 1px solid white;
-  }
-}
-

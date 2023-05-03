@@ -1,38 +1,45 @@
 <main>
   <div id="home">
-  <div id="home-container">
-    
-
-    <p>Be the change you wish to see in the world.</p>
-    <p> - Mahatma Gandhi</p>
+    <div id="home-container">
+      <p>Be the change you wish to see in the world.</p>
+      <p> - Mahatma Gandhi</p>
+    </div>
   </div>
 
-  </div>
-  <div>
- <section class="homepage-events">
-    <h3>Active Events</h3>
-    <br>
-<div class="about-row">
+  <section class="homepage-events">
+    <h3 id="popular">Popular Events</h3>
+    <div class="row-container">
+      <div class="row">
 
-  {{#each allEvents}}
-      {{#ifCond @index "%" 4}}
-      </div><div class="about-row about-row-{{@index}}">
-    {{/ifCond}}
-    <div class="about-column">
-            
-         <a href="/event/{{_id}}">
-         <div class="about-event"> 
-          <img class="image" src="/public/images/{{image_url}}"
-               alt="{{alt_text}}"
-               style="width:100%">
-               <p id="event-name">{{event_name}}</h3>
-               <p id="city-name">{{location.city}}</h4>
+        {{#each allEvents}}
+          <div class="card card-{{@index}}">
+            <a id="eventA" href="event/{{_id}}">
+            <img
+              src="/public/images/{{image_url}}"
+              class="image"
+              alt="..."
+            />
+            <div class="card-body">
+              <h5 class="card-title">
+                {{event_name}}</h5>
+                 <p id="city-name">{{location.city}}</h4>
+                <p class="card-text">{{description}}</p>
+                <p>{{likes}}&nbsp;<i class="fa fa-heart"></i></p>
+                <p><span>Registration Deadline:</span>&nbsp;{{application_deadline}}</p>
+            </div>
+              </a>
+          </div>
+
+        {{else}}
+          <p class="empty">No content</p>
+        {{/each}}
+
       </div>
-        </a>
-        </div>
-      
-  {{/each}}
-  <h3 id="ending">No more events to catchup...</h3>
-</div>
-    </section>
+      <div id="sliderControls">
+        <button id="pre" class="control-btn" onclick="showPreEvent(event)"></button>
+        <button id="next" class="control-btn" onclick="showNextEvent(event)"></button>
+      </div>
+
+    </div>
+  </section>
 </main>

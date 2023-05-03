@@ -80,6 +80,22 @@ app.get('/logout',(req,res,next)=>
   }
   next()
 });
+app.get('/landing',(req,res,next)=>
+{
+  if(!req.session)
+  {
+    return res.redirect('/login')
+  }
+  next()
+});
+app.get('/profile',(req,res,next)=>
+{
+  if(!req.session)
+  {
+    return res.redirect('/login')
+  }
+  next()
+})
 configRoutes(app)
 
 const server = app.listen(3000, async () => {
