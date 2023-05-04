@@ -3,44 +3,46 @@
   <div id="searchAndFilter">
     <div class="filter">
       <form>
-        <label for="filter">Filter:</label>
-        <select name="filter" id="filter">
+        <label for="filter">Sort By:</label>
+        <select name="filter" id="filter" onchange="sortEvent(this.value)">
+          <option disabled selected value> -- Select -- </option>
           <option value="popularity">Popularity</option>
-          <option value="recent" selected>Most Recent</option>
+          <option value="recent">Most Recent</option>
           <option value="due">Due soon</option>
         </select>
       </form>
     </div>
 
   </div>
-   <div class="row-container">
 
-    {{#each allEvents}}
-      <div class="row">
-        {{#each row}}
 
-          <div class="col">
-            <div class="card">
-            <a id="eventA" href="event/{{_id}}">
-              <img
-                src="/public/images/{{image_url}}"
-                class="card-img-top"
-                alt="{{alt}}"
-              />
-              <div class="card-body">
-                <h5 class="card-title">
-                  {{event_name}}</h5>
-                <p class="card-text">{{description}}</p>
-                <p>{{likes}}&nbsp;<i class="fa fa-heart"></i></p>
-                <p><span>Registration Deadline:</span>&nbsp;{{application_deadline}}</p>
-              </div>
-              </a>
-            </div>
+  <div class="event-row-container">
+    <div class="row">
+      {{#each allEvents}}
+        <div
+          class="card"
+          data-popularity="{{likes}}"
+          data-recent="{{release_time}}"
+          data-due="{{application_deadline}}"
+        >
+          <img
+            src="/public/images/{{image_url}}"
+            class="card-img-top"
+            alt="..."
+          />
+          <div class="card-body">
+            <h5 class="card-title"><a
+                href="event/{{_id}}"
+              >{{event_name}}</a></h5>
+            <p class="card-text">{{description}}</p>
+            <p>{{likes}}&nbsp;<i class="fa fa-heart"></i></p>
+            <p><span>Registration Deadline:</span>&nbsp;{{application_deadline}}</p>
+
           </div>
-        {{/each}}
-      </div>
-    {{else}}
-      <p class="empty">No content</p>
-    {{/each}}
+        </div>
+      {{else}}
+        <p class="empty">No content</p>
+      {{/each}}
+    </div>
   </div>
 </main>
