@@ -165,14 +165,15 @@ const exportedMethods = {
     return eventsArray;
   },
 
-  filterExpired(events, needExpired) {
+  filterExpiredEventsOrNonExpiredEventsByApplicationDeadline(events, needExpired) {
     if(needExpired) {
       return events.filter(event => new Date(event.application_deadline) < new Date());
     }else {
       return events.filter(event => new Date(event.application_deadline) >= new Date());
     }
   },
-  expiredEvents(events, needExpired) {
+
+  filterExpiredEventsOrNonExpiredEventsByHostTime(events, needExpired) {
     if(needExpired) {
       return events.filter(event => new Date(event.host_time) < new Date());
     }else {
@@ -180,12 +181,32 @@ const exportedMethods = {
     }
   },
 
-  sortByTime(events, needNearestToFurthest) {
+  sortByHostTime(events, needNearestToFurthest) {
     if(needNearestToFurthest) {
       events.sort((a, b) => new Date(b.host_time) - new Date(a.host_time));
       return events;
     }else {
       events.sort((a, b) => new Date(a.host_time) - new Date(b.host_time));
+      return events;
+    }
+  },
+
+  sortByReleaseTime(events, needNearestToFurthest) {
+    if(needNearestToFurthest) {
+      events.sort((a, b) => new Date(b.release_time) - new Date(a.release_time));
+      return events;
+    }else {
+      events.sort((a, b) => new Date(a.release_time) - new Date(b.release_time));
+      return events;
+    }
+  },
+
+  sortByLikes(events, needPopularToNonPopular) {
+    if(needPopularToNonPopular) {
+      events.sort((a, b) => b.likes.length - a.likes.length);
+      return events;
+    }else {
+      events.sort((a, b) => a.likes.length - b.likes.length);
       return events;
     }
   },
