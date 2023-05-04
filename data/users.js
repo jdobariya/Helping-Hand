@@ -209,7 +209,7 @@ let exportedMethods = {
   if(await bcrypt.compare(password,user.password))
   {
     
-    return {isLoggedIn:true,userInfo:user.first_name}
+    return {user_id:user._id,isLoggedIn:true,userInfo:user.first_name,ishost:user.isHost}
   }
   throw "Password incorrect!"
   }

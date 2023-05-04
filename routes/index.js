@@ -58,13 +58,10 @@ const constructorMethod = (app) => {
   app.use("/signup", signUpRoutes);
   app.use("/search",searchRoute);
   app.use("/landing",landingRoute);
+  app.use("/profile",profileRoute);
   app.use("*", (req, res) => {
     res.render("error")
-  app.use("/profile", profileRoute);
 
-  app.use("*", (req, res) => {
-    res.redirect("/home");
   });
-});
 }
 export default constructorMethod;

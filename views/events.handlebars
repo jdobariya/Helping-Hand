@@ -18,21 +18,23 @@
     {{#each allEvents}}
       <div class="row">
         {{#each row}}
+
           <div class="col">
             <div class="card">
+            <a id="eventA" href="event/{{_id}}">
               <img
                 src="/public/images/{{image_url}}"
                 class="card-img-top"
-                alt="..."
+                alt="{{alt}}"
               />
               <div class="card-body">
-                <h5 class="card-title"><a
-                    href="event/{{_id}}"
-                  >{{event_name}}</a></h5>
+                <h5 class="card-title">
+                  {{event_name}}</h5>
                 <p class="card-text">{{description}}</p>
                 <p>{{likes}}&nbsp;<i class="fa fa-heart"></i></p>
                 <p><span>Registration Deadline:</span>&nbsp;{{application_deadline}}</p>
               </div>
+              </a>
             </div>
           </div>
         {{/each}}

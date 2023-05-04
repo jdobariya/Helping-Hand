@@ -13,6 +13,11 @@ export function redirectLogin(req, res, next) {
     if (req.session && req.session.loggedIn) res.redirect('/home');
     else next();
 }
+export function redirectHistory(req, res, next) {
+    if (req.session && req.session.loggedIn) next();
+    else res.redirect('/login');
+}
+
 
 export function redirectSignup(req, res, next) {
     if (req.session && req.session.loggedIn) res.redirect('/home');
