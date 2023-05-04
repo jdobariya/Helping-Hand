@@ -203,3 +203,10 @@ color:black;
   border: 0;
   background-color: rgb(235, 232, 232);
 }
+
+@media screen and (max-width: 500px) {
+  .homepage-events .card{
+    min-width: 100%;
+    max-width: 100%;
+  }
+}
