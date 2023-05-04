@@ -4,45 +4,6 @@ import { ObjectId } from "mongodb";
 import bcrypt from "bcrypt";
 
 let exportedMethods = {
-  async getAllUsers() {
-    let usersCollection = await users();
-    const usersList = await usersCollection.find({}).toArray();
-    const newList = usersList.map(
-      ({
-        _id,
-        first_name,
-        last_name,
-        contact,
-        email,
-        bio,
-        skills,
-        address,
-        past_events,
-        current_events,
-        past_hosted_events,
-        current_hosted_events,
-        user_story,
-        user_feedback,
-      }) => ({
-        _id,
-        first_name,
-        last_name,
-        contact,
-        email,
-        bio,
-        skills,
-        address,
-        past_events,
-        current_events,
-        past_hosted_events,
-        current_hosted_events,
-        user_story,
-        user_feedback,
-      })
-    );
-
-    return newList;
-  },
 
   async getUserById(id) {
     validation.isValidId(id);
@@ -66,8 +27,6 @@ let exportedMethods = {
 
     let hashedPassword = await bcrypt.hash(password, 10);
 
-    let user_since = new Date().getFullYear();
-
     const usersCollection = await users();
 
     let info = await usersCollection.findOne({email: email})
@@ -83,12 +42,7 @@ let exportedMethods = {
         bio: "",
         skills: [],
         address: "",
-        past_hosted_events: [],
-        current_hosted_events: [],
-        user_since: user_since,
-        isHost: isHost,
-        user_story: [],
-        user_feedback: []
+        isHost: isHost
       };
     }else {
       var newUser = {
@@ -100,12 +54,7 @@ let exportedMethods = {
         bio: "",
         skills: [],
         address: "",
-        past_events: [],
-        current_events: [],
-        user_since: user_since,
-        isHost: isHost,
-        user_story: [],
-        user_feedback: []
+        isHost: isHost
       };
     }
 
@@ -127,7 +76,6 @@ let exportedMethods = {
     if (deletionInfo.lastErrorObject.n === 0)
       throw [404, `Error: Could not delete user with id of ${id}`];
 
-    //return {...deletionInfo.value, deleted: true};
     return true;
   },
 
@@ -184,18 +132,6 @@ let exportedMethods = {
       throw [404, `Could not update the event with id ${id}`];
 
     return {updatePasswrodSuccess: true};
-  },
-
-  async getFullnames()
-  {
-    let userData=await users();
-  const participants = await userData.find({}).toArray();
-  let p=participants.map(user => user.first_name + ' ' + user.last_name);
-  if(!participants.length)
-  {
-    throw "No users in the database"
-  }
-  return p
   },
 
   async verifyUser(email,password)
