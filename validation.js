@@ -1,40 +1,37 @@
 import {ObjectId} from 'mongodb';
 
-export function isValidString(str)
-{
-    
-    if(!str)
-    {
-        throw "Error: Value can't be empty"
-    }
-    if(typeof str!=='string')
-    {
-        throw "Error: Type should be string"
-    }
-    str=str.trim()
-    if(str.length==0)
-    {
-        throw "Error: inputs can't be empty"
-    }
-    return str
+export function isValidString(str) {
+  if(!str)
+  {
+      throw "Error: Value can't be empty"
+  }
+  if(typeof str!=='string')
+  {
+      throw "Error: Type should be string"
+  }
+  str=str.trim()
+  if(str.length==0)
+  {
+      throw "Error: inputs can't be empty"
+  }
+  return str
+}
 
-}
-export const isValidArray=(arr,arname)=>
-{
-if(!Array.isArray(arr))
-{
-  throw `Error: ${arname} should be an array`
-}
-if(arr.length==0)
-{
-  throw `Error: ${arname} list can't be empty`
-}
-for(let i=0;i<arr.length;i++)
-{
-  isValidString(arr[i])
-  arr[i]=arr[i].trim()
-}
-return arr
+export const isValidArray = (arr,arname) => {
+  if(!Array.isArray(arr))
+  {
+    throw `Error: ${arname} should be an array`
+  }
+  if(arr.length==0)
+  {
+    throw `Error: ${arname} list can't be empty`
+  }
+  for(let i=0;i<arr.length;i++)
+  {
+    isValidString(arr[i])
+    arr[i]=arr[i].trim()
+  }
+  return arr
 }
 
 export function isValidId(id)
@@ -60,6 +57,7 @@ export function isValidContact(contact)
     }
     throw "Error: Contact number should be exactly 10 characters"
 }
+
 export function validatePassword(password) {
   const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+=[\]{}|\\,.?'";:/<>\-])\S{8,}$/;
   if(regex.test(password)){
@@ -67,6 +65,7 @@ export function validatePassword(password) {
   }
   throw "Error: Password should match the requirements[atleast 8 characters consisting atleast( 1 upper case, 1 number, 1 special character, 1 lower case)"
 }
+
 export function isUserAdult(d) {
   let dob = new Date(d);
   let now = new Date();
@@ -76,7 +75,6 @@ export function isUserAdult(d) {
   }
   return age >= 18;
 }
-
 
 export function isValidEmail(email) {
   const r = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -94,7 +92,7 @@ export function isValidName(name){
   if(!isNaN(name)) throw "Name cannot be a number";
 }
 
-export function isValidTime(time, timeName) {
+export function isValidTimeStamp(time, timeName) {
   if(typeof time !== 'string') {
     throw `Error: ${timeName} is not a string`;
   }
@@ -105,8 +103,9 @@ export function isValidTime(time, timeName) {
     throw `Error: ${timeName} should not be empty string`;
   }
 
-  const regex = /^\d{2}\/\d{2}\/\d{4} \d{1,2}:\d{2} (AM|PM)$/;
-  if (!regex.test(time)) {
+  const timestamp = Date.parse(time);
+
+  if (isNaN(timestamp)) {
     throw `Error: ${timeName} is not in valid format`;
   }
   
@@ -208,19 +207,24 @@ export function isValidStory(story) {
 export function isValidFeedback(feedback) {
   const keys = Object.keys(feedback);
 
-  if(feedback.length !== 4) {
-    throw `Error: feedback object must have "_id", "first_name", "last_name", "feedback_comment" four keys`;
+  if(feedback.length !== 5) {
+    throw `Error: feedback object must have "_id", "volunteer_id", "first_name", "last_name", "feedback_comment" four keys`;
   }
 
-  const expectedKeys = ["_id", "first_name", "last_name", "feedback_comment"];
+  const expectedKeys = ["_id", "volunteer_id", "first_name", "last_name", "feedback_comment"];
   for(const key of expectedKeys) {
     if(!keys.includes(key)) {
-      throw `Error: feedback object must have "_id", "first_name", "last_name", "feedback_comment" four keys`;
+      throw `Error: feedback object must have "_id", "volunteer_id", "first_name", "last_name", "feedback_comment" four keys`;
     }
   }
 
   _id = feedback._id.toString().trim();
   isValidId(_id);
+  
+  if(feedback.volunteer_id) {
+    volunteer_id = feedback.volunteer_id.toString().trim();
+    isValidId(volunteer_id);
+  }
 
   feedback.first_name = isValidString(feedback.first_name);
   feedback.last_name = isValidString(feedback.last_name);
@@ -229,72 +233,14 @@ export function isValidFeedback(feedback) {
   return feedback;
 }
 
-export function checkInputs(
-  first_name,
-    last_name,
-    contact,
-    email,
-    bio = "",
-    skills = [],
-    address = "",
-    past_events = [],
-    current_events=[],
-    past_hosted_events=[],
-    current_hosted_events=[],
-    user_story=[],
-    user_feedback=[]
-)
-{
-  first_name=isValidString(first_name)
-    last_name=isValidString(last_name)
-    contact=isValidContact(contact)
-    email=email.trim().toLowerCase()
+export function isValidImageUrl(image_url) {
+  const imageRegex = /\.(gif|jpg|jpeg|tiff|png)$/i; // Regular expression pattern
 
-    isValidEmail(email)
-    bio=bio.trim()
-    if(skills.length)
-    {
-        skills=isValidArray(skills)
-    }
-    address=address.trim()
-    if(past_events.length)
-    {
-        past_events=isValidArray(past_events)
-    }
-    if(current_events.length)
-    {
-        current_events=isValidArray(current_events)
-    }
-    if(past_hosted_events.length)
-    {
-        past_hosted_events=isValidArray(past_hosted_events)
-    }
-    if(current_hosted_events.length)
-    {
-        current_hosted_events=isValidArray(current_hosted_events)
-    }
-    if(user_story.length)
-    {
-        user_story=isValidArray(user_story)
-    }
-    if(user_feedback.length)
-    {
-      user_feedback=isValidArray(user_feedback)
-    }
-    return {first_name,
-    last_name,
-    contact,
-    email,
-    bio,
-    skills ,
-    address,
-    past_events,
-    current_events,
-    past_hosted_events,
-    current_hosted_events,
-    user_story,
-    user_feedback}
-    
+  if(imageRegex.test(image_url)) {
+    return image_url;
+  } else {
+    throw "Invalid image URL";
+  }
 }
 
 export function checkEventsInputs(
@@ -304,6 +250,7 @@ export function checkEventsInputs(
   host_time,
   location,
   host_info,
+  image_url,
   volunteers = [],
   stories = [],
   feedbacks = [],
@@ -311,10 +258,15 @@ export function checkEventsInputs(
 ) {
   event_name = isValidString(event_name);
   description = isValidString(description);
-  application_deadline = isValidTime(application_deadline, "application_deadline");
-  host_time = isValidTime(host_time, "host_time");
+  application_deadline = isValidTimeStamp(application_deadline, "application_deadline");
+  host_time = isValidTimeStamp(host_time, "host_time");
   location = isValidLocation(location, "location");
   host_info = isValidHostInfo(host_info, "host_info");
+
+  image_url = isValidString(image_url);
+  if(image_url) {
+    image_url = isValidImageUrl(image_url);
+  }
 
   if(stories.length !== 0) {
     for(let i = 1; i < stories.length; i++) {
@@ -341,6 +293,7 @@ export function checkEventsInputs(
     likes
   };
 }
+
 export function searchObject(obj,regex) {
   for (const prop in obj) {
     if (typeof obj[prop] === "object") {

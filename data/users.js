@@ -32,31 +32,17 @@ let exportedMethods = {
     let info = await usersCollection.findOne({email: email})
     if(info) throw "Email already exists";
     
-    if(isHost) {
-      var newUser = {
-        first_name: first_name,
-        last_name: last_name,
-        contact: "",
-        email: email,
-        password: hashedPassword,
-        bio: "",
-        skills: [],
-        address: "",
-        isHost: isHost
-      };
-    }else {
-      var newUser = {
-        first_name: first_name,
-        last_name: last_name,
-        contact: "",
-        email: email,
-        password: hashedPassword,
-        bio: "",
-        skills: [],
-        address: "",
-        isHost: isHost
-      };
-    }
+    var newUser = {
+      first_name: first_name,
+      last_name: last_name,
+      contact: "",
+      email: email,
+      password: hashedPassword,
+      bio: "",
+      skills: [],
+      address: "",
+      isHost: isHost
+    };
 
     const insertInfo = await usersCollection.insertOne(newUser);
     if (!insertInfo.insertedId || !insertInfo.acknowledged)
@@ -66,7 +52,6 @@ let exportedMethods = {
 
   async removeUser(id) {
     validation.isValidId(id);
-
     id = id.trim();
 
     const usersCollection = await users();
@@ -81,36 +66,36 @@ let exportedMethods = {
 
 
   async updateUserProfile(id, userInfo){
-      id = validation.isValidString(id);
-      validation.isValidId(id);
-      let first_name = validation.isValidString(userInfo.first_name);
-      validation.isValidName(first_name);
-      let last_name = validation.isValidString(userInfo.last_name);
-      validation.isValidName(last_name);
-      let contact = validation.isValidString(userInfo.contact);
-      let email = validation.isValidString(userInfo.email.trim().toLowerCase());
-      validation.isValidEmail(email);
-      let bio = validation.isValidString(userInfo.bio);
-      let skills = validation.isValidArray(userInfo.skills, 'skills');
-      let address = validation.isValidString(userInfo.address);
+    id = validation.isValidString(id);
+    validation.isValidId(id);
+    let first_name = validation.isValidString(userInfo.first_name);
+    validation.isValidName(first_name);
+    let last_name = validation.isValidString(userInfo.last_name);
+    validation.isValidName(last_name);
+    let contact = validation.isValidString(userInfo.contact);
+    let email = validation.isValidString(userInfo.email.trim().toLowerCase());
+    validation.isValidEmail(email);
+    let bio = validation.isValidString(userInfo.bio);
+    let skills = validation.isValidArray(userInfo.skills, 'skills');
+    let address = validation.isValidString(userInfo.address);
 
-      const usersCollection = await users();
-      const user = await usersCollection.findOne({ _id: new ObjectId(id) });
-      if (!user) throw `Error: No user found with id ${id}`;
+    const usersCollection = await users();
+    const user = await usersCollection.findOne({ _id: new ObjectId(id) });
+    if (!user) throw `Error: No user found with id ${id}`;
 
-      user.first_name = first_name;
-      user.last_name = last_name;
-      user.contact = contact;
-      user.email = email;
-      user.bio = bio;
-      user.skills = skills;
-      user.address = address;
+    user.first_name = first_name;
+    user.last_name = last_name;
+    user.contact = contact;
+    user.email = email;
+    user.bio = bio;
+    user.skills = skills;
+    user.address = address;
 
-      const updatedInfo = await usersCollection.updateOne({ _id: new ObjectId(id) }, {$set: user}, {returnDocument: "after"});
+    const updatedInfo = await usersCollection.updateOne({ _id: new ObjectId(id) }, {$set: user}, {returnDocument: "after"});
 
-      if(!updatedInfo.acknowledged) throw `Error: Could not update user with id ${id}`;
+    if(!updatedInfo.acknowledged) throw `Error: Could not update user with id ${id}`;
 
-      return updatedInfo.value
+    return updatedInfo.value
   },
 
   async updateUserPassword(id, newPassword) {
@@ -134,20 +119,19 @@ let exportedMethods = {
     return {updatePasswrodSuccess: true};
   },
 
-  async verifyUser(email,password)
-  {
+  async verifyUser(email,password) {
     let userData=await users();
-  let user=await userData.findOne({email})
-  if(user==null)
-  {
-    throw "No records found"
-  }
-  if(await bcrypt.compare(password,user.password))
-  {
+    let user=await userData.findOne({"email": email});
+
+    if(user === null){
+      throw "No records found"
+    }
+
+    if(await bcrypt.compare(password,user.password)) {
+      return {user_id:user._id,isLoggedIn:true,userInfo:user.first_name,ishost:user.isHost}
+    }
     
-    return {user_id:user._id,isLoggedIn:true,userInfo:user.first_name,ishost:user.isHost}
-  }
-  throw "Password incorrect!"
+    throw "Password incorrect!"
   }
 
 };
