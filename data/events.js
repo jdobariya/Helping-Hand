@@ -2,9 +2,6 @@ import { events } from "../config/mongoCollections.js";
 import { ObjectId } from "mongodb";
 import * as validation from "../validation.js";
 
-
-
-
 const exportedMethods = {
   async addEvent(
     event_name,
@@ -13,7 +10,7 @@ const exportedMethods = {
     host_time,
     location,
     host_info,
-    alt_text,
+    alt_text="",
     image_url
   ) {
     let tempEvent = validation.checkEventsInputs(
@@ -41,7 +38,7 @@ const exportedMethods = {
       stories: tempEvent.stories,
       feedbacks: tempEvent.feedbacks,
       likes: tempEvent.likes,
-      alt_text,image_url
+      alt_text:tempEvent.event_name,image_url
 
     };
 
@@ -168,6 +165,13 @@ const exportedMethods = {
       return events.filter(event => new Date(event.application_deadline) < new Date());
     }else {
       return events.filter(event => new Date(event.application_deadline) >= new Date());
+    }
+  },
+  expiredEvents(events, needExpired) {
+    if(needExpired) {
+      return events.filter(event => new Date(event.host_time) < new Date());
+    }else {
+      return events.filter(event => new Date(event.host_time) >= new Date());
     }
   },
 

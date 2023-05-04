@@ -3,7 +3,7 @@
     <img
       src="/public/images/{{event.image_url}}"
       class="card-img-top"
-      alt="..."
+      alt="{{event.alt}}"
     />
   </div>
   <div class="event-container">
@@ -17,7 +17,7 @@
       <p><span><strong>About:</strong>&nbsp;</span>{{event.description}}</p>
     </div>
     <div class="event-registeration">
-      <form action="">
+      <form action="/registerEvent">
         <input type="submit" name="register-btn" value="REGISTER NOW" />
       </form>
     </div>
