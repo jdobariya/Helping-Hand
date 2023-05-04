@@ -125,17 +125,12 @@
   }
 }
 
-#pre
-{
-  left:0;
+#pre {
+  left: 0;
 }
-#next
-{
-  right:0;
+#next {
+  right: 0;
 }
-
-
-
 
 .control-btn {
   margin: 5px 10px 5px 10px;
@@ -144,38 +139,35 @@
   border: 0;
 }
 
-.homepage-events .card{
+.homepage-events .card {
   border: 0;
 }
 
 @media screen and (max-width: 500px) {
-  .homepage-events .card{
+  .homepage-events .card {
     min-width: 100%;
     max-width: 100%;
   }
 }
 
-.image {
-  display: block;
+.homepage-events .image {
   box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease-out;
   width: 350px;
   height: 150px;
 }
 
-.image:hover {
+.homepage-events .image:hover {
   transform: scale(1.1);
 }
-#eventA
-{
-text-decoration: none ;
-color:black;
+#eventA {
+  text-decoration: none;
+  color: black;
 }
 
-#ending
-{
-  color:rgb(214, 31, 31)
-  }
+#ending {
+  color: rgb(214, 31, 31);
+}
 
 #ending {
   color: rgb(214, 31, 31);
@@ -218,8 +210,13 @@ color:black;
   top: -20%;
   left: -20%;
   width: 90%;
-  height:70% ;
-  background: radial-gradient(circle, #fff 0%, rgb(43, 183, 198) 60%, transparent 70%);
+  height: 70%;
+  background: radial-gradient(
+    circle,
+    #fff 0%,
+    rgb(43, 183, 198) 60%,
+    transparent 70%
+  );
   animation: blast 1s forwards;
 }
 
@@ -231,7 +228,8 @@ color:black;
   to {
     transform: scale(5);
     opacity: 0;
-  }}
+  }
+}
 #sliderControls {
   justify-content: center;
   display: flex;
@@ -244,12 +242,12 @@ color:black;
   border: 0;
 }
 
-.homepage-events .card{
+.homepage-events .card {
   border: 0;
 }
 
 @media screen and (max-width: 500px) {
-  .homepage-events .card{
+  .homepage-events .card {
     min-width: 100%;
     max-width: 100%;
   }
