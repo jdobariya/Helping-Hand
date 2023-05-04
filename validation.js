@@ -92,29 +92,18 @@ export function isValidName(name){
   if(!isNaN(name)) throw "Name cannot be a number";
 }
 
-export function isValidTimeStamp(time, timeName) {
-  if(typeof time !== 'string') {
-    throw `Error: ${timeName} is not a string`;
-  }
+export function isValidTimeStamp(timeStamp, timeName) {
+  const time = new Date(timeStamp);
 
-  time = time.trim();
-  
-  if(time.length === 0) {
-    throw `Error: ${timeName} should not be empty string`;
-  }
-
-  const timestamp = Date.parse(time);
-
-  if (isNaN(timestamp)) {
+  if (isNaN(time)) {
     throw `Error: ${timeName} is not in valid format`;
   }
   
-  const date = new Date(time);
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  const year = date.getFullYear();
-  const hour = date.getHours();
-  const minute = date.getMinutes();
+  const month = time.getMonth() + 1;
+  const day = time.getDate();
+  const year = time.getFullYear();
+  const hour = time.getHours();
+  const minute = time.getMinutes();
   const now = new Date();
   const currentYear = now.getFullYear();
 
@@ -123,7 +112,7 @@ export function isValidTimeStamp(time, timeName) {
   year >= currentYear && year <= currentYear + 3 &&
   hour >= 0 && hour <= 24 &&
   minute >= 0 && minute <= 59) {
-    return time;
+    return timeStamp;
   }else {
     throw `Error: ${timeName} has some invalid time numbers`;
   }
