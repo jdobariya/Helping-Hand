@@ -17,7 +17,8 @@ router.route("/").get(async (req, res) => {
         title: "Profile",
         first_name: user.first_name,
         user: user,
-        events: events
+        events: events,
+        first_name:req.session.first_name
     });
     }
 );

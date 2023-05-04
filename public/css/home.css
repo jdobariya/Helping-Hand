@@ -5,8 +5,8 @@
   background-size: cover;
   background-position: center;
   width: 100%;
-}
 
+}
 #home {
   text-align: center;
   font-weight: bolder;
@@ -19,7 +19,6 @@
   transform: translate(-50%, -50%);
   color: rgb(3, 2, 56);
 }
-
 #home-container p {
   font-size: 3rem;
 }
@@ -74,7 +73,6 @@
   font-weight: 500;
   transition: all 0.2s ease-in-out;
 }
-
 .dropdown-item:hover,
 .dropdown-item:focus {
   background-color: #e9ecef;
@@ -97,6 +95,7 @@
 .dropdown-menu > .active > .dropdown-item:focus {
   background-color: #0069d9;
 }
+
 
 #ending {
   color: rgb(214, 31, 31);
@@ -132,6 +131,17 @@
   right: 0;
 }
 
+=======
+#pre
+{
+  left:0;
+}
+#next
+{
+  right:0;
+
+}
+
 .control-btn {
   margin: 5px 10px 5px 10px;
   font-size: 2rem;
@@ -139,9 +149,11 @@
   border: 0;
 }
 
+
 .homepage-events .card {
   border: 0;
 }
+
 
 @media screen and (max-width: 500px) {
   .homepage-events .card {
@@ -153,21 +165,21 @@
 .homepage-events .image {
   box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease-out;
-  width: 350px;
-  height: 150px;
+  height: 250px;
+  width:350px
 }
 
-.homepage-events .image:hover {
+
+.homepage-events .image:hover,.homepage-events .card:hover {
+
   transform: scale(1.1);
+  background-color: white;
 }
 #eventA {
   text-decoration: none;
   color: black;
 }
 
-#ending {
-  color: rgb(214, 31, 31);
-}
 
 #ending {
   color: rgb(214, 31, 31);
@@ -190,18 +202,13 @@
   }
 }
 
-@media screen and (max-width: 480px) {
-  .about-column {
-    width: 100%;
-  }
-}
-
 #popular {
   display: inline-block;
   padding: 10px;
   background-color: #ccc;
   border-radius: 10px;
   position: relative;
+  background-color: #fff;
 }
 
 #popular:hover::before {
@@ -244,6 +251,7 @@
 
 .homepage-events .card {
   border: 0;
+  background-color: rgb(235, 232, 232);
 }
 
 @media screen and (max-width: 500px) {

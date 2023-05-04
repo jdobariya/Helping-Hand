@@ -1,8 +1,48 @@
 <main>
-    <section class="future">
-        
-    </section>
-    <section class="past">
+  <div class="future">
+    <h3>Your Upcoming events</h3>
+    <div class="row">
+    {{#each future}}
+    <div class="cols col-md-6">
+        <div class="card">
+      <a id="eventA" href="event/{{_id}}">
+       <h5 class="card-title">{{event_name}}</h5>
+        <p id="updated_info">{{updated}}</p>
+       
+        <p id="city-name">{{location.address}}, {{location.city }}, {{location.state}}</p>
+        <p><span>Registration Deadline:</span>&nbsp;{{application_deadline}}</p>
+      </a>
+      </div>
+      </div>
+    {{else}}
+    <p class="empty">You haven't registered for any events</p>
+    <a id="link_to_events" href="/events">Click here to go to events page</a>
+    {{/each}}
+    </div>
+  </div>
 
-    </section>
+  <div class="expired">
+    {{#if isHost}}
+    <h3>Your past events</h3>
+    {{else}}
+    <h3>Your hosted events</h3>
+    {{/if}}
+     <div class="row">
+    {{#each expired}}
+    <div class="cols col-md-6">
+        <div class="card">
+      <a id="eventA" href="event/{{_id}}">
+       <h5 class="card-title">{{event_name}}</h5>
+       
+        <p id="city-name">{{location.city}}, {{location.state}}  </p> 
+        <p>Event ended on: {{host_time}}</p>
+      </a>
+    </div>
+    </div>
+    {{else}}
+    <p class="empty">You haven't participated in any events</p>
+    <a id="link_to_events" href="/events">Click here to go to events page</a>
+    {{/each}}
+  </div>
+  </div>
 </main>
