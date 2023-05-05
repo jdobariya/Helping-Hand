@@ -1,6 +1,8 @@
 import { events } from "../config/mongoCollections.js";
+import userInfo from "./users.js";
 import { ObjectId } from "mongodb";
 import * as validation from "../validation.js";
+import e from "express";
 
 const exportedMethods = {
   async addEvent(
@@ -10,8 +12,7 @@ const exportedMethods = {
     host_time,
     location,
     host_info,
-    alt_text="",
-    image_url
+    image_url,
   ) {
     let tempEvent = validation.checkEventsInputs(
       event_name,
@@ -19,7 +20,8 @@ const exportedMethods = {
       application_deadline,
       host_time,
       location,
-      host_info
+      host_info,
+      image_url
     );
 
     const now = new Date();
@@ -33,13 +35,12 @@ const exportedMethods = {
       application_deadline: tempEvent.application_deadline,
       host_time: tempEvent.host_time,
       location: tempEvent.location,
+      image_url: tempEvent.image_url,
       volunteers: tempEvent.volunteers,
       host_info: tempEvent.host_info,
       stories: tempEvent.stories,
       feedbacks: tempEvent.feedbacks,
       likes: tempEvent.likes,
-      alt_text:tempEvent.event_name,image_url
-
     };
 
     const eventsCollection = await events();
@@ -83,11 +84,11 @@ const exportedMethods = {
     }
 
     if(eventInfo.application_deadline) {
-      updatedEventData.application_deadline = validation.isValidTime(eventInfo.application_deadline);
+      updatedEventData.application_deadline = validation.isValidTimeStamp(eventInfo.application_deadline);
     }
     
     if(eventInfo.host_time) {
-      updatedEventData.host_time = validation.isValidTime(eventInfo.host_time);
+      updatedEventData.host_time = validation.isValidTimeStamp(eventInfo.host_time);
     }
 
     if(eventInfo.location) {
@@ -96,6 +97,10 @@ const exportedMethods = {
 
     if(eventInfo.host_info) {
       updatedEventData.host_info = validation.isValidHostInfo(eventInfo.host_info);
+    }
+
+    if(eventInfo.image_url) {
+      updatedEventData.image_url = validation.isValidImageUrl(image_url);
     }
 
     const eventCollection = await events();
@@ -160,14 +165,15 @@ const exportedMethods = {
     return eventsArray;
   },
 
-  filterExpired(events, needExpired) {
+  filterExpiredEventsOrNonExpiredEventsByApplicationDeadline(events, needExpired) {
     if(needExpired) {
       return events.filter(event => new Date(event.application_deadline) < new Date());
     }else {
       return events.filter(event => new Date(event.application_deadline) >= new Date());
     }
   },
-  expiredEvents(events, needExpired) {
+
+  filterExpiredEventsOrNonExpiredEventsByHostTime(events, needExpired) {
     if(needExpired) {
       return events.filter(event => new Date(event.host_time) < new Date());
     }else {
@@ -175,12 +181,32 @@ const exportedMethods = {
     }
   },
 
-  sortByTime(events, needNearestToFurthest) {
+  sortByHostTime(events, needNearestToFurthest) {
     if(needNearestToFurthest) {
       events.sort((a, b) => new Date(b.host_time) - new Date(a.host_time));
       return events;
     }else {
       events.sort((a, b) => new Date(a.host_time) - new Date(b.host_time));
+      return events;
+    }
+  },
+
+  sortByReleaseTime(events, needNearestToFurthest) {
+    if(needNearestToFurthest) {
+      events.sort((a, b) => new Date(b.release_time) - new Date(a.release_time));
+      return events;
+    }else {
+      events.sort((a, b) => new Date(a.release_time) - new Date(b.release_time));
+      return events;
+    }
+  },
+
+  sortByLikes(events, needPopularToNonPopular) {
+    if(needPopularToNonPopular) {
+      events.sort((a, b) => b.likes.length - a.likes.length);
+      return events;
+    }else {
+      events.sort((a, b) => a.likes.length - b.likes.length);
       return events;
     }
   },
@@ -331,41 +357,70 @@ const exportedMethods = {
     return updateInfo.value;
   },
 
-  async addFeedback(eventId, userId = "", feedback) {
+  async addLoggedInUserFeedback(eventId, userId, feedback_comment) {
     eventId = eventId.toString().trim();
     validation.isValidId(eventId);
+
     userId = userId.toString().trim();
     validation.isValidId(userId);
+
     const eventsCollection = await events();
-    let userAvailable = true;
-    try {
-      let userData = await userInfo.getUserById(userId.toString());
-      feedback = feedback.toLowerCase();
-      feedback = feedback.charAt(0).toUpperCase() + feedback.slice(1);
-      let newFeedback = {
-        _id: new ObjectId(),
-        firstname: userData.first_name,
-        lastname: userData.last_name,
-        feedback_comment: feedback,
-      };
-      let insertFeedback = await eventsCollection.findOneAndUpdate(
-        { _id: new ObjectId(eventId) },
-        { $push: { feedback: newFeedback } }
-      );
-      if (insertFeedback.lastErrorObject.n === 0) {
-        throw "Error: could not update feedback";
-      }
-    } catch (e) {
-      userAvailable = false;
+
+    let userData = await userInfo.getUserById(userId);
+    feedback_comment = validation.isValidString(feedback_comment);
+
+    let newFeedback = {
+      _id: new ObjectId(),
+      volunteer_id: userId,
+      email: userData.email,
+      firstname: userData.first_name,
+      lastname: userData.last_name,
+      feedback_comment: feedback_comment,
+    };
+
+    let insertFeedback = await eventsCollection.findOneAndUpdate(
+      { _id: new ObjectId(eventId) },
+      { $push: { feedback: newFeedback } }
+    );
+
+    if (insertFeedback.lastErrorObject.n === 0) {
+      throw "Error: could not update feedback";
+    }
+    
+    return { updatedFeedback: true };
+  },
+
+  async addNonLoggedInUserFeedback(eventId, feedbackWithEmailAndName) {
+    eventId = eventId.toString().trim();
+    validation.isValidId(eventId);
+
+    feedbackWithEmailAndName.feedback_comment = validation.isValidString(feedbackWithEmailAndName.feedback_comment);
+    feedbackWithEmailAndName.email = validation.isValidEmail(feedbackWithEmailAndName.email);
+    feedbackWithEmailAndName.lastName = validation.isValidString(feedbackWithEmailAndName.lastName);
+    feedbackWithEmailAndName.lastName = validation.isValidName(feedbackWithEmailAndName.lastName);
+    feedbackWithEmailAndName.firstName = validation.isValidString(feedbackWithEmailAndName.firstName);
+    feedbackWithEmailAndName.firstName = validation.isValidName(feedbackWithEmailAndName.firstName);
+    
+    const eventsCollection = await events();
+
+    let newFeedback = {
+      _id: new ObjectId(),
+      volunteer_id: "",
+      email: feedbackWithEmailAndName.email,
+      firstname: feedbackWithEmailAndName.first_name,
+      lastname: feedbackWithEmailAndName.last_name,
+      feedback_comment: feedbackWithEmailAndName.feedback_comment,
+    };
+
+    let insertFeedback = await eventsCollection.findOneAndUpdate(
+      { _id: new ObjectId(eventId) },
+      { $push: { feedback: newFeedback } }
+    );
+
+    if (insertFeedback.lastErrorObject.n === 0) {
+      throw "Error: could not update feedback";
     }
 
-    if (userAvailable) {
-      try {
-        await userInfo.addFeedback(newFeedback._id.toString(), userId);
-      } catch (e) {
-        throw e;
-      }
-    }
     return { updatedFeedback: true };
   },
 
@@ -374,14 +429,17 @@ const exportedMethods = {
     validation.isValidId(eventId);
     userId = userId.toString().trim();
     validation.isValidId(userId);
+
     const eventsCollection = await events();
     let userData = await userInfo.getUserById(userId.toString());
+
     let newStory = {
       _id: new ObjectId(),
       volunteer_fname: userData.first_name,
       volunteer_lname: userData.last_name,
       story_comment: story,
     };
+
     let insertStory = await eventsCollection.findOneAndUpdate(
       { _id: new ObjectId(eventId) },
       { $push: { story: newStory } }
@@ -389,13 +447,10 @@ const exportedMethods = {
     if (insertStory.lastErrorObject.n === 0) {
       throw "Error: could not update story";
     }
-    try {
-      await userInfo.addStory(newStory._id.toString(), userId);
-    } catch (e) {
-      throw e;
-    }
+
     return { updatedStory: true };
   },
+
   async getEventByKeyword(keyword)
 {
   const regex = new RegExp(keyword, "i");
