@@ -52,7 +52,7 @@
   font-size: 18pt;
   font-weight: bolder;
 }
-#city-name {
+.homepage-events .city-name {
   padding-left: 10px;
   padding-bottom: 25px;
   color: rgb(64, 118, 13);

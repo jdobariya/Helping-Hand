@@ -1,44 +1,48 @@
+#yourEvents {
+  margin: 20px;
+}
+.participated-event {
+  width: 50%;
+  float: left;
+  border-right: 2px solid black;
+}
 
-  .future {
-    width: 50%;
-    float: left;
-    border-right: 2px solid black;
-  }
-  .expired {
-   
-    width: 50%;
-    float: right;
-    
-  }
-  .cols {
-    padding: 20px 20px 20px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: left;
-    margin-bottom: 10px;
-     padding: 20px;
-  }
+.hosted-event {
+  width: 50%;
+  float: right;
+  padding-left: 20px;
+}
 
-  .hist_image {
-    height: 150px;
-    width: 250px;
-    object-fit: cover;
-    margin-bottom: 10px;
-  }
-  
-  #city-name {
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
+.hist_image {
+  height: 150px;
+  width: 250px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
 
-  #link_to_events {
-    display: block;
-    margin-top: 20px;
-    text-align: center;
-    font-weight: bold;
-  }
+#yourEvents .city-name {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: rgb(64, 118, 13);
+}
+
+#link_to_events {
+  display: block;
+  margin-top: 20px;
+  text-align: center;
+  font-weight: bold;
+}
 .empty {
-    font-style: italic;
-    text-align: center;
-  }
+  font-style: italic;
+  text-align: center;
+}
+
+#yourEvents .row {
+  width: 100%;
+}
+#yourEvents .card {
+  max-width: 90%;
+  min-width: 90%;
+  margin: 10px 20px;
+}

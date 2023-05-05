@@ -40,16 +40,22 @@ function showPreEvent(event) {
 }
 
 //sorting
-let els = document.getElementsByClassName("card");
-Array.prototype.forEach.call(els, function (el) {
-  el.getElementsByClassName("card-text")[0].innerHTML =
-    el
-      .getElementsByClassName("card-text")[0]
-      .textContent.trim()
-      .substring(0, 100)
-      .trim()
-      .replace(/.$/, "") + "...";
-});
+let eCard = $(".event-row-container .card");
+let hCard = $(".homepage-events .card");
+
+function trimCardText(els) {
+  Array.prototype.forEach.call(els, function (el) {
+    el.getElementsByClassName("card-text")[0].innerHTML =
+      el
+        .getElementsByClassName("card-text")[0]
+        .textContent.trim()
+        .substring(0, 100)
+        .trim()
+        .replace(/.$/, "") + "...";
+  });
+}
+trimCardText(eCard);
+trimCardText(hCard);
 
 function sortEventBy(arg, sel, elem, order, by) {
   var $selector = $(sel);
