@@ -21,6 +21,13 @@
               class="image"
               alt="{{alt}}"
             />
+            {{else}}
+            <img
+              src="/public/images/No_Image_Available.jpg"
+              class="image"
+              alt="No Image Available for this event"
+            />
+            {{/if}}
             <div class="card-body">
               <h5 class="card-title">
                 {{event_name}}</h5>

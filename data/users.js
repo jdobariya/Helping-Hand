@@ -15,6 +15,41 @@ let exportedMethods = {
     return user;
   },
 
+  async seedUser(first_name, last_name, email, password, isHost,
+    contact = "", bio="", skills = [], address="") {
+    first_name = validation.isValidString(first_name);
+    validation.isValidName(first_name);
+    last_name = validation.isValidString(last_name);
+    validation.isValidName(last_name);
+    email = validation.isValidString(email.trim().toLowerCase());
+    validation.isValidEmail(email);
+    password = validation.isValidString(password);
+    let hashedPassword = await bcrypt.hash(password, 10);
+
+    const usersCollection = await users();
+
+    let info = await usersCollection.findOne({email: email})
+    if(info) throw "Email already exists";
+    
+    var newUser = {
+      first_name: first_name,
+      last_name: last_name,
+      contact: "",
+      email: email,
+      password: hashedPassword,
+      bio: "",
+      skills: [],
+      address: "",
+      isHost: isHost
+    };
+
+    const insertInfo = await usersCollection.insertOne(newUser);
+    console.log(insertInfo);
+    if (!insertInfo.insertedId || !insertInfo.acknowledged)
+      throw "Failed Inserting a user";
+    else return insertInfo.insertedId.toString();
+  },
+
   async addUser(first_name, last_name, email, password, isHost) {
     first_name = validation.isValidString(first_name);
     validation.isValidName(first_name);
@@ -47,7 +82,7 @@ let exportedMethods = {
     const insertInfo = await usersCollection.insertOne(newUser);
     if (!insertInfo.insertedId || !insertInfo.acknowledged)
       throw "Failed Inserting a user";
-    else return true;
+    else return insertInfo.insertedId.toString();
   },
 
   async removeUser(id) {

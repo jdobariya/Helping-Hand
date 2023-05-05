@@ -1,10 +1,18 @@
 <main id="indi-event">
   <div class="event-img">
+    {{#if event.image_url}}
     <img
       src="/public/images/{{event.image_url}}"
       class="card-img-top"
       alt="{{event.alt}}"
     />
+    {{else}}
+    <img
+      src="/public/images/No_Image_Available.jpg"
+      class="image"
+      alt="No Image Available for this event"
+    />
+    {{/if}}
   </div>
   <div class="event-container">
     <div class="host-time">
