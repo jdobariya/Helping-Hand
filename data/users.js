@@ -24,6 +24,12 @@ let exportedMethods = {
     email = validation.isValidString(email.trim().toLowerCase());
     validation.isValidEmail(email);
     password = validation.isValidString(password);
+    validation.validatePassword(password);
+    contact = validation.isValidString(contact);
+    bio = validation.isValidString(bio);
+    skills = validation.isValidArray(skills, 'skills');
+    address = validation.isValidString(address);
+    
     let hashedPassword = await bcrypt.hash(password, 10);
 
     const usersCollection = await users();
@@ -34,12 +40,12 @@ let exportedMethods = {
     var newUser = {
       first_name: first_name,
       last_name: last_name,
-      contact: "",
+      contact: contact,
       email: email,
       password: hashedPassword,
-      bio: "",
-      skills: [],
-      address: "",
+      bio: bio,
+      skills: skills,
+      address: address,
       isHost: isHost
     };
 

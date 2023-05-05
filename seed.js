@@ -1,8 +1,8 @@
 import {userData,eventData} from "./data/index.js"
 import {dbConnection, closeConnection} from './config/mongoConnection.js';
 
-const db = await dbConnection();
-db.dropDatabase();
+// const db = await dbConnection();
+// db.dropDatabase();
 
 const events_data = [
     {
@@ -2202,7 +2202,6 @@ async function seedEvents(){
                 events_data[i].host_time,
                 events_data[i].location,
                 host_info,
-                "No Image Available for this Event",
                 "No_Image_Available.jpg"
             )
 
@@ -2228,16 +2227,6 @@ async function seedEvents(){
 }
 
 await seedUsers();
-// await seedEvents();
-async.waterfall([
-    seedUsers,
-    seedEvents
-], function (err, result) {
-    if (err) {
-
-        console.log(err);
-    } else {
-        console.log("Done seeding database");
-    }});
+await seedEvents();
     
-await closeConnection()
+// await closeConnection()
