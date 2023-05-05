@@ -97,3 +97,53 @@ function sortEvent(sortBy) {
     );
   }
 }
+
+function registerEvent(event_id) {
+  let requestConfig = {
+    url: `${event_id}`,
+    method: "PATCH",
+    data: { reqType: "register" },
+  };
+
+  $.ajax(requestConfig).then(function (responseMessage) {
+    if (responseMessage.success) {
+      alert("Registed Successfully!");
+      let btn = `<button
+      type="submit"
+      id="unregister-btn"
+      onclick="UnRegisterEvent('${event_id}')"
+    >
+    UNREGISTER
+    </button>`;
+
+      $("#event-r-btn").html(btn);
+    } else {
+      alert("Something went wrong! Please try again later.");
+    }
+  });
+}
+
+function UnRegisterEvent(event_id) {
+  let requestConfig = {
+    url: `${event_id}`,
+    method: "PATCH",
+    data: { reqType: "unregister" },
+  };
+
+  $.ajax(requestConfig).then(function (responseMessage) {
+    if (responseMessage.success) {
+      alert("Unregistered Successfully!");
+      let btn = `<button
+      type="submit"
+      id="register-btn"
+      onclick="registerEvent('${event_id}')"
+    >
+    REGISTER NOW
+    </button>`;
+
+      $("#event-r-btn").html(btn);
+    } else {
+      alert("Something went wrong! Please try again later.");
+    }
+  });
+}

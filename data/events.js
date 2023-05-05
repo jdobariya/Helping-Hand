@@ -357,6 +357,36 @@ const exportedMethods = {
     return updateInfo.value;
   },
 
+  async removeVolunteerToEvent(event_id, volunteer_id) {
+    validation.isValidId(event_id);
+    event_id = event_id.trim(event_id);
+    validation.isValidId(volunteer_id);
+    volunteer_id = volunteer_id.trim();
+
+    const eventCollection = await events();
+
+    const event = await eventCollection.findOne({
+      _id: new ObjectId(event_id),
+    });
+    if (!event) throw `Error: event with id ${event_id} not found`;
+
+    if (event.volunteers.includes(volunteer_id)) {
+      event.volunteers.splice(event.volunteers.indexOf(volunteer_id), 1);
+    }
+
+    console.log(event.volunteers);
+
+    let updateInfo = await eventCollection.findOneAndUpdate(
+      { _id: new ObjectId(event_id) },
+      { $set: { volunteers: event.volunteers } },
+      { returnDocument: "after" }
+    );
+    if (updateInfo.lastErrorObject.n === 0)
+      throw [404, `Could not update the event with id ${_id}`];
+
+    return updateInfo.value;
+  },
+
   async addLikes(event_id, volunteer_id) {
     validation.isValidId(event_id);
     event_id = event_id.trim(event_id);
