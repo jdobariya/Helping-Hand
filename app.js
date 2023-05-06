@@ -65,7 +65,7 @@ app.use(session({
     saveUninitialized: false
 }))
 
-import { logger, redirectLogin, redirectSignup, redirectLogout,redirectProfile } from './middleware.js';
+import { logger, redirectLogin, redirectSignup, redirectLogout,redirectProfile, redirectEditEvent, redirectCreateEvent } from './middleware.js';
 
 app.use(logger)
 
@@ -84,6 +84,8 @@ app.get('/landing',(req,res,next)=>
 
 app.get('/logout', redirectLogout);
 app.get('/profile', redirectProfile)
+app.get('/event/edit/:id', redirectEditEvent())
+app.get('/event/create', redirectCreateEvent())
 
 configRoutes(app)
 

@@ -46,3 +46,13 @@ export function redirectEditEvent(){
         }
     }
 }
+
+export function redirectCreateEvent(){
+    return function(req, res, next){
+        if (req.session && req.session.loggedIn) {
+            next();
+        }else{
+            res.redirect('/login');
+        }
+    }
+}
