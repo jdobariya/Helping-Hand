@@ -58,14 +58,16 @@ export function validatePassword(password) {
   throw "Error: Password should match the requirements[atleast 8 characters consisting atleast( 1 upper case, 1 number, 1 special character, 1 lower case)";
 }
 
-export function isUserAdult(d) {
-  let dob = new Date(d);
+export function isUserAdult(birth_date) {
+  let dob = new Date(birth_date);
   let now = new Date();
   let age = now.getFullYear() - dob.getFullYear();
   if (now < new Date(now.getFullYear(), dob.getMonth(), dob.getDate())) {
     age--;
   }
-  return age >= 18;
+  if(age < 13) {
+    throw "Error: you are not 13 year old or older."
+  }
 }
 
 export function isValidEmail(email) {
@@ -83,46 +85,13 @@ export function isValidName(name) {
   if (!isNaN(name)) throw "Name cannot be a number";
 }
 
-export function isValidTimeStamp(timeStamp, timeName) {
-  const time = new Date(timeStamp);
-
-  if (isNaN(time)) {
-    throw `Error: ${timeName} is not in valid format`;
-  }
-
-  const month = time.getMonth() + 1;
-  const day = time.getDate();
-  const year = time.getFullYear();
-  const hour = time.getHours();
-  const minute = time.getMinutes();
-  const now = new Date();
-  const currentYear = now.getFullYear();
-
-  if (
-    month >= 1 &&
-    month <= 12 &&
-    day >= 1 &&
-    day <= new Date(year, month, 0).getDate() &&
-    year >= currentYear &&
-    year <= currentYear + 3 &&
-    hour >= 0 &&
-    hour <= 24 &&
-    minute >= 0 &&
-    minute <= 59
-  ) {
-    return timeStamp;
-  } else {
-    throw `Error: ${timeName} has some invalid time numbers`;
-  }
-}
-
-function isValidTimestamp(timestamp) {
+export function isValidTimeStamp(timestamp) {
   const date = new Date(timestamp);
   return date instanceof Date && !isNaN(date);
 }
 
 export function isValidEventTime(timestamp, release_time){
-  if(!isValidTimestamp(timestamp)) throw "Error: Invalid timestamp";
+  if(!isValidTimeStamp(timestamp)) throw "Error: Invalid timestamp";
   const date = new Date(timestamp);
   const currentDate = new Date();
   if(date.getTime() < currentDate.getTime()) throw "Error: Application Deadline should be in future";
