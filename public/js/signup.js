@@ -1,40 +1,34 @@
 function onSubmitClicked(){
   let errorMessage = document.getElementById('error_message');
-  let signupform=document.getElementById('signup_form')
+  event.preventDefault();
+  try {
+    let firstName = document.getElementById('first_name').value;
+    firstName = checkString(firstName, 'first name');
+    checkName(firstName);
 
-  if(signupform) {
-  registration.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    
-    try {
-      let firstName = document.getElementById('first_name').value;
-      firstName = checkString(firstName, 'first name');
-      checkName(firstName);
+    let lastName = document.getElementById('last_name').value;
+    lastName = checkString(lastName, 'last name');
+    checkName(lastName);
 
-      let lastName = document.getElementById('last_name').value;
-      lastName = checkString(lastName, 'last name');
-      checkName(lastName);
+    let email = document.getElementById('email').value;
+    email = checkString(email, 'email');
+    checkEmail(email);
 
-      let email = document.getElementById('email').value;
-      email = checkString(email, 'email');
-      checkEmail(email);
+    let password = document.getElementById('password').value;
+    password = checkString(password, 'password');
+    checkPassword(password);
 
-      let password = document.getElementById('password').value;
-      password = checkString(password, 'password');
-      checkPassword(password);
+    let repeatPassword = document.getElementById('repeat_password').value;
+    repeatPassword = checkString(repeatPassword, 'repeat password');
+    if(password !== repeatPassword) throw "Passwords do not match";
 
-      let repeatPassword = document.getElementById('repeat_password').value;
-      repeatPassword = checkString(repeatPassword, 'repeat password');
-      if(password !== repeatPassword) throw "Passwords do not match";
-
-      errorMessage.hidden = true;
-      document.getElementById('signup_form').submit();
-    }catch(e) {
-      errorMessage.hidden = false;
-      errorMessage.innerHTML = e;
-    }
-  });
+    errorMessage.hidden = true;
+    document.getElementById('signup_form').submit();
+  }catch(e) {
+    errorMessage.hidden = false;
+    errorMessage.innerHTML = e;
   }
+
 }
 
 function checkString(strVal, varName) {

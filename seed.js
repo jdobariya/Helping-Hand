@@ -125,8 +125,8 @@ const events_data = [
     event_name: 'Charity Golf Tournament',
     description:
       'Participate in a golf tournament to raise funds for a charity that makes a difference.',
-    application_deadline: 1691561557303,
-    host_time: 1691647957303,
+    application_deadline: 1687673557303,
+    host_time: 1685340757303,
     location: {
       address: "6 Hoard Crossing",
       city: "Washington",
