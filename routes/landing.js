@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { eventData } from "../data/index.js";
+import { changeDateFormat } from "../routes/events.js";
 const router = Router();
 
 router.route("/").get(async (req, res) => {
@@ -11,6 +12,10 @@ router.route("/").get(async (req, res) => {
         let allParticipatedEvents = await eventData.getAllEventsByVolunteerId(
           id
         );
+
+        for (let i = 0; i < allParticipatedEvents.length; i++) {
+          allParticipatedEvents = changeDateFormat(allParticipatedEvents);
+        }
         let expired_participated_events =
           eventData.filterExpiredEventsOrNonExpiredEventsByHostTime(
             allParticipatedEvents,
@@ -23,6 +28,9 @@ router.route("/").get(async (req, res) => {
           );
 
         let allHostedEvents = await eventData.getAllEventsByHostId(id);
+        for (let i = 0; i < allHostedEvents.length; i++) {
+          allHostedEvents = changeDateFormat(allHostedEvents);
+        }
         let expired_hosted_events =
           eventData.filterExpiredEventsOrNonExpiredEventsByHostTime(
             allHostedEvents,

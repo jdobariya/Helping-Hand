@@ -18,11 +18,10 @@ router.route("/:id").get(async (req, res) => {
   );
   eventDetail.host_time = eventDetail.etime;
 
-
   eventDetail.application_deadline = longEnUSFormatter
     .format(new Date(eventDetail.application_deadline))
     .toString();
-
+  let isRegistered = false;
   if (req.session && req.session.loggedIn) {
     let user = req.session.user_id;
     let eventHostUser = eventDetail.host_info.host_id;
