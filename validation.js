@@ -65,8 +65,8 @@ export function isUserAdult(birth_date) {
   if (now < new Date(now.getFullYear(), dob.getMonth(), dob.getDate())) {
     age--;
   }
-  if(age < 13) {
-    throw "Error: you are not 13 year old or older."
+  if(age < 18) {
+    throw "Error: you are not 18 year old or older."
   }
 }
 
