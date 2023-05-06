@@ -1,4 +1,4 @@
-import { eventData } from "../../data/index.js";
+
 function searchClicked()
 {
    let form=document.getElementById("searchForm");

@@ -23,11 +23,6 @@ const exportedMethods = {
       host_info,
       image_url
     );
-
-    const now = new Date();
-
-    const rele_time = now.getTime();
-
     const newEvent = {
       event_name: tempEvent.event_name,
       description: tempEvent.description,
@@ -70,7 +65,7 @@ const exportedMethods = {
 
   async updateEventPatch(_id, eventInfo) {
     validation.isValidId(_id);
-    _id = vid.trim();
+    _id = _id.trim();
 
     const updatedEventData = {};
     if (eventInfo.event_name) {
@@ -85,26 +80,25 @@ const exportedMethods = {
       );
     }
 
+
+    if(eventInfo.application_deadline) {
+      updatedEventData.application_deadline = validation.isValidApplicationDeadline(eventInfo.application_deadline);
+    }
+    
+    if(eventInfo.host_time) {
+      updatedEventData.host_time = validation.isValidHostTime(eventInfo.host_time);
+
     if (eventInfo.tags) {
       updatedEventData.tags = validation.isValidArray(eventInfo.tags);
     }
 
-    if (eventInfo.application_deadline) {
-      updatedEventData.application_deadline = validation.isValidTimeStamp(
-        eventInfo.application_deadline
-      );
-    }
 
-    if (eventInfo.host_time) {
-      updatedEventData.host_time = validation.isValidTimeStamp(
-        eventInfo.host_time
-      );
-    }
 
     if (eventInfo.location) {
       updatedEventData.location = validation.isValidLocation(
         eventInfo.location
       );
+
     }
 
     if (eventInfo.host_info) {
@@ -127,6 +121,24 @@ const exportedMethods = {
       throw [404, `Could not update the event with id ${_id}`];
 
     return newEvent.value;
+  },
+
+  async checkIfHost(event_id, host_id) {
+    event_id = event_id.trim();
+    validation.isValidId(event_id);
+    
+    host_id = host_id.trim();
+    validation.isValidId(host_id);
+
+    const eventCollection = await events();
+    const event = await eventCollection.findOne({ _id: new ObjectId(event_id) });
+    if (!event) throw `Error: event with id ${event_id} not found`;
+
+    if(event.host_info.host_id !== host_id) {
+      throw `Error: host with ${host_id} id is not the host of the event`;
+    }
+
+    return true;
   },
 
   // will return all app's events

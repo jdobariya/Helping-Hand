@@ -114,6 +114,35 @@ export function isValidTimeStamp(timeStamp, timeName) {
   }
 }
 
+function isValidTimestamp(timestamp) {
+  const date = new Date(timestamp);
+  return date instanceof Date && !isNaN(date);
+}
+
+export function isValidApplicationDeadline(timestamp){
+  if(!isValidTimestamp(timestamp)) throw "Error: Invalid timestamp";
+  const date = new Date(timestamp);
+  const currentDate = new Date();
+  if(date < currentDate) throw "Error: Application Deadline should be in future";
+
+  currentDate.setMonth(currentDate.getMonth() + 3);
+  if(date > currentDate) throw "Error: Application Deadline should be within 3 months from now";
+
+  return timestamp;
+}
+
+export function isValidHostTime(timestamp){
+  if(!isValidTimestamp(timestamp)) throw "Error: Invalid timestamp";
+  const date = new Date(timestamp);
+  const currentDate = new Date();
+  if(date < currentDate) throw "Error: Host Time should be in future";
+
+  currentDate.setMonth(currentDate.getMonth() + 3);
+  if(date > currentDate) throw "Error: Host Time should be within 3 months from now";
+  
+  return timestamp;
+}
+
 export function isValidLocation(location) {
   const keys = Object.keys(location);
 
@@ -257,12 +286,10 @@ export function checkEventsInputs(
 ) {
   event_name = isValidString(event_name);
   description = isValidString(description);
-  application_deadline = isValidTimeStamp(
-    application_deadline,
-    "application_deadline"
-  );
 
-  host_time = isValidTimeStamp(host_time, "host_time");
+  application_deadline = isValidApplicationDeadline(application_deadline);
+  host_time = isValidHostTime(host_time);
+
   location = isValidLocation(location, "location");
   host_info = isValidHostInfo(host_info, "host_info");
 
