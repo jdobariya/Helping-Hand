@@ -230,7 +230,9 @@ export function isValidFeedback(feedback) {
 }
 
 export function isValidImageUrl(image_url) {
+
   const imageRegex = /\.(gif|jpg|jpeg|tiff|png|avif)$/i; // Regular expression pattern
+
   if (imageRegex.test(image_url)) {
     return image_url;
   } else {
@@ -259,6 +261,7 @@ export function checkEventsInputs(
     application_deadline,
     "application_deadline"
   );
+
   host_time = isValidTimeStamp(host_time, "host_time");
   location = isValidLocation(location, "location");
   host_info = isValidHostInfo(host_info, "host_info");
@@ -292,7 +295,9 @@ export function checkEventsInputs(
     stories,
     feedbacks,
     likes,
+
     image_url,
+
   };
 }
 

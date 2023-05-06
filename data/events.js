@@ -182,6 +182,7 @@ const exportedMethods = {
     events,
     needExpired
   ) {
+
     let todaysDate = new Date();
     if (needExpired) {
       return events.filter(
@@ -190,16 +191,19 @@ const exportedMethods = {
     } else {
       return events.filter(
         (event) => new Date(event.application_deadline) >= todaysDate
+
       );
     }
   },
 
   filterExpiredEventsOrNonExpiredEventsByHostTime(events, needExpired) {
+
     let todaysDate = new Date();
     if (needExpired) {
       return events.filter((event) => new Date(event.host_time) < todaysDate);
     } else {
       return events.filter((event) => new Date(event.host_time) >= todaysDate);
+
     }
   },
 
@@ -390,6 +394,7 @@ const exportedMethods = {
 
     return updateInfo.value;
   },
+
 
   async addLikes(event_id, volunteer_id) {
     validation.isValidId(event_id);

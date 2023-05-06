@@ -5,10 +5,9 @@ import signUpRoutes from "./signup.js";
 import logoutRoute from "./logout.js";
 import { eventData } from "../data/index.js";
 import eventRoutes from "./event.js";
-import searchRoute from './search.js';
-import landingRoute from './landing.js';
-import profileRoute from './profile.js';
-
+import searchRoute from "./search.js";
+import landingRoute from "./landing.js";
+import profileRoute from "./profile.js";
 
 const constructorMethod = (app) => {
   app.get("/", (req, res) => {
@@ -22,17 +21,11 @@ const constructorMethod = (app) => {
       month: "short",
       day: "numeric",
     });
-    let deadlineDateAndTime;
+
     events.forEach((eventDetail) => {
-      deadlineDateAndTime = eventDetail.application_deadline.split(" ");
-      eventDetail.application_deadline =
-        longEnUSFormatter
-          .format(new Date(eventDetail.application_deadline))
-          .toString() +
-        " " +
-        deadlineDateAndTime[1] +
-        " " +
-        deadlineDateAndTime[2];
+      eventDetail.application_deadline = longEnUSFormatter
+        .format(new Date(eventDetail.application_deadline))
+        .toString();
     });
 
     if (req.session && req.session.loggedIn) {
@@ -40,7 +33,7 @@ const constructorMethod = (app) => {
         title: "Helping Hands",
         user: true,
         allEvents: events,
-        first_name:req.session.first_name
+        first_name: req.session.first_name,
       });
     } else {
       return res.render("homepage", {
@@ -56,12 +49,11 @@ const constructorMethod = (app) => {
   app.use("/event", eventRoutes);
   app.use("/about", aboutRoutes);
   app.use("/signup", signUpRoutes);
-  app.use("/search",searchRoute);
-  app.use("/landing",landingRoute);
-  app.use("/profile",profileRoute);
+  app.use("/search", searchRoute);
+  app.use("/landing", landingRoute);
+  app.use("/profile", profileRoute);
   app.use("*", (req, res) => {
-    res.render("error")
-
+    res.render("error");
   });
-}
+};
 export default constructorMethod;

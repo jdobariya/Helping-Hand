@@ -12,24 +12,17 @@ router.route("/:id").get(async (req, res) => {
     month: "long",
     day: "numeric",
   });
-  let eventDateAndTime = eventDetail.host_time.split(" ");
-  let deadlineDateAndTime = eventDetail.application_deadline.split(" ");
 
   eventDetail["etime"] = longEnUSFormatter.format(
     new Date(eventDetail.host_time)
   );
-  eventDetail.host_time =
-    eventDetail.etime + " " + eventDateAndTime[1] + " " + eventDateAndTime[2];
+  eventDetail.host_time = eventDetail.etime;
 
-  eventDetail.application_deadline =
-    longEnUSFormatter
-      .format(new Date(eventDetail.application_deadline))
-      .toString() +
-    " " +
-    deadlineDateAndTime[1] +
-    " " +
-    deadlineDateAndTime[2];
-  let isRegistered = false;
+
+  eventDetail.application_deadline = longEnUSFormatter
+    .format(new Date(eventDetail.application_deadline))
+    .toString();
+
   if (req.session && req.session.loggedIn) {
     let user = req.session.user_id;
     let eventHostUser = eventDetail.host_info.host_id;

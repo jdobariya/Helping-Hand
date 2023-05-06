@@ -13,15 +13,9 @@ export function changeDateFormat(events) {
   let deadlineDateAndTime;
 
   for (let i = 0; i < events.length; i++) {
-    deadlineDateAndTime = events[i].application_deadline.split(" ");
-    events[i].application_deadline =
-      longEnUSFormatter
-        .format(new Date(events[i].application_deadline))
-        .toString() +
-      " " +
-      deadlineDateAndTime[1] +
-      " " +
-      deadlineDateAndTime[2];
+    events[i].application_deadline = longEnUSFormatter
+      .format(new Date(events[i].application_deadline))
+      .toString();
   }
 
   return events;
