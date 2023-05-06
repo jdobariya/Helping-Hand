@@ -1,5 +1,7 @@
 import { Router } from "express";
 import {
+  isValidTimeStamp,
+  isUserAdult,
   isValidEmail,
   isValidName,
   isValidString,
@@ -18,6 +20,7 @@ router.route("/").get((req, res) => {
 router.route("/").post(async (req, res) => {
   let firstName = req.body.first_name;
   let lastName = req.body.last_name;
+  let birth_date = Date.parse(req.body.birth_date);
   let email = req.body.email;
   let password = req.body.password;
   let repeatPassword = req.body.repeat_password;
@@ -29,6 +32,11 @@ router.route("/").post(async (req, res) => {
 
     lastName = isValidString(lastName);
     isValidName(lastName);
+
+    if(!isValidTimeStamp(birth_date)) {
+      throw " Invalid birth_date timeStamp"
+    }
+    isUserAdult(birth_date);
 
     email = isValidString(email);
     email = email.toLowerCase();
@@ -52,6 +60,7 @@ router.route("/").post(async (req, res) => {
     const result = await usersData.addUser(
       firstName,
       lastName,
+      birth_date,
       email,
       password,
       isHost

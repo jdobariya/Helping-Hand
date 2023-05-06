@@ -10,6 +10,15 @@ function onSubmitClicked(){
     lastName = checkString(lastName, 'last name');
     checkName(lastName);
 
+    console.log(document.getElementById('birth_date'));
+
+    let birthDate = document.getElementById('birth_date').value;
+    birthDate = Date.parse(birthDate);
+    if(!isValidTimeStamp(birthDate)) {
+      throw " Invalid birth_date timeStamp"
+    }
+    isUserAdult(birthDate);
+
     let email = document.getElementById('email').value;
     email = checkString(email, 'email');
     checkEmail(email);
@@ -67,4 +76,21 @@ function checkPassword(password){
   if(!password.match(/[A-Z]/)) throw "Password must contain at least one uppercase character";
   if(!password.match(/[0-9]/)) throw "Password must contain at least one number";
   if(!password.match(/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+=[\]{}|\\,.?'";:/<>\-])\S{8,}$/)) throw "Password must contain at least one special character";
+}
+
+function isValidTimeStamp(timestamp) {
+  const date = new Date(timestamp);
+  return date instanceof Date && !isNaN(date);
+}
+
+function isUserAdult(birth_date) {
+  let dob = new Date(birth_date);
+  let now = new Date();
+  let age = now.getFullYear() - dob.getFullYear();
+  if (now < new Date(now.getFullYear(), dob.getMonth(), dob.getDate())) {
+    age--;
+  }
+  if(age < 13) {
+    throw "Error: you are not 13 year old or older."
+  }
 }

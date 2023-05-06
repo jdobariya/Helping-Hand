@@ -56,11 +56,15 @@ let exportedMethods = {
     else return insertInfo.insertedId.toString();
   },
 
-  async addUser(first_name, last_name, email, password, isHost) {
+  async addUser(first_name, last_name, birth_date, email, password, isHost) {
     first_name = validation.isValidString(first_name);
     validation.isValidName(first_name);
     last_name = validation.isValidString(last_name);
     validation.isValidName(last_name);
+    if(!validation.isValidTimeStamp(birth_date)) {
+      throw " Invalid birth_date timeStamp"
+    }
+    validation.isUserAdult(birth_date);
     email = validation.isValidString(email.trim().toLowerCase());
     validation.isValidEmail(email);
     password = validation.isValidString(password);
@@ -76,6 +80,7 @@ let exportedMethods = {
     var newUser = {
       first_name: first_name,
       last_name: last_name,
+      birth_date: birth_date,
       contact: "",
       email: email,
       password: hashedPassword,
