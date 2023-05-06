@@ -48,7 +48,9 @@ const exportedMethods = {
     const insertEvent = await eventsCollection.insertOne(newEvent);
     if (!insertEvent.insertedId) throw "Failed Inserting a event";
     let newId = insertEvent.insertedId.toString();
-    return await this.getEventByEventId(newId);
+    const InsertedEvent = await this.getEventByEventId(newId);
+    InsertedEvent._id = InsertedEvent._id.toString();
+    return InsertedEvent;
   },
 
   async removeEventById(_id) {

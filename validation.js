@@ -157,8 +157,7 @@ export function isValidHostInfo(hostInfo) {
 
   hostInfo.host_name = isValidString(hostInfo.host_name);
 
-  hostInfo.contact = hostInfo.contact.trim().toLowerCase();
-  isValidEmail(hostInfo.contact);
+  hostInfo.contact = isValidString(hostInfo.contact);
 
   return hostInfo;
 }
