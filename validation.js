@@ -1,4 +1,6 @@
 import { ObjectId } from "mongodb";
+import fs from 'fs';
+import sharp from "sharp"; 
 
 export function isValidString(str) {
   if (!str) {
@@ -285,18 +287,31 @@ export function checkEventsInputs(
 
   };
 }
-
-export function searchObject(obj, regex) {
+export function searchObject(obj,regex) {
   for (const prop in obj) {
     if (typeof obj[prop] === "object") {
-      if (searchObject(obj[prop], regex)) {
+      if (searchObject(obj[prop],regex)) {
         return true;
-      }
-    } else if (obj[prop]) {
-      if (regex.test(obj[prop])) {
-        return true;
-      }
-    }
+      }}
+     else if (obj[prop])
+    {
+      if(regex.test(obj[prop])) {
+      return true;
   }
+  }}
   return false;
+}
+
+
+export function imageToAlt(image_url)
+{
+  sharp(image_url)
+  .metadata()
+  .then(metadata => {
+      const altText = metadata.exif.ImageDescription;
+      return altText
+    })
+  .catch(err => {
+    console.log(err);
+  });
 }

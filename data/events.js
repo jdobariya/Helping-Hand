@@ -348,7 +348,7 @@ const exportedMethods = {
     return unpdateInfo.value;
   },
 
-  async addVolunteerToEvent(event_id, volunteer_id) {
+  async addVolunteers(event_id, volunteer_id) {
     validation.isValidId(event_id);
     event_id = event_id.trim(event_id);
     validation.isValidId(volunteer_id);
@@ -394,7 +394,7 @@ const exportedMethods = {
       event.volunteers.splice(event.volunteers.indexOf(volunteer_id), 1);
     }
 
-    console.log(event.volunteers);
+    //console.log(event.volunteers);
 
     let updateInfo = await eventCollection.findOneAndUpdate(
       { _id: new ObjectId(event_id) },
@@ -549,7 +549,7 @@ const exportedMethods = {
     const filteredArray = array.filter((obj) => {
       return validation.searchObject(obj, regex);
     });
-    console.log(filteredArray);
+    //console.log(filteredArray);
     return filteredArray;
   },
 };

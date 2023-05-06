@@ -5,6 +5,67 @@ import { userData } from "../data/index.js";
 
 const router = Router();
 
+router.route("/create").get(async (req, res) => {
+  try{
+    if(req.session.isHost){
+
+      res.render("create_event", {
+          title: "Create Event",
+          user:true,
+          first_name: req.session.first_name,
+      });
+
+    }else{
+      res.status(403).render("error", {error: 403});
+    }
+
+  }catch(e){
+    res.status(500).render("error", {error: 500});
+  }
+})
+
+router.route("/create").post(async (req, res) => {
+  try{
+    if(req.session.isHost){
+      const userId = req.session.user_id
+      const userInfo = await userData.getUserById(userId);
+
+      let eventName = validation.isValidString(req.body.event_name);
+      let description = validation.isValidString(req.body.description);
+      let application_deadline = validation.isValidEventTime(parseInt(req.body.application_deadline));
+      let host_time = validation.isValidEventTime(parseInt(req.body.host_time));
+      let streetAddress = validation.isValidString(req.body.streetAddress);
+      let city = validation.isValidString(req.body.city);
+      let state = validation.isValidString(req.body.state);
+      let zipcode = validation.isValidString(req.body.zipcode);
+      let image_url = req.body.image_url? req.body.image_url : "No_Image_Available.jpg";
+  
+      if(host_time < application_deadline) throw "Error: Event Date & Time should be after Registration Deadline";
+
+      const hostInfo = {
+        host_id: userId,
+        host_name: userInfo.first_name + " " + userInfo.last_name,
+        contact: userInfo.contact,
+      }
+
+      const location = {
+        address: streetAddress,
+        city: city,
+        state: state,
+        zipcode: zipcode
+      }
+
+      const event = await eventData.addEvent(eventName, description, application_deadline, host_time, location, hostInfo, image_url);
+  
+      res.redirect("/event/" + event._id);
+    }else{
+      res.status(403).render("error", {error: 403});
+    }
+  }catch(e){
+    res.json({ success: false, error: e });
+  }
+})
+
 router.route("/:id").get(async (req, res) => {
   let eventDetail = await eventData.getEventByEventId(req.params.id);
   const longEnUSFormatter = new Intl.DateTimeFormat("en-US", {
@@ -103,25 +164,27 @@ router.route("/:id").patch(async (req, res) => {
 
 router.route("/edit/:id").get(async (req, res) => {
   try{
-    let isHost = req.session.isHost;
-    
-    if(!isHost) throw "Error: You are not a host";
+    if(req.session.isHost){
+      const eventId = req.params.id;
+      const userId = req.session.user_id
+      let eventDetail = await eventData.getEventByEventId(req.params.id);
 
-    let eventDetail = await eventData.getEventByEventId(req.params.id);
-    const host_id = req.session.user_id;
-
-    if(eventDetail.host_info.host_id !== host_id) {
-      throw `Error: host with ${host_id} id is not the host of the event`;
+      if(eventDetail.host_info.host_id === userId) {
+        res.render("edit_event", {
+          title: "Edit Event",
+          event: eventDetail,
+          user:true,
+          first_name: req.session.first_name,
+        });
+      }else{
+        res.status(403).render("error", {error: 403});
+      }
+    }else{
+      res.status(403).render("error", {error: 403});
     }
 
-    res.render("edit_event", {
-      title: "Edit Event",
-      event: eventDetail,
-      user:true,
-      first_name: req.session.first_name,
-    });
   }catch(e){
-    res.status(404).render("error");
+    res.status(500).render("error", {error: 500});
   }
 });
 
@@ -158,10 +221,10 @@ router.route("/edit/:id").patch(async (req, res) => {
         res.json({ success: true });
       }
       else{
-        res.render("error");
+        res.status(403).render("error", {error: 403});
       }
     }else{
-      res.render("error");
+      res.status(403).render("error", {error: 403});
     }
   }catch(e){
     res.json({ success: false, error: e });
