@@ -84,11 +84,11 @@ const exportedMethods = {
 
     if (eventInfo.application_deadline) {
       updatedEventData.application_deadline =
-        validation.isValidApplicationDeadline(eventInfo.application_deadline);
+        validation.isValidEventTime(eventInfo.application_deadline, eventInfo.release_time);
     }
 
     if (eventInfo.host_time) {
-      updatedEventData.host_time = validation.isValidHostTime(
+      updatedEventData.host_time = validation.isValidEventTime(
         eventInfo.host_time
       );
     }
@@ -110,7 +110,7 @@ const exportedMethods = {
     }
 
     if (eventInfo.image_url) {
-      updatedEventData.image_url = validation.isValidImageUrl(image_url);
+      updatedEventData.image_url = validation.isValidImageUrl(eventInfo.image_url);
     }
 
     const eventCollection = await events();

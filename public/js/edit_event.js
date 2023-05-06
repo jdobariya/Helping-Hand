@@ -1,5 +1,6 @@
 let url = window.location.pathname;
 var submitBtn = $("#submit_btn");
+let release_time = window.release_time;
 
 submitBtn.on("click", function (e) {
   e.preventDefault();
@@ -19,11 +20,11 @@ submitBtn.on("click", function (e) {
 
     let applicationDeadline = applicationDeadlineInput.val();
     applicationDeadline = new Date(applicationDeadline).getTime();
-    applicationDeadline = isValidApplicationDeadline(applicationDeadline);
+    applicationDeadline = isValidEventTime(applicationDeadline, release_time);
 
     let hostTime = hostTimeInput.val();
     hostTime = new Date(hostTime).getTime();
-    hostTime = isValidHostTime(hostTime);
+    hostTime = isValidEventTime(hostTime, release_time);
 
     let streetAddress = streetAddressInput.val();
     isValidString(streetAddress);
@@ -107,26 +108,15 @@ function isValidTimestamp(timestamp) {
     return date instanceof Date && !isNaN(date);
 }
 
-function isValidApplicationDeadline(timestamp){
+function isValidEventTime(timestamp, release_time){
     if(!isValidTimestamp(timestamp)) throw "Error: Invalid timestamp";
     const date = new Date(timestamp);
     const currentDate = new Date();
-    if(date < currentDate) throw "Error: Application Deadline should be in future";
-
-    currentDate.setMonth(currentDate.getMonth() + 3);
-    if(date > currentDate) throw "Error: Application Deadline should be within 3 months from now";
-
+    if(date.getTime() < currentDate.getTime()) throw "Error: Application Deadline should be in future";
+  
+    const releaseDate = new Date(release_time);
+    releaseDate.setMonth(releaseDate.getMonth() + 6);
+    if(date.getTime() > releaseDate.getTime()) throw "Error: Application Deadline should be within 6 months from Release Date";
+  
     return timestamp;
-}
-
-function isValidHostTime(timestamp){
-    if(!isValidTimestamp(timestamp)) throw "Error: Invalid timestamp";
-    const date = new Date(timestamp);
-    const currentDate = new Date();
-    if(date < currentDate) throw "Error: Host Time should be in future";
-
-    currentDate.setMonth(currentDate.getMonth() + 3);
-    if(date > currentDate) throw "Error: Host Time should be within 3 months from now";
-
-    return timestamp;
-}
+  }

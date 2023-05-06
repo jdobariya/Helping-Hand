@@ -127,32 +127,42 @@ router.route("/edit/:id").get(async (req, res) => {
 
 router.route("/edit/:id").patch(async (req, res) => {
   try{
-    const eventId = req.params.id;
-    const userId = req.session.user_id
-    let description = validation.isValidString(req.body.description);
-    let application_deadline = validation.isValidApplicationDeadline(parseInt(req.body.application_deadline));
-    let host_time = validation.isValidHostTime(parseInt(req.body.host_time));
-    let streetAddress = validation.isValidString(req.body.streetAddress);
-    let city = validation.isValidString(req.body.city);
-    let state = validation.isValidString(req.body.state);
-    let zipcode = validation.isValidString(req.body.zipcode);
+    if(req.session.isHost){
+      const eventId = req.params.id;
+      const userId = req.session.user_id
+      let eventDetail = await eventData.getEventByEventId(req.params.id);
 
-    if(host_time < application_deadline) throw "Error: Event Date & Time should be after Registration Deadline";
-
-    let eventDetail = await eventData.getEventByEventId(req.params.id);
-    eventDetail.description = description;
-    eventDetail.application_deadline = application_deadline;
-    eventDetail.host_time = host_time;
-    eventDetail.location = {
-      address: streetAddress,
-      city: city,
-      state: state,
-      zipcode: zipcode,
-    };
-
-    await eventData.updateEventPatch(eventId, eventDetail);
-
-    res.json({ success: true });
+      if(eventDetail.host_info.host_id === userId) {
+        let description = validation.isValidString(req.body.description);
+        let application_deadline = validation.isValidEventTime(parseInt(req.body.application_deadline));
+        let host_time = validation.isValidEventTime(parseInt(req.body.host_time));
+        let streetAddress = validation.isValidString(req.body.streetAddress);
+        let city = validation.isValidString(req.body.city);
+        let state = validation.isValidString(req.body.state);
+        let zipcode = validation.isValidString(req.body.zipcode);
+    
+        if(host_time < application_deadline) throw "Error: Event Date & Time should be after Registration Deadline";
+    
+        eventDetail.description = description;
+        eventDetail.application_deadline = application_deadline;
+        eventDetail.host_time = host_time;
+        eventDetail.location = {
+          address: streetAddress,
+          city: city,
+          state: state,
+          zipcode: zipcode,
+        };
+    
+        await eventData.updateEventPatch(eventId, eventDetail);
+    
+        res.json({ success: true });
+      }
+      else{
+        res.render("error");
+      }
+    }else{
+      res.render("error");
+    }
   }catch(e){
     res.json({ success: false, error: e });
   }
