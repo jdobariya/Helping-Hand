@@ -131,6 +131,7 @@
 
 #pre {
   left: 0;
+  color:#949494;
 }
 #next {
   right: 0;
@@ -200,6 +201,7 @@
 #popular {
   display: inline-block;
   padding: 10px;
+  font-size:35px;
   background-color: #ccc;
   border-radius: 10px;
   position: relative;
@@ -239,14 +241,14 @@
 
 .control-btn {
   margin: 5px 10px 5px 10px;
-  font-size: 2rem;
-  background-color: transparent;
+  font-size: 3rem;
+  background-color:transparent;
   border: 0;
 }
 
 .homepage-events .card {
   border: 0;
-  background-color: rgb(235, 232, 232);
+  background-color: rgb(219, 216, 216);
 }
 
 @media screen and (max-width: 500px) {

@@ -61,6 +61,7 @@
               name="searchValue"
               placeholder="Search"
             />
+            <label for="searchButton"></label>
             <button id="searchButton" type="submit" onclick="searchClicked()"><i
                 class="fa fa-search"
               ></i></button>
@@ -90,10 +91,8 @@
                   href="/events"
                 >Events</a></li>
 
-              <li class="nav-item"><a
-                  class="nav-link"
-                  href="/about"
-                >About</a></li>
+              <li class="nav-item"><a href="/about" aria-label="About us"class="nav-link"
+              >About</a></li>
 
               {{#if user}}
 
