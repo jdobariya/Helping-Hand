@@ -3,7 +3,7 @@
     <div class="future">
       <h3>Your Registered Events</h3>
       <div class="row">
-        <h4>Upcoming Events</h4>
+        <h4 id ="future-upcoming">Upcoming Events</h4>
         {{#each futureParticipated}}
 
           <div class="card">
@@ -42,7 +42,7 @@
 
         {{else}}
           <p class="empty">You haven't participated in any events</p>
-          <a id="link_to_events" href="/events">Click here to browse events page</a>
+          <a id="link_to" href="/events">Click here to browse events page</a>
         {{/each}}
       </div>
     </div>
