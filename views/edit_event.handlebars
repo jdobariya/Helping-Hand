@@ -197,7 +197,7 @@
         let currentDate = new Date();
         currentDate.setMonth(currentDate.getMonth() + 3);
 
-        let date = new Date('{{application_deadline}}');
+        let date = new Date({{application_deadline}});
         let app_deadline = document.getElementById("app_deadline");
         app_deadline.value = date.toISOString().slice(0,16);
 
@@ -206,7 +206,7 @@
         app_deadline.max = currentDate.toISOString().slice(0,16);
 
 
-        date = new Date('{{host_time}}');
+        date = new Date({{host_time}});
         let host_time = document.getElementById("host_time");
         host_time.value = date.toISOString().slice(0,16);
 
