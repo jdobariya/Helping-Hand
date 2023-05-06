@@ -80,25 +80,25 @@ const exportedMethods = {
       );
     }
 
-
-    if(eventInfo.application_deadline) {
-      updatedEventData.application_deadline = validation.isValidApplicationDeadline(eventInfo.application_deadline);
+    if (eventInfo.application_deadline) {
+      updatedEventData.application_deadline =
+        validation.isValidApplicationDeadline(eventInfo.application_deadline);
     }
-    
-    if(eventInfo.host_time) {
-      updatedEventData.host_time = validation.isValidHostTime(eventInfo.host_time);
+
+    if (eventInfo.host_time) {
+      updatedEventData.host_time = validation.isValidHostTime(
+        eventInfo.host_time
+      );
+    }
 
     if (eventInfo.tags) {
       updatedEventData.tags = validation.isValidArray(eventInfo.tags);
     }
 
-
-
     if (eventInfo.location) {
       updatedEventData.location = validation.isValidLocation(
         eventInfo.location
       );
-
     }
 
     if (eventInfo.host_info) {
@@ -126,15 +126,17 @@ const exportedMethods = {
   async checkIfHost(event_id, host_id) {
     event_id = event_id.trim();
     validation.isValidId(event_id);
-    
+
     host_id = host_id.trim();
     validation.isValidId(host_id);
 
     const eventCollection = await events();
-    const event = await eventCollection.findOne({ _id: new ObjectId(event_id) });
+    const event = await eventCollection.findOne({
+      _id: new ObjectId(event_id),
+    });
     if (!event) throw `Error: event with id ${event_id} not found`;
 
-    if(event.host_info.host_id !== host_id) {
+    if (event.host_info.host_id !== host_id) {
       throw `Error: host with ${host_id} id is not the host of the event`;
     }
 
@@ -194,7 +196,6 @@ const exportedMethods = {
     events,
     needExpired
   ) {
-
     let todaysDate = new Date();
     if (needExpired) {
       return events.filter(
@@ -203,19 +204,16 @@ const exportedMethods = {
     } else {
       return events.filter(
         (event) => new Date(event.application_deadline) >= todaysDate
-
       );
     }
   },
 
   filterExpiredEventsOrNonExpiredEventsByHostTime(events, needExpired) {
-
     let todaysDate = new Date();
     if (needExpired) {
       return events.filter((event) => new Date(event.host_time) < todaysDate);
     } else {
       return events.filter((event) => new Date(event.host_time) >= todaysDate);
-
     }
   },
 
@@ -406,7 +404,6 @@ const exportedMethods = {
 
     return updateInfo.value;
   },
-
 
   async addLikes(event_id, volunteer_id) {
     validation.isValidId(event_id);
