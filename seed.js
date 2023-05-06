@@ -2227,22 +2227,28 @@ async function seedEvents() {
     }
   }
 
-  event_ids.forEach(async (event_id) => {
-    const numVolunteers = Math.floor(Math.random() * 15) + 1;
-    const volunteers = [];
-    for (let i = 0; i < numVolunteers; i++) {
-      volunteers.push(
-        volunteer_ids[Math.floor(Math.random() * volunteer_ids.length)]
-      );
+  try {
+    for (const event_id of event_ids) {
+      const numVolunteers = Math.floor(Math.random() * 15) + 1;
+      const volunteers = [];
+      
+      while (volunteers.length < numVolunteers) {
+        const randomId= volunteer_ids[Math.floor(Math.random() * volunteer_ids.length)];
+        if (!volunteers.includes(randomId)) {
+          volunteers.push(randomId);
+        }
+      }
+      
+      for (const volunteer_id of volunteers) {
+        await eventData.addVolunteerToEvent(event_id, volunteer_id);
+      }
     }
-
-    volunteers.forEach(async (volunteer_id) => {
-      await eventData.addVolunteerToEvent(event_id, volunteer_id);
-    });
-  });
+  } catch (e) {
+    console.log(e);
+  }  
 }
 
 await seedUsers();
 await seedEvents();
 
-// await closeConnection()
+await closeConnection()
