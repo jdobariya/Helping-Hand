@@ -91,6 +91,6 @@ function isUserAdult(birth_date) {
     age--;
   }
   if(age < 18) {
-    throw "Error: you are not 18 year old or older."
+    throw "User should be atleast 18 years old"
   }
 }
