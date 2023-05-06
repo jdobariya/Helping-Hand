@@ -65,11 +65,10 @@ app.use(session({
     saveUninitialized: false
 }))
 
-import { logger, redirectLogin, redirectSignup, redirectLogout,redirectProfile, redirectEditEvent, redirectCreateEvent } from './middleware.js';
+import { logger, redirectLogin, redirectSignup, redirectLogout,redirectProfile, redirectEditEvent, redirectCreateEvent, sanitizeUserInput } from './middleware.js';
 
 app.use(logger)
-
-// add the middleware functions from middleware.js here 
+app.use(sanitizeUserInput);
 app.get('/login', redirectLogin);
 app.get('/signup', redirectSignup);
 app.get('/landing',(req,res,next)=>

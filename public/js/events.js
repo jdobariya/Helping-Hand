@@ -6,7 +6,7 @@ function searchClicked()
    {
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
-        form.onsubmit()
+        form.submit()
    });
 
    }

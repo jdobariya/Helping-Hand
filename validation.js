@@ -1,4 +1,6 @@
 import { ObjectId } from "mongodb";
+import fs from 'fs';
+import sharp from "sharp"; 
 
 export function isValidString(str) {
   if (!str) {
@@ -330,4 +332,18 @@ export function searchObject(obj, regex) {
     }
   }
   return false;
+}
+
+
+export function imageToAlt(image_url)
+{
+  sharp(image_url)
+  .metadata()
+  .then(metadata => {
+      const altText = metadata.exif.ImageDescription;
+      return altText
+    })
+  .catch(err => {
+    console.log(err);
+  });
 }

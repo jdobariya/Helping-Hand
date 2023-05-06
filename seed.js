@@ -1,5 +1,6 @@
 import { userData, eventData } from "./data/index.js";
 import { dbConnection, closeConnection } from "./config/mongoConnection.js";
+import { imageToAlt } from "./validation.js";
 
 const db = await dbConnection();
 await db.dropDatabase();
