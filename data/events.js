@@ -23,10 +23,12 @@ const exportedMethods = {
       host_info,
       image_url
     );
+
+    const release_time = new Date().getTime();
     const newEvent = {
       event_name: tempEvent.event_name,
       description: tempEvent.description,
-      release_time: rele_time,
+      release_time: release_time,
       application_deadline: tempEvent.application_deadline,
       host_time: tempEvent.host_time,
       location: tempEvent.location,

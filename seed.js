@@ -6,9 +6,9 @@ await db.dropDatabase();
 
 const events_data = [
   {
-    event_name: "'Run for a Cause'",
+    event_name: 'Run for a Cause',
     description:
-      "'Join us for a run to raise awareness and funds for a local charity.'",
+      'Join us for a run to raise awareness and funds for a local charity.',
     application_deadline: 1689055957303,
     host_time: 1689142357303,
     location: {
@@ -19,9 +19,9 @@ const events_data = [
     },
   },
   {
-    event_name: "'Charity Auction'",
+    event_name: 'Charity Auction',
     description:
-      "'Bid on unique and valuable items donated by local businesses and individuals to support a good cause.'",
+      'Bid on unique and valuable items donated by local businesses and individuals to support a good cause.',
     application_deadline: 1683785557303,
     host_time: 1683871957303,
     location: {
@@ -32,9 +32,9 @@ const events_data = [
     },
   },
   {
-    event_name: "'Benefit Concert'",
+    event_name: 'Benefit Concert',
     description:
-      "'Enjoy live music while supporting a charity that helps people in need.'",
+      'Enjoy live music while supporting a charity that helps people in need.',
     application_deadline: 1683871957303,
     host_time: 1683958357303,
     location: {
@@ -45,9 +45,9 @@ const events_data = [
     },
   },
   {
-    event_name: "'Walk for a Cure'",
+    event_name: 'Walk for a Cure',
     description:
-      "'Join us for a walk to raise awareness and funds for research on a life-threatening disease.'",
+      'Join us for a walk to raise awareness and funds for research on a life-threatening disease.',
     application_deadline: 1689055957303,
     host_time: 1689142357303,
     location: {
@@ -58,8 +58,8 @@ const events_data = [
     },
   },
   {
-    event_name: "'Charity Bake Sale'",
-    description: "'Satisfy your sweet tooth while supporting a good cause.'",
+    event_name: 'Charity Bake Sale',
+    description: 'Satisfy your sweet tooth while supporting a good cause.',
     application_deadline: 1690611157303,
     host_time: 1690697557303,
     location: {
@@ -70,9 +70,9 @@ const events_data = [
     },
   },
   {
-    event_name: "'Community Service Day'",
+    event_name: 'Community Service Day',
     description:
-      "'Volunteer your time to help out a local charity and make a difference in your community.'",
+      'Volunteer your time to help out a local charity and make a difference in your community.',
     application_deadline: 1687673557303,
     host_time: 1687759957303,
     location: {
@@ -83,9 +83,9 @@ const events_data = [
     },
   },
   {
-    event_name: "'Charity Gala'",
+    event_name: 'Charity Gala',
     description:
-      "'Dress up and attend an elegant evening of dinner and entertainment to support a charity that makes a difference.'",
+      'Dress up and attend an elegant evening of dinner and entertainment to support a charity that makes a difference.',
     application_deadline: 1686291157303,
     host_time: 1686377557303,
     location: {
@@ -96,9 +96,9 @@ const events_data = [
     },
   },
   {
-    event_name: "'Food Drive'",
+    event_name: 'Food Drive',
     description:
-      "'Collect non-perishable food items to help feed those who are food insecure.'",
+      'Collect non-perishable food items to help feed those who are food insecure.',
     application_deadline: 1684390357303,
     host_time: 1684476757303,
     location: {
@@ -109,7 +109,7 @@ const events_data = [
     },
   },
   {
-    event_name: "'5K Color Run'",
+    event_name: '5K Color Run',
     description:
       "Join a fun run where you'll be doused in vibrant colors to raise funds for a charity.",
     application_deadline: 1687673557303,
@@ -122,9 +122,9 @@ const events_data = [
     },
   },
   {
-    event_name: "'Charity Golf Tournament'",
+    event_name: 'Charity Golf Tournament',
     description:
-      "'Participate in a golf tournament to raise funds for a charity that makes a difference.'",
+      'Participate in a golf tournament to raise funds for a charity that makes a difference.',
     application_deadline: 1691561557303,
     host_time: 1691647957303,
     location: {
@@ -135,9 +135,9 @@ const events_data = [
     },
   },
   {
-    event_name: "'Virtual Charity Challenge'",
+    event_name: 'Virtual Charity Challenge',
     description:
-      "'Join a virtual challenge to raise funds for a charity and make a difference from the comfort of your own home.'",
+      'Join a virtual challenge to raise funds for a charity and make a difference from the comfort of your own home.',
     application_deadline: 1685254357303,
     host_time: 1685340757303,
     location: {
@@ -148,9 +148,9 @@ const events_data = [
     },
   },
   {
-    event_name: "'Charity Bike Ride'",
+    event_name: 'Charity Bike Ride',
     description:
-      "'Join a bike ride to raise funds for a charity and enjoy the great outdoors.'",
+      'Join a bike ride to raise funds for a charity and enjoy the great outdoors.',
     application_deadline: 1689315157303,
     host_time: 1689401557303,
     location: {
@@ -161,9 +161,9 @@ const events_data = [
     },
   },
   {
-    event_name: "'Holiday Charity Drive'",
+    event_name: 'Holiday Charity Drive',
     description:
-      "'Donate to a holiday charity drive to help make the season brighter for those in need.'",
+      'Donate to a holiday charity drive to help make the season brighter for those in need.',
     application_deadline: 1689055957303,
     host_time: 1689142357303,
     location: {
@@ -174,9 +174,9 @@ const events_data = [
     },
   },
   {
-    event_name: "'Charity Talent Show'",
+    event_name: 'Charity Talent Show',
     description:
-      "'Showcase your talent or enjoy the talents of others while supporting a good cause.'",
+      'Showcase your talent or enjoy the talents of others while supporting a good cause.',
     application_deadline: 1685945557303,
     host_time: 1686031957303,
     location: {
@@ -187,9 +187,9 @@ const events_data = [
     },
   },
   {
-    event_name: "'Charity Art Auction'",
+    event_name: 'Charity Art Auction',
     description:
-      "'Bid on beautiful artwork to support a charity that makes a difference.'",
+      'Bid on beautiful artwork to support a charity that makes a difference.',
     application_deadline: 1690351957303,
     host_time: 1690438357303,
     location: {
@@ -200,9 +200,9 @@ const events_data = [
     },
   },
   {
-    event_name: "'Charity Book Sale'",
+    event_name: 'Charity Book Sale',
     description:
-      "'Purchase books at a discounted price to support a good cause.'",
+      'Purchase books at a discounted price to support a good cause.',
     application_deadline: 1690265557303,
     host_time: 1690351957303,
     location: {
@@ -213,9 +213,9 @@ const events_data = [
     },
   },
   {
-    event_name: "'Charity Movie Night'",
+    event_name: 'Charity Movie Night',
     description:
-      "'Enjoy a movie while supporting a charity that makes a difference.'",
+      'Enjoy a movie while supporting a charity that makes a difference.',
     application_deadline: 1688105557303,
     host_time: 1688191957303,
     location: {
@@ -226,9 +226,9 @@ const events_data = [
     },
   },
   {
-    event_name: "'Charity Yoga Class'",
+    event_name: 'Charity Yoga Class',
     description:
-      "'Unwind and destress while supporting a charity that helps others.'",
+      'Unwind and destress while supporting a charity that helps others.',
     application_deadline: 1685427157303,
     host_time: 1685513557303,
     location: {
@@ -239,9 +239,9 @@ const events_data = [
     },
   },
   {
-    event_name: "'Charity Bowling Tournament'",
+    event_name: 'Charity Bowling Tournament',
     description:
-      "'Participate in a bowling tournament to raise funds for a charity that makes a difference.'",
+      'Participate in a bowling tournament to raise funds for a charity that makes a difference.',
     application_deadline: 1690524757303,
     host_time: 1690611157303,
     location: {
@@ -252,9 +252,9 @@ const events_data = [
     },
   },
   {
-    event_name: "'Charity Trivia Night'",
+    event_name: 'Charity Trivia Night',
     description:
-      "'Show off your knowledge and compete with others while supporting a charity that helps people in need.'",
+      'Show off your knowledge and compete with others while supporting a charity that helps people in need.',
     application_deadline: 1688796757303,
     host_time: 1688883157303,
     location: {
