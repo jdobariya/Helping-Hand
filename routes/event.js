@@ -18,6 +18,7 @@ router.route("/:id").get(async (req, res) => {
   );
   eventDetail.host_time = eventDetail.etime;
 
+
   eventDetail.application_deadline = longEnUSFormatter
     .format(new Date(eventDetail.application_deadline))
     .toString();
@@ -26,6 +27,7 @@ router.route("/:id").get(async (req, res) => {
     let user = req.session.user_id;
     let eventHostUser = eventDetail.host_info.host_id;
 
+    if (eventDetail.volunteers.includes(user)) isRegistered = true;
     if (user === eventHostUser) {
       let volunteers = {};
       let eventVolunteer = eventDetail.volunteers;
@@ -50,6 +52,8 @@ router.route("/:id").get(async (req, res) => {
         user: true,
         first_name: req.session.first_name,
         volunteerList: volunteers,
+        volunteersCount: Object.keys(volunteers).length,
+        isRegistered,
       });
     } else {
       res.render("event", {
@@ -58,6 +62,7 @@ router.route("/:id").get(async (req, res) => {
         isHost: false,
         user: true,
         first_name: req.session.first_name,
+        isRegistered,
       });
     }
   } else {
@@ -66,7 +71,34 @@ router.route("/:id").get(async (req, res) => {
       event: eventDetail,
       isHost: false,
       user: false,
+      isRegistered,
     });
+  }
+});
+
+router.route("/:id").patch(async (req, res) => {
+  if (req.body.reqType === "register") {
+    try {
+      let updatedEventDetail = await eventData.addVolunteerToEvent(
+        req.params.id,
+        req.session.user_id
+      );
+
+      if (updatedEventDetail) res.status(200).json({ success: true });
+    } catch (e) {
+      res.status(500).json({ success: false, error: e });
+    }
+  } else if (req.body.reqType === "unregister") {
+    try {
+      let updatedEventDetail = await eventData.removeVolunteerToEvent(
+        req.params.id,
+        req.session.user_id
+      );
+
+      if (updatedEventDetail) res.status(200).json({ success: true });
+    } catch (e) {
+      res.status(500).json({ success: false, error: e });
+    }
   }
 });
 

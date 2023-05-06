@@ -231,12 +231,15 @@ export function isValidFeedback(feedback) {
 }
 
 export function isValidImageUrl(image_url) {
-  const imageRegex = /\.(gif|jpg|jpeg|tiff|png)$/i; // Regular expression pattern
+
+  const imageRegex = /\.(gif|jpg|jpeg|tiff|png|avif)$/i; // Regular expression pattern
 
   if (imageRegex.test(image_url)) {
     return image_url;
   } else {
-    throw "Invalid image URL";
+    image_url = "No-image-found.jpg";
+    return image_url;
+    // throw "Invalid image URL";
   }
 }
 
@@ -265,6 +268,7 @@ export function checkEventsInputs(
   host_info = isValidHostInfo(host_info, "host_info");
 
   image_url = isValidString(image_url);
+
   if (image_url) {
     image_url = isValidImageUrl(image_url);
   }
@@ -292,6 +296,9 @@ export function checkEventsInputs(
     stories,
     feedbacks,
     likes,
+
+    image_url,
+
   };
 }
 
