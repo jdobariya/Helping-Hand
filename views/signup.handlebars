@@ -1,6 +1,6 @@
 <main >
     <h1 class="title">{{title}}</h1>
-    <form id="signup_form" action="/signup" method="POST" onsubmit="onSubmitClicked()">
+    <form id="signup_form" action="/signup" method="POST">
         <label for="first_name">First Name</label>
         <input type="text" name="first_name" id="first_name" placeholder="First Name" required/>
 
@@ -25,7 +25,7 @@
             <option value="volunteer">Volunteer</option>
         </select>
 
-        <button type="submit" value="Submit">Sign Up</button>
+        <button type="submit" value="submit">Sign Up</button>
     </form>
     <p id="error_message">{{error}}</p>
     <script src="../public/js/signup.js"></script>

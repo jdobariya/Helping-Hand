@@ -13,7 +13,7 @@ router.route("/").get(async (req, res) => {
     const events = user.isHost? await eventsData.getAllEventsByHostId(id): 
     await eventsData.getAllEventsByVolunteerId(id);
 
-    res.render("profile", {
+    return res.render("profile", {
         title: "Profile",
         first_name: user.first_name,
         user: user,

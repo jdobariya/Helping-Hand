@@ -1,5 +1,10 @@
-function onSubmitClicked(){
-  let errorMessage = document.getElementById('error_message');
+
+let errorMessage = document.getElementById('error_message');
+  let signup=document.getElementById('signup_form')
+  if(signup)
+  {
+    signup.addEventListener('submit',async (event)=>
+    {
   event.preventDefault();
   try {
     let firstName = document.getElementById('first_name').value;
@@ -10,9 +15,8 @@ function onSubmitClicked(){
     lastName = checkString(lastName, 'last name');
     checkName(lastName);
 
-    console.log(document.getElementById('birth_date'));
-
     let birthDate = document.getElementById('birth_date').value;
+    //console.log(birthDate)
     birthDate = Date.parse(birthDate);
     if(!isValidTimeStamp(birthDate)) {
       throw " Invalid birth_date timeStamp"
@@ -32,13 +36,13 @@ function onSubmitClicked(){
     if(password !== repeatPassword) throw "Passwords do not match";
 
     errorMessage.hidden = true;
-    document.getElementById('signup_form').submit();
+    signup.submit();
   }catch(e) {
     errorMessage.hidden = false;
     errorMessage.innerHTML = e;
   }
-
-}
+  }
+  )}
 
 function checkString(strVal, varName) {
   if (!strVal) throw `You must supply a ${varName}!`;

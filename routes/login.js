@@ -41,11 +41,11 @@ router.route("/").post(async (req, res) => {
       req.session.isHost = isHost;
       req.session.user_id = result.user_id;
       //console.log(result.first_name)
-      res.redirect("/home");
+      return res.redirect("/home");
       //res.render("homepage",{user:req.session.loggedIn,first_name:req.session.first_name});
     }
   } catch (e) {
-    res.status(400).render("login", { title: "Login", error: e });
+    return res.status(400).render("login", { title: "Login", error: e });
   }
 });
 

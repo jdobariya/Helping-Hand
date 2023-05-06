@@ -12,7 +12,7 @@ import usersData from "../data/users.js";
 const router = Router();
 
 router.route("/").get((req, res) => {
-  res.render("signup", {
+  return res.render("signup", {
     title: "Sign Up",
   });
 });
@@ -51,7 +51,7 @@ router.route("/").post(async (req, res) => {
     role = isValidString(role);
     if (role !== "host" && role !== "volunteer") throw "Invalid role";
   } catch (e) {
-    res.status(400).render("signup", { title: "Sign Up", error: e });
+    return res.status(400).render("signup", { title: "Sign Up", error: e });
   }
 
   try {
@@ -68,12 +68,12 @@ router.route("/").post(async (req, res) => {
     if (result) {
       res.redirect("/login");
     } else {
-      res
+      return res
         .status(500)
         .render("signup", { title: "Sign Up", error: "Internal Server Error" });
     }
   } catch (e) {
-    res.status(400).render("signup", { title: "Sign Up", error: e });
+    return res.status(400).render("signup", { title: "Sign Up", error: e });
   }
 });
 

@@ -9,7 +9,7 @@ router.route("/create").get(async (req, res) => {
   try{
     if(req.session.isHost){
 
-      res.render("create_event", {
+      return res.render("create_event", {
           title: "Create Event",
           user:true,
           first_name: req.session.first_name,
@@ -57,12 +57,12 @@ router.route("/create").post(async (req, res) => {
 
       const event = await eventData.addEvent(eventName, description, application_deadline, host_time, location, hostInfo, image_url);
   
-      res.redirect("/event/" + event._id);
+      return res.redirect("/event/" + event._id);
     }else{
-      res.status(403).render("error", {error: 403});
+     return  res.status(403).render("error", {error: 403});
     }
   }catch(e){
-    res.json({ success: false, error: e });
+   return res.json({ success: false, error: e });
   }
 })
 
@@ -105,7 +105,7 @@ router.route("/:id").get(async (req, res) => {
         console.log("something went wrong");
       }
 
-      res.render("event", {
+      return res.render("event", {
         title: "Event Details",
         event: eventDetail,
         isHost: true,
@@ -116,7 +116,7 @@ router.route("/:id").get(async (req, res) => {
         isRegistered,
       });
     } else {
-      res.render("event", {
+      return res.render("event", {
         title: "Event Details",
         event: eventDetail,
         isHost: false,
@@ -126,7 +126,7 @@ router.route("/:id").get(async (req, res) => {
       });
     }
   } else {
-    res.render("event", {
+    return res.render("event", {
       title: "Event Details",
       event: eventDetail,
       isHost: false,
@@ -170,7 +170,7 @@ router.route("/edit/:id").get(async (req, res) => {
       let eventDetail = await eventData.getEventByEventId(req.params.id);
 
       if(eventDetail.host_info.host_id === userId) {
-        res.render("edit_event", {
+        return res.render("edit_event", {
           title: "Edit Event",
           event: eventDetail,
           user:true,
@@ -227,7 +227,7 @@ router.route("/edit/:id").patch(async (req, res) => {
       res.status(403).render("error", {error: 403});
     }
   }catch(e){
-    res.json({ success: false, error: e });
+    return res.json({ success: false, error: e });
   }
 });
 

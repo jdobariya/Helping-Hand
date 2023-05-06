@@ -66,7 +66,7 @@ export function isUserAdult(birth_date) {
     age--;
   }
   if(age < 18) {
-    throw "Error: you are not 18 year old or older."
+    throw "User should be atleast 18 years old"
   }
 }
 
@@ -220,7 +220,7 @@ export function isValidFeedback(feedback) {
 
 export function isValidImageUrl(image_url) {
 
-  const imageRegex = /\.(gif|jpg|jpeg|tiff|png|avif)$/i; // Regular expression pattern
+  const imageRegex = /\.(gif|jpg|jpeg|tiff|png|avif)$/i; 
 
   if (imageRegex.test(image_url)) {
     return image_url;

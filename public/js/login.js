@@ -1,5 +1,10 @@
-function onSubmitClicked() {
+
   let errorMessage = document.getElementById("error_message");
+  let login=document.getElementById("login_form");
+  if(login)
+  {
+    login.addEventListener('submit',(event)=>
+    {
   event.preventDefault();
   try{
     let email = document.getElementById("email").value;
@@ -16,7 +21,7 @@ function onSubmitClicked() {
     errorMessage.hidden = false;
     errorMessage.innerHTML = e;
   }
-}
+})}
 
 function checkString(strVal, varName) {
   if (!strVal) throw `You must supply a ${varName}!`;
