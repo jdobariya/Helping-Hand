@@ -151,7 +151,48 @@
     <footer id="footer">
       <p></p>
     </footer>
-    <script src="/public/js/events.js"></script>
-    <script src="/public/js/accessiblityfunc.js"></script>
+     <script src="/public/js/events.js"></script>
+    <script>
+      document.getElementById("footer").getElementsByTagName("p")[0].innerHTML =
+      "&copy; " + new Date().getFullYear() + " Helping Hands, Inc";
+    </script>
+   
+
+    <script>
+      var eventSliderIndex = 2; 
+      $(".homepage-events .card").css({"max-width":
+      "33%","display":"none"}); 
+      for(let card=0;card < 3;card++ ){
+      $(`.homepage-events .card-${card}`).css( "display","" ); }
+
+   
+        $("#pre").html("<"); $("#next").html(">"); 
+        $("#pre").prop('disabled',true); 
+  
+        function showNextEvent(event){ 
+
+          $("#pre").prop('disabled', false); 
+          eventSliderIndex++;
+          if($(".homepage-events .card").length-1 === eventSliderIndex ){
+          $("#next").prop('disabled', true); } 
+          $(`.homepage-events .card-${eventSliderIndex}`).css( "display","" ); $(`.homepage-events .card-${eventSliderIndex-3}`).css( "display","none" ); 
+        };
+
+        
+        function showPreEvent(event){
+          $("#next").prop('disabled', false); if(eventSliderIndex === 3){
+          $("#pre").prop('disabled', true)}; $(`.homepage-events
+          .card-${eventSliderIndex}`).css( "display","none" ); $(`.homepage-events
+          .card-${eventSliderIndex-3}`).css( "display","" ); eventSliderIndex--;
+        };
+
+      $(document).ready(function() {
+        let els = document.getElementsByClassName("card");
+        Array.prototype.forEach.call(els, function(el) {
+          console.log(el.getElementsByClassName("card-text")[0].textContent);
+          el.getElementsByClassName("card-text")[0].innerHTML = el.getElementsByClassName("card-text")[0].textContent.trim().substring(0,100).trim().replace(/.$/,"")+"...";   
+        });
+      });
+    </script>
   </body>
 </html>

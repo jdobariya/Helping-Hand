@@ -2,10 +2,10 @@ import xss from 'xss';
 
 export const sanitizeUserInput = (req, res, next) => {
      const inputString = JSON.stringify(req.body);
-     console.log(inputString)
+    // console.log(inputString)
     const sanitizedInput = xss(inputString);
     const outputObject = JSON.parse(sanitizedInput);
-    console.log(outputObject)
+    //console.log(outputObject)
     req.body = outputObject;
     next();
   };
