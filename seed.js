@@ -2159,7 +2159,7 @@ let event_ids = []
 
 async function seedUsers(){
 
-    for (let i in users_data.length){       
+    for (let i = 0; i < users_data.length; i++){       
         try{
             const id = await userData.seedUser(
                 users_data[i].first_name,
@@ -2192,7 +2192,7 @@ async function seedUsers(){
 }
 
 async function seedEvents(){
-    for (let i in events_data.length){
+    for (let i = 0; i < events_data.length; i++){
         try{
             const host_info = host_info_list[Math.floor(Math.random() * (host_info_list.length + 1))]
             const event = await eventData.addEvent(
