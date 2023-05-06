@@ -5,7 +5,6 @@
   background-size: cover;
   background-position: center;
   width: 100%;
-
 }
 #home {
   text-align: center;
@@ -53,7 +52,7 @@
   font-size: 18pt;
   font-weight: bolder;
 }
-#city-name {
+.homepage-events .city-name {
   padding-left: 10px;
   padding-bottom: 25px;
   color: rgb(64, 118, 13);
@@ -96,7 +95,6 @@
   background-color: #0069d9;
 }
 
-
 #ending {
   color: rgb(214, 31, 31);
   display: block;
@@ -131,15 +129,11 @@
   right: 0;
 }
 
-=======
-#pre
-{
-  left:0;
+#pre {
+  left: 0;
 }
-#next
-{
-  right:0;
-
+#next {
+  right: 0;
 }
 
 .control-btn {
@@ -149,11 +143,9 @@
   border: 0;
 }
 
-
 .homepage-events .card {
   border: 0;
 }
-
 
 @media screen and (max-width: 500px) {
   .homepage-events .card {
@@ -166,20 +158,23 @@
   box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease-out;
   height: 250px;
-  width:350px
+  width: 350px;
 }
 
-
-.homepage-events .image:hover,.homepage-events .card:hover {
-
+.homepage-events .image:hover,
+.homepage-events .card:hover {
   transform: scale(1.1);
   background-color: white;
 }
-#eventA {
+.eventA {
   text-decoration: none;
   color: black;
+  text-align: center;
 }
 
+.eventA p {
+  text-align: left;
+}
 
 #ending {
   color: rgb(214, 31, 31);

@@ -1,10 +1,18 @@
 <main id="indi-event">
   <div class="event-img">
+    {{#if event.image_url}}
     <img
       src="/public/images/{{event.image_url}}"
       class="card-img-top"
       alt="{{event.alt}}"
     />
+    {{else}}
+    <img
+      src="/public/images/No_Image_Available.jpg"
+      class="image"
+      alt="No Image Available for this event"
+    />
+    {{/if}}
   </div>
   <div class="event-container">
     <div class="host-time">
@@ -16,13 +24,38 @@
     <div class="about-event">
       <p><span><strong>About:</strong>&nbsp;</span>{{event.description}}</p>
     </div>
-    <div class="event-registeration">
-      <form action="/registerEvent">
-        <input type="submit" name="register-btn" value="REGISTER NOW" />
-      </form>
-    </div>
+    {{#if isHost}}
+      <div class="event-edit">
+
+        <a href="/event/edit/{{event._id}}">
+          <button type="button">EDIT EVENT</button>
+        </a>
+      </div>
+    {{else if user}}
+      <div class="event-registeration" id="event-r-btn">
+        {{#if isRegistered}}
+          <button
+            type="submit"
+            id="unregister-btn"
+            onclick="UnRegisterEvent('{{event_id}}')"
+          >
+            UNREGISTER
+          </button>
+        {{else}}
+          <button
+            type="submit"
+            id="register-btn"
+            onclick="registerEvent('{{event._id}}')"
+          >REGISTER NOW</button>
+        {{/if}}
+      </div>
+    {{else}}
+      <div class="login-btn">
+        <a href="/login">LOGIN FOR REGISTRATION</a>
+      </div>
+    {{/if}}
     <div class="event-location">
-      <p>When and Where</p>
+      <p class="event-sub-title">When and Where</p>
       <div class="time-loc-wrapper">
         <div class="event-time">
           <p>Date and Time</p>
@@ -48,10 +81,9 @@
           </p>
         </div>
       </div>
-
     </div>
     <div class="event-deadline">
-      <p>Registration Deadline</p>
+      <p class="event-sub-title">Registration Deadline</p>
       <div class="time-loc-wrapper">
         <div class="event-time">
           <p>Date and Time</p>
@@ -60,7 +92,7 @@
       </div>
     </div>
     <div class="event-host">
-      <p class="event-d-title">About the organizer</p>
+      <p class="event-sub-title">About the organizer</p>
       <div class="host-deatil">
         <p><span>Host:&nbsp;</span>
           {{event.host_info.host_name}}
@@ -73,6 +105,34 @@
         </p>
       </div>
     </div>
+
+    {{#if isHost}}
+      <div class="volunteer-list">
+        <p class="event-sub-title">Volunteer List&nbsp;({{volunteersCount}})</p>
+        {{#each volunteerList}}
+
+          <div class="card w-50">
+            <div class="card-body">
+              <div class="volunteer">
+                {{#ifCond first_name "||" last_name}}
+                  <h5
+                    class="card-title"
+                  >Name:&nbsp;{{first_name}}&nbsp;{{last_name}}</h5>
+                {{/ifCond}}
+                <div class="volunteer-contact">
+                  {{#if contact}}
+                    <p class="card-text">Contact:&nbsp;{{contact}}</p>
+                  {{/if}}
+                  {{#if email}}
+                    <p class="card-text">Email:&nbsp;{{email}}</p>
+                  {{/if}}
+                </div>
+              </div>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    {{/if}}
   </div>
 
 </main>

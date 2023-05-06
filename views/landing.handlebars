@@ -1,48 +1,97 @@
-<main>
-  <div class="future">
-    <h3>Your Upcoming events</h3>
-    <div class="row">
-    {{#each future}}
-    <div class="cols col-md-6">
-        <div class="card">
-      <a id="eventA" href="event/{{_id}}">
-       <h5 class="card-title">{{event_name}}</h5>
-        <p id="updated_info">{{updated}}</p>
-       
-        <p id="city-name">{{location.address}}, {{location.city }}, {{location.state}}</p>
-        <p><span>Registration Deadline:</span>&nbsp;{{application_deadline}}</p>
-      </a>
-      </div>
-      </div>
-    {{else}}
-    <p class="empty">You haven't registered for any events</p>
-    <a id="link_to_events" href="/events">Click here to go to events page</a>
-    {{/each}}
-    </div>
-  </div>
+<main id="yourEvents">
+  <div class="participated-event">
+    <div class="future">
+      <h3>Your Registered Events</h3>
+      <div class="row">
+        <h4>Upcoming Events</h4>
+        {{#each futureParticipated}}
 
-  <div class="expired">
-    {{#if isHost}}
-    <h3>Your past events</h3>
-    {{else}}
-    <h3>Your hosted events</h3>
-    {{/if}}
-     <div class="row">
-    {{#each expired}}
-    <div class="cols col-md-6">
-        <div class="card">
-      <a id="eventA" href="event/{{_id}}">
-       <h5 class="card-title">{{event_name}}</h5>
-       
-        <p id="city-name">{{location.city}}, {{location.state}}  </p> 
-        <p>Event ended on: {{host_time}}</p>
-      </a>
+          <div class="card">
+            <a class="eventA" href="event/{{_id}}">
+              <h5 class="card-title">{{event_name}}</h5>
+              <p class="updated_info">{{updated}}</p>
+              <p class="city-name">{{location.address}},
+                {{location.city}},
+                {{location.state}}</p>
+              <p><span>Registration Deadline:</span>&nbsp;{{application_deadline}}</p>
+            </a>
+          </div>
+
+        {{else}}
+          <p class="empty">No upcoming events to show</p>
+          <a id="link_to_events" href="/events">Click here to browse events page</a>
+        {{/each}}
+      </div>
     </div>
+
+    <div class="expired">
+
+      <h3>Participated Events</h3>
+
+      <div class="row">
+        {{#each expiredParticipated}}
+
+          <div class="card">
+            <a class="eventA" href="event/{{_id}}">
+              <h5 class="card-title">{{event_name}}</h5>
+
+              <p class="city-name">{{location.city}}, {{location.state}} </p>
+              <p>Event ended on: {{host_time}}</p>
+            </a>
+          </div>
+
+        {{else}}
+          <p class="empty">You haven't participated in any events</p>
+          <a id="link_to_events" href="/events">Click here to browse events page</a>
+        {{/each}}
+      </div>
     </div>
-    {{else}}
-    <p class="empty">You haven't participated in any events</p>
-    <a id="link_to_events" href="/events">Click here to go to events page</a>
-    {{/each}}
   </div>
+  <div class="hosted-event">
+    <div class="future">
+      <h3>Your Hosted Events</h3>
+      <div class="row">
+        <h4>Upcoming Events</h4>
+        {{#each futureHost}}
+          <div class="card">
+            <a class="eventA" href="event/{{_id}}">
+              <h5 class="card-title">{{event_name}}</h5>
+              <p class="updated_info">{{updated}}</p>
+              <p class="city-name">{{location.address}},
+                {{location.city}},
+                {{location.state}}</p>
+              <p><span>Registration Deadline:</span>&nbsp;{{application_deadline}}</p>
+            </a>
+          </div>
+
+        {{else}}
+          <p class="empty">No upcoming events to show</p>
+          <a id="link_to_events" href="/events">Click here to browse events page</a>
+        {{/each}}
+      </div>
+    </div>
+
+    <div class="expired">
+
+      <h3>Past organized Events</h3>
+
+      <div class="row">
+        {{#each expiredHost}}
+
+          <div class="card">
+            <a class="eventA" href="event/{{_id}}">
+              <h5 class="card-title">{{event_name}}</h5>
+
+              <p class="city-name">{{location.city}}, {{location.state}} </p>
+              <p>Event ended on: {{host_time}}</p>
+            </a>
+          </div>
+
+        {{else}}
+          <p class="empty">You haven't organized any events</p>
+          <a id="link_to_events" href="/events">Click here to browse events page</a>
+        {{/each}}
+      </div>
+    </div>
   </div>
 </main>

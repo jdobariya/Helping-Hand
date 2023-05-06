@@ -15,7 +15,6 @@
 
   </div>
 
-
   <div class="event-row-container">
     <div class="row">
       {{#each allEvents}}
@@ -25,11 +24,19 @@
           data-recent="{{release_time}}"
           data-due="{{application_deadline}}"
         >
-          <img
-            src="/public/images/{{image_url}}"
-            class="card-img-top"
-            alt="..."
-          />
+          {{#if image_url}}
+            <img
+              src="/public/images/{{image_url}}"
+              class="image"
+              alt="{{alt}}"
+            />
+            {{else}}
+            <img
+              src="/public/images/No_Image_Available.jpg"
+              class="image"
+              alt="No Image Available for this event"
+            />
+            {{/if}}
           <div class="card-body">
             <h5 class="card-title"><a
                 href="event/{{_id}}"
@@ -45,4 +52,5 @@
       {{/each}}
     </div>
   </div>
+
 </main>
