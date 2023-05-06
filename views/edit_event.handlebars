@@ -190,6 +190,8 @@
 
     <script src="/public/js/edit_event.js" ></script>
     <script>
+      window.release_time = "{{release_time}}";
+
         const state = "{{location.state}}";
         let select = document.getElementById("state");
         for (let i = 0; i < select.options.length; i++) {
@@ -200,24 +202,26 @@
         }
 
         let currentDate = new Date();
-        currentDate.setMonth(currentDate.getMonth() + 3);
+
+        let releaseDate = new Date({{release_time}});
+        releaseDate.setMonth(releaseDate.getMonth() + 6);
 
         let date = new Date({{application_deadline}});
         let app_deadline = document.getElementById("app_deadline");
         app_deadline.value = date.toISOString().slice(0,16);
 
-        app_deadline.min = date.toISOString().slice(0,16);
+        app_deadline.min = currentDate.toISOString().slice(0,16);
 
-        app_deadline.max = currentDate.toISOString().slice(0,16);
+        app_deadline.max = releaseDate.toISOString().slice(0,16);
 
 
         date = new Date({{host_time}});
         let host_time = document.getElementById("host_time");
         host_time.value = date.toISOString().slice(0,16);
 
-        host_time.min = date.toISOString().slice(0,16);
+        host_time.min = currentDate.toISOString().slice(0,16);
 
-        host_time.max = currentDate.toISOString().slice(0,16);
+        host_time.max = releaseDate.toISOString().slice(0,16);
         
     </script>
 {{/with}}
