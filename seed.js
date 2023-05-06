@@ -2,7 +2,7 @@ import {userData,eventData} from "./data/index.js"
 import {dbConnection, closeConnection} from './config/mongoConnection.js';
 
 // const db = await dbConnection();
-// db.dropDatabase();
+// awaitdb.dropDatabase();
 
 const events_data = [
     {
