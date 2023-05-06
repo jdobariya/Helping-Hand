@@ -46,5 +46,5 @@ function checkPassword(password){
   if(!isNaN(password)) throw "Password cannot be a number";
   if(!password.match(/[A-Z]/)) throw "Password must contain at least one uppercase character";
   if(!password.match(/[0-9]/)) throw "Password must contain at least one number";
-  if(!password.match(/[!@#$%^&*]/)) throw "Password must contain at least one special character";
+  if(!password.match(/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+=[\]{}|\\,.?'";:/<>\-])\S{8,}$/)) throw "Password must contain at least one special character";
 }
