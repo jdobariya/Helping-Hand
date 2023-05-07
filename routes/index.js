@@ -8,7 +8,7 @@ import eventRoutes from "./event.js";
 import searchRoute from "./search.js";
 import landingRoute from "./landing.js";
 import profileRoute from "./profile.js";
-
+import { changeDateFormat } from "./events.js";
 const constructorMethod = (app) => {
   app.get("/", (req, res) => {
     return res.redirect("/home");
@@ -16,17 +16,7 @@ const constructorMethod = (app) => {
 
   app.use("/home", async (req, res) => {
     let events = await eventData.getAllAppEvents();
-    const longEnUSFormatter = new Intl.DateTimeFormat("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
-
-    events.forEach((eventDetail) => {
-      eventDetail.application_deadline = longEnUSFormatter
-        .format(new Date(eventDetail.application_deadline))
-        .toString();
-    });
+    events = changeDateFormat(events);
 
     if (req.session && req.session.loggedIn) {
       return res.render("homepage", {

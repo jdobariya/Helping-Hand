@@ -82,6 +82,9 @@ router.route("/:id").get(async (req, res) => {
     year: "numeric",
     month: "long",
     day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
   });
 
   eventDetail["etime"] = longEnUSFormatter.format(

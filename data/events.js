@@ -150,15 +150,34 @@ const exportedMethods = {
   },
 
   // will return all app's events
-  async getAllAppEvents() {
+  async getAllAppEvents(limit, skip) {
     const eventCollection = await events();
 
-    let all = await eventCollection.find({}).toArray();
-    all = all.map((element) => {
-      element._id = element._id.toString();
-      return element;
-    });
-    return all;
+    if (limit) {
+      if (!skip) skip = 0;
+      let all = await eventCollection
+        .find({})
+        .skip(skip)
+        .limit(limit)
+        .toArray();
+      all = all.map((element) => {
+        element._id = element._id.toString();
+        return element;
+      });
+      return all;
+    } else {
+      let all = await eventCollection.find({}).toArray();
+      all = all.map((element) => {
+        element._id = element._id.toString();
+        return element;
+      });
+      return all;
+    }
+  },
+
+  async getEventsCount() {
+    const eventCollection = await events();
+    return eventCollection.count();
   },
 
   async getEventByEventId(_id) {
