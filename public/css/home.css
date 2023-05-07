@@ -55,6 +55,8 @@
 .homepage-events .city-name {
   padding-left: 10px;
   padding-bottom: 25px;
+  font-style: italic;
+  font-size: 22px;
   color: rgb(64, 118, 13);
 }
 .dropdown-menu {
@@ -130,11 +132,11 @@
 }
 
 #pre {
-  left: 0;
-  color:#949494;
+
+  color:black;
 }
 #next {
-  right: 0;
+  color:black;
 }
 
 .control-btn {
@@ -249,7 +251,7 @@
 
 .homepage-events .card {
   border: 0;
-  background-color: rgb(219, 216, 216);
+  background-color: rgb(240, 235, 235);
 }
 
 @media screen and (max-width: 500px) {
