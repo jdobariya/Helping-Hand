@@ -7,7 +7,7 @@
   </div>
 
   <section class="homepage-events">
-    <h3 id="popular">Popular Events</h3>
+    <h1 id="popular">Popular Events</h1>
 
     <div class="row-container">
       <div class="row">
@@ -24,12 +24,14 @@
 
             </a>
             <div class="card-body">
-              <h5 class="card-title">
-                {{event_name}}</h5>
+
+              <h2 class="card-title">
+                {{event_name}}</h2>
               <p class="city-name">{{location.city}}</p>
               <p class="card-text">{{description}}</p>
                 {{> like }}
               <p><span>Registration Deadline:</span>&nbsp;{{application_deadline}}</p>
+
             </div>
 
           </div>

@@ -46,7 +46,7 @@ footer {
 .navbar-brand:hover::before {
   content: "\1F64C"; /* Unicode value for hands emoji */
   position: absolute;
-  top: -8;
+  top: 0;
   left: 120%;
   transform: translateX(-50%);
   font-size: 30px;
@@ -83,7 +83,6 @@ li.search input[type="text"] {
 .navbar-brand:hover::before {
   content: "\1F64C"; /* Unicode value for hands emoji */
   position: absolute;
-  top: -8;
   left: 120%;
   transform: translateX(-50%);
   font-size: 30px;
@@ -109,7 +108,7 @@ li.search input[type="text"] {
 #searchButton {
   float: left;
   width: 10%;
-  padding: 14px;
+  padding: 10px;
   background: #2196F3;
   color: white;
   font-size: 17px;

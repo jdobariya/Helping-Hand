@@ -17,9 +17,11 @@
 
 .card .card-title a {
   text-decoration: none !important;
+  
 }
 .card .card-title a:hover {
   color: crimson;
+
 }
 .row-container {
   margin: 20px 20px 20px 30px;
@@ -35,7 +37,12 @@
 .empty {
   display: block;
 }
-
+.card-title
+{
+  font-size: 25px;
+  font-style: oblique;
+  color:rgb(5, 68, 25)
+}
 @media screen and (max-width: 768px) {
   .col {
     min-width: 100% !important;
