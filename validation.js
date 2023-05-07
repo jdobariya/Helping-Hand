@@ -1,6 +1,6 @@
 import { ObjectId } from "mongodb";
-import fs from 'fs';
-import sharp from "sharp"; 
+import fs from "fs";
+import sharp from "sharp";
 
 export function isValidString(str) {
   if (!str) {
@@ -65,8 +65,8 @@ export function isUserAdult(birth_date) {
   if (now < new Date(now.getFullYear(), dob.getMonth(), dob.getDate())) {
     age--;
   }
-  if(age < 18) {
-    throw "User should be atleast 18 years old"
+  if (age < 18) {
+    throw "User should be atleast 18 years old";
   }
 }
 
@@ -90,15 +90,17 @@ export function isValidTimeStamp(timestamp) {
   return date instanceof Date && !isNaN(date);
 }
 
-export function isValidEventTime(timestamp, release_time){
-  if(!isValidTimeStamp(timestamp)) throw "Error: Invalid timestamp";
+export function isValidEventTime(timestamp, release_time) {
+  if (!isValidTimeStamp(timestamp)) throw "Error: Invalid timestamp";
   const date = new Date(timestamp);
   const currentDate = new Date();
-  if(date.getTime() < currentDate.getTime()) throw "Error: Application Deadline should be in future";
+  if (date.getTime() < currentDate.getTime())
+    throw "Error: Application Deadline should be in future";
 
   const releaseDate = new Date(release_time);
   releaseDate.setMonth(releaseDate.getMonth() + 6);
-  if(date.getTime() > releaseDate.getTime()) throw "Error: Application Deadline should be within 6 months from Release Date";
+  if (date.getTime() > releaseDate.getTime())
+    throw "Error: Application Deadline should be within 6 months from Release Date";
 
   return timestamp;
 }
@@ -219,8 +221,7 @@ export function isValidFeedback(feedback) {
 }
 
 export function isValidImageUrl(image_url) {
-
-  const imageRegex = /\.(gif|jpg|jpeg|tiff|png|avif)$/i; 
+  const imageRegex = /\.(gif|jpg|jpeg|tiff|png|avif)$/i;
 
   if (imageRegex.test(image_url)) {
     return image_url;
@@ -242,7 +243,7 @@ export function checkEventsInputs(
   volunteers = [],
   stories = [],
   feedbacks = [],
-  likes = 0
+  likes = []
 ) {
   event_name = isValidString(event_name);
   description = isValidString(description);
@@ -282,36 +283,32 @@ export function checkEventsInputs(
     stories,
     feedbacks,
     likes,
-
     image_url,
-
   };
 }
-export function searchObject(obj,regex) {
+export function searchObject(obj, regex) {
   for (const prop in obj) {
     if (typeof obj[prop] === "object") {
-      if (searchObject(obj[prop],regex)) {
+      if (searchObject(obj[prop], regex)) {
         return true;
-      }}
-     else if (obj[prop])
-    {
-      if(regex.test(obj[prop])) {
-      return true;
+      }
+    } else if (obj[prop]) {
+      if (regex.test(obj[prop])) {
+        return true;
+      }
+    }
   }
-  }}
   return false;
 }
 
-
-export function imageToAlt(image_url)
-{
+export function imageToAlt(image_url) {
   sharp(image_url)
-  .metadata()
-  .then(metadata => {
+    .metadata()
+    .then((metadata) => {
       const altText = metadata.exif.ImageDescription;
-      return altText
+      return altText;
     })
-  .catch(err => {
-    console.log(err);
-  });
+    .catch((err) => {
+      console.log(err);
+    });
 }

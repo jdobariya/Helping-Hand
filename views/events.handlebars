@@ -31,17 +31,21 @@
               class="image"
               alt="{{alt}}"
             />
-            {{else}}
+          {{else}}
             <img
               src="/public/images/No_Image_Available.jpg"
               class="image"
               alt="No Image Available for this event"
             />
-            {{/if}}
+          {{/if}}
           <div class="card-body">
             <h5 class="card-title">{{event_name}}</h5>
             <p class="card-text">{{description}}</p>
-            <p>{{likes}}&nbsp;<i class="fa fa-heart"></i></p>
+            <p>{{likes.length}}&nbsp;<i
+                class="fa fa-heart"
+                onclick="likeEvent('{{_id}}')"
+              ></i>
+            </p>
             <p><span>Registration Deadline:</span>&nbsp;{{application_deadline}}</p>
 
           </div>

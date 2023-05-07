@@ -235,11 +235,12 @@
 #sliderControls {
   justify-content: center;
   display: flex;
+  margin-top: 20px;
 }
 
 .control-btn {
   margin: 5px 10px 5px 10px;
-  font-size: 2rem;
+  font-size: 3rem;
   background-color: transparent;
   border: 0;
 }

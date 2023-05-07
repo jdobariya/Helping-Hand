@@ -11,26 +11,29 @@
 
     <div class="row-container">
       <div class="row">
-  
+
         {{#each allEvents}}
-      
+
           <div class="card card-{{@index}}">
             <a class="eventA" href="event/{{_id}}">
-            <img
-              src="/public/images/{{image_url}}"
-              class="image"
-              alt="{{alt}}"
-            />
+              <img
+                src="/public/images/{{image_url}}"
+                class="image"
+                alt="{{alt}}"
+              />
+
+            </a>
             <div class="card-body">
               <h5 class="card-title">
                 {{event_name}}</h5>
-                 <p class="city-name">{{location.city}}</h4>
-                <p class="card-text">{{description}}</p>
-                <p>{{likes}}&nbsp;<i class="fa fa-heart"></i></p>
-                <p><span>Registration Deadline:</span>&nbsp;{{application_deadline}}</p>
+              <p class="city-name">{{location.city}}</p>
+              <p class="card-text">{{description}}</p>
+              <p>{{likes.length}}&nbsp;<i
+                  class="fa fa-heart"
+                  onclick="likeEvent('{{_id}}')"
+                ></i></p>
+              <p><span>Registration Deadline:</span>&nbsp;{{application_deadline}}</p>
             </div>
-
-              </a>
 
           </div>
 
@@ -40,8 +43,16 @@
 
       </div>
       <div id="sliderControls">
-        <button id="pre" class="control-btn" onclick="showPreEvent(event)"></button>
-        <button id="next" class="control-btn" onclick="showNextEvent(event)"></button>
+        <button
+          id="pre"
+          class="control-btn"
+          onclick="showPreEvent(event)"
+        ></button>
+        <button
+          id="next"
+          class="control-btn"
+          onclick="showNextEvent(event)"
+        ></button>
       </div>
     </div>
   </section>

@@ -153,3 +153,15 @@ function UnRegisterEvent(event_id) {
     }
   });
 }
+
+//like event
+
+function likeEvent(event_id) {
+  if (!event_id) alert("Must provide event id");
+  if (typeof event_id !== "string") alert("Event id must be of type string");
+
+  if (localStorage.getItem("status") === "loggedIn") {
+  } else {
+    location.replace("/profile");
+  }
+}
