@@ -149,6 +149,43 @@ const exportedMethods = {
     return true;
   },
 
+  async getPopularEvents(limit, skip) {
+    const eventCollection = await events();
+
+    if (!limit) limit = 0;
+    if (!skip) skip = 0;
+    let popularEvents = await eventCollection
+      .aggregate([
+        { $match: { application_deadline: { $gte: new Date().getTime() } } },
+
+        {
+          $project: {
+            event_name: 1,
+            description: 1,
+            release_time: 1,
+            application_deadline: 1,
+            host_time: 1,
+            location: 1,
+            image_url: 1,
+            volunteers: 1,
+            host_info: 1,
+            stories: 1,
+            feedbacks: 1,
+            likes: 1,
+            likeCount: { $size: { $ifNull: ["$likes", []] } },
+          },
+        },
+        {
+          $sort: { likeCount: -1 },
+        },
+      ])
+      .skip(skip)
+      .limit(limit)
+      .toArray();
+
+    return popularEvents;
+  },
+
   // will return all app's events
   async getAllAppEvents(limit, skip) {
     const eventCollection = await events();

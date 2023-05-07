@@ -15,21 +15,21 @@ const constructorMethod = (app) => {
   });
 
   app.use("/home", async (req, res) => {
-    let events = await eventData.getAllAppEvents();
-    events = changeDateFormat(events);
+    let popularEvents = await eventData.getPopularEvents(10); //showing top 10 popular events
+    popularEvents = changeDateFormat(popularEvents);
 
     if (req.session && req.session.loggedIn) {
       return res.render("homepage", {
         title: "Helping Hands",
         user: true,
-        allEvents: events,
+        allEvents: popularEvents,
         first_name: req.session.first_name,
       });
     } else {
       return res.render("homepage", {
         title: "Helping Hands",
         user: false,
-        allEvents: events,
+        allEvents: popularEvents,
       });
     }
   });
