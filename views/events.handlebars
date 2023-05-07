@@ -24,7 +24,7 @@
           data-recent="{{release_time}}"
           data-due="{{application_deadline}}"
         >
-        <a class="eventA" href="event/{{_id}}">
+
           {{#if image_url}}
             <img
               src="/public/images/{{image_url}}"
@@ -39,17 +39,15 @@
             />
           {{/if}}
           <div class="card-body">
-            <h5 class="card-title">{{event_name}}</h5>
+            <a class="eventA" href="event/{{_id}}">
+              <h5 class="card-title">{{event_name}}</h5></a>
             <p class="card-text">{{description}}</p>
-            <p>{{likes.length}}&nbsp;<i
-                class="fa fa-heart"
-                onclick="likeEvent('{{_id}}')"
-              ></i>
-            </p>
+
+               {{> like }}
             <p><span>Registration Deadline:</span>&nbsp;{{application_deadline}}</p>
 
           </div>
-          </a>
+
         </div>
       {{else}}
         <p class="empty">No content</p>

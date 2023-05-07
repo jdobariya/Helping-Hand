@@ -28,10 +28,7 @@
                 {{event_name}}</h5>
               <p class="city-name">{{location.city}}</p>
               <p class="card-text">{{description}}</p>
-              <p>{{likes.length}}&nbsp;<i
-                  class="fa fa-heart"
-                  onclick="likeEvent('{{_id}}')"
-                ></i></p>
+                {{> like }}
               <p><span>Registration Deadline:</span>&nbsp;{{application_deadline}}</p>
             </div>
 

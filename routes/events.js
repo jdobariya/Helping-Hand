@@ -10,7 +10,6 @@ export function changeDateFormat(events) {
     month: "short",
     day: "numeric",
   });
-  let deadlineDateAndTime;
 
   for (let i = 0; i < events.length; i++) {
     events[i].application_deadline = longEnUSFormatter
@@ -20,6 +19,7 @@ export function changeDateFormat(events) {
 
   return events;
 }
+
 router.route("/").get(async (req, res) => {
   let events = await eventData.getAllAppEvents();
   let eventRows = changeDateFormat(events);
@@ -36,6 +36,23 @@ router.route("/").get(async (req, res) => {
       user: false,
       allEvents: eventRows,
     });
+  }
+});
+
+router.route("/").patch(async (req, res) => {
+  if (req.body.reqType === "like") {
+    try {
+      let updatedEventLikeCount = await eventData.addAndRemoveLikes(
+        req.body.event_id,
+        req.session.user_id
+      );
+      if (updatedEventLikeCount)
+        res
+          .status(200)
+          .json({ success: true, likeCount: updatedEventLikeCount });
+    } catch (e) {
+      res.status(500).json({ success: false, error: e });
+    }
   }
 });
 

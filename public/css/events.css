@@ -116,3 +116,7 @@
     max-width: 100%;
   }
 }
+
+.event-row-container .row {
+  width: 100%;
+}
