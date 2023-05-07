@@ -24,28 +24,33 @@
           data-recent="{{release_time}}"
           data-due="{{application_deadline}}"
         >
-        <a class="eventA" href="event/{{_id}}">
+
           {{#if image_url}}
             <img
               src="/public/images/{{image_url}}"
               class="image"
               alt="{{alt}}"
             />
-            {{else}}
+          {{else}}
             <img
               src="/public/images/No_Image_Available.jpg"
               class="image"
               alt="No Image Available for this event"
             />
-            {{/if}}
+          {{/if}}
           <div class="card-body">
-            <p class="card-title">{{event_name}}</p>
+
+            <a class="eventA" href="event/{{_id}}">
+
+            <p class="card-title">{{event_name}}</p></a>
+
             <p class="card-text">{{description}}</p>
-            <p>{{likes}}&nbsp;<i class="fa fa-heart"></i></p>
+
+               {{> like }}
             <p><span>Registration Deadline:</span>&nbsp;{{application_deadline}}</p>
 
           </div>
-          </a>
+
         </div>
       {{else}}
         <p class="empty">No content</p>

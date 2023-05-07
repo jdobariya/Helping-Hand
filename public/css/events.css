@@ -28,9 +28,12 @@
 }
 
 .fa-heart {
-  color: red;
+  color: purple;
 }
 
+.fa-heart:hover {
+  color: red;
+}
 .empty {
   display: block;
 }
@@ -119,4 +122,8 @@
     min-width: 100%;
     max-width: 100%;
   }
+}
+
+.event-row-container .row {
+  width: 100%;
 }

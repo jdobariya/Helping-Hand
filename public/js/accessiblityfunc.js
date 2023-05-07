@@ -153,3 +153,27 @@ function UnRegisterEvent(event_id) {
     }
   });
 }
+
+//like event
+
+function likeEvent(ele, event_id) {
+  if (!event_id) alert("Must provide event id");
+  if (typeof event_id !== "string") alert("Event id must be of type string");
+  let requestConfig = {
+    url: `events`,
+    method: "PATCH",
+    data: { reqType: "like", event_id },
+  };
+  if (localStorage.getItem("status") === "loggedIn") {
+    $.ajax(requestConfig).then(function (responseMessage) {
+      if (responseMessage.success) {
+        ele.parentElement.getElementsByClassName("likeCount")[0].innerHTML =
+          responseMessage.likeCount;
+      } else {
+        alert("Something went wrong! Please try again later.");
+      }
+    });
+  } else {
+    window.location.href = "/profile";
+  }
+}

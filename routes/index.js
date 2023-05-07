@@ -53,7 +53,7 @@ const constructorMethod = (app) => {
   app.use("/landing", landingRoute);
   app.use("/profile", profileRoute);
   app.use("*", (req, res) => {
-    res.status(404).render("error", {error: 404});
+    res.status(404).render("error", { error: 404 });
   });
 };
 export default constructorMethod;

@@ -131,3 +131,9 @@
 #unregister-btn {
   background-color: rgb(183, 61, 61);
 }
+
+.reg-closed-msg {
+  text-align: center;
+  font-size: 20px;
+  color: rgb(183, 61, 61);
+}
