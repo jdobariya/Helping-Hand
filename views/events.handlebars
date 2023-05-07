@@ -18,44 +18,18 @@
   <div class="event-row-container">
     <div class="row">
       {{#each allEvents}}
-        <div
-          class="card"
-          data-popularity="{{likes}}"
-          data-recent="{{release_time}}"
-          data-due="{{application_deadline}}"
-        >
-
-          {{#if image_url}}
-            <img
-              src="/public/images/{{image_url}}"
-              class="image"
-              alt="{{alt}}"
-            />
-          {{else}}
-            <img
-              src="/public/images/No_Image_Available.jpg"
-              class="image"
-              alt="No Image Available for this event"
-            />
-          {{/if}}
-          <div class="card-body">
-
-            <a class="eventA" href="event/{{_id}}">
-
-            <p class="card-title">{{event_name}}</p></a>
-
-            <p class="card-text">{{description}}</p>
-
-               {{> like }}
-            <p><span>Registration Deadline:</span>&nbsp;{{application_deadline}}</p>
-
-          </div>
-
-        </div>
+        {{> card_partial }}
       {{else}}
         <p class="empty">No content</p>
       {{/each}}
     </div>
+    
   </div>
+  {{#ifCond totalEventsCount '>' currEventCount}}
+  <div id="load-event-btn" >
+      <button onclick="fetchMoreEvents()">See More</button>
+  </div>
+
+  {{/ifCond}}
 
 </main>

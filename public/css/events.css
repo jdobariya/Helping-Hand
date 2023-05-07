@@ -17,11 +17,9 @@
 
 .card .card-title a {
   text-decoration: none !important;
-  
 }
 .card .card-title a:hover {
   color: crimson;
-
 }
 .row-container {
   margin: 20px 20px 20px 30px;
@@ -37,11 +35,13 @@
 .empty {
   display: block;
 }
-.card-title
-{
+.card-title {
   font-size: 25px;
-  font-style: oblique;
-  color:rgb(5, 68, 25)
+  /* font-style: oblique; */
+  color: rgb(5, 68, 25);
+}
+.card-title:hover {
+  color: darkblue;
 }
 .card-title:hover
 {
@@ -130,4 +130,18 @@
 
 .event-row-container .row {
   width: 100%;
+}
+
+#load-event-btn {
+  justify-content: center;
+  display: flex;
+}
+
+#load-event-btn button {
+  margin: 20px;
+  padding: 10px 30px;
+  border-radius: 10px;
+  font-family: fangsong;
+  color: black;
+  background-color: white;
 }

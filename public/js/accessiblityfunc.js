@@ -17,12 +17,15 @@ for (let card = 0; card < 3; card++) {
 $("#pre").html("<");
 $("#next").html(">");
 $("#pre").prop("disabled", true);
+$("#pre").css("color", "#949494");
 
 function showNextEvent(event) {
   $("#pre").prop("disabled", false);
+  $("#pre").css("color", "black");
   eventSliderIndex++;
   if ($(".homepage-events .card").length - 1 === eventSliderIndex) {
     $("#next").prop("disabled", true);
+    $("#next").css("color", "#949494");
   }
   $(`.homepage-events
     .card-${eventSliderIndex}`).css("display", "");
@@ -31,8 +34,10 @@ function showNextEvent(event) {
 }
 function showPreEvent(event) {
   $("#next").prop("disabled", false);
+  $("#next").css("color", "black");
   if (eventSliderIndex === 3) {
     $("#pre").prop("disabled", true);
+    $("#pre").css("color", "#949494");
   }
   $(`.homepage-events .card-${eventSliderIndex}`).css("display", "none");
   $(`.homepage-events .card-${eventSliderIndex - 3}`).css("display", "");
@@ -61,22 +66,29 @@ function sortEventBy(arg, sel, elem, order, by) {
   var $selector = $(sel);
   var $element = $selector.children(elem);
   $element.sort(function (a, b) {
-    if (by === "popularity" || by === "recent") {
-      var an = parseInt(a.getAttribute(arg)),
-        bn = parseInt(b.getAttribute(arg));
-    } else if (by === "due") {
-      var an = new Date(a.getAttribute(arg)),
-        bn = new Date(b.getAttribute(arg));
+    if (by === "popularity") {
+      let an = parseInt(a.getAttribute(arg));
+      let bn = parseInt(b.getAttribute(arg));
+
+      if (order == "asc") {
+        if (an > bn) return 1;
+        if (an < bn) return -1;
+      } else if (order == "desc") {
+        if (an < bn) return;
+        1;
+        if (an > bn) return -1;
+      }
+      return 0;
+    } else if (by === "due" || by === "recent") {
+      let an = new Date(a.getAttribute(arg));
+      let bn = new Date(b.getAttribute(arg));
+
+      if (order == "asc") {
+        return an - bn;
+      } else if (order == "desc") {
+        return bn - an;
+      }
     }
-    if (order == "asc") {
-      if (an > bn) return 1;
-      if (an < bn) return -1;
-    } else if (order == "desc") {
-      if (an < bn) return;
-      1;
-      if (an > bn) return -1;
-    }
-    return 0;
   });
   $element.detach().appendTo($selector);
 }
@@ -86,12 +98,12 @@ function sortEvent(sortBy) {
       `data-${sortBy}`,
       "#events \
     .row",
-      "div",
-      "desc",
+      ".card",
+      "asc",
       sortBy
     );
   } else if (sortBy === "due") {
-    sortEventBy(`data-${sortBy}`, "#events .row", "div", "asc", sortBy);
+    sortEventBy(`data-${sortBy}`, "#events .row", ".card", "asc", sortBy);
   } else if (sortBy === "popularity") {
     sortEventBy(
       `data-${sortBy}`,
@@ -104,6 +116,7 @@ function sortEvent(sortBy) {
   }
 }
 
+//event registration
 function registerEvent(event_id) {
   let requestConfig = {
     url: `${event_id}`,
@@ -176,4 +189,33 @@ function likeEvent(ele, event_id) {
   } else {
     window.location.href = "/profile";
   }
+}
+
+//load events
+
+var currEventCount = 15;
+
+function fetchMoreEvents() {
+  let requestConfig = {
+    url: `events/loadevents`,
+    method: "GET",
+    data: { currEventCount: currEventCount },
+  };
+
+  $.ajax(requestConfig).then(function (responseMessage) {
+    if (responseMessage.success) {
+      if (responseMessage.eventStr.trim().length > 0) {
+        const newEvents = responseMessage.eventStr;
+        document.getElementsByClassName("row")[0].innerHTML =
+          document.getElementsByClassName("row")[0].innerHTML + newEvents;
+        currEventCount += responseMessage.returneventsLength;
+      }
+      if (responseMessage.totalEventsCount <= currEventCount) {
+        document.getElementById("load-event-btn").remove();
+        $("#filter option:eq(0)").prop("selected", true);
+      }
+    } else {
+      alert("Something went wrong! Please try again later.");
+    }
+  });
 }
