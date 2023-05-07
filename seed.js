@@ -2240,7 +2240,7 @@ async function seedEvents() {
       }
 
       for (const volunteer_id of volunteers) {
-        await eventData.addVolunteerToEvent(event_id, volunteer_id);
+        await eventData.addVolunteers(event_id, volunteer_id);
       }
     }
   } catch (e) {
