@@ -147,12 +147,8 @@ export function isValidHostInfo(hostInfo) {
   isValidId(hostInfo.host_id);
 
   hostInfo.host_name = isValidString(hostInfo.host_name);
-<<<<<<< HEAD
-  hostInfo.contact = isValidString(hostInfo.contact);
-=======
 
   isValidEmail(hostInfo.contact);
->>>>>>> 2ed2e927bc361c9ff9490b2956653556bc131eb8
 
   return hostInfo;
 }
