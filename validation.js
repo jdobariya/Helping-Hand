@@ -233,13 +233,16 @@ export function isValidFeedbackString(story){
   }
 }
 
-export function isValidImageUrl(image_url) {
+export function isValidImageUrls(image_urls) {
   const imageRegex = /\.(gif|jpg|jpeg|tiff|png|avif)/i;
 
-  if (imageRegex.test(image_url)) {
-    return image_url;
-  } else {
-    throw "Invalid image URL";
+  for(let image_url of image_urls) {
+    image_url = isValidString(image_url);
+    if (imageRegex.test(image_url)) {
+      return image_url;
+    } else {
+      throw "Invalid image URL";
+    }
   }
 }
 
@@ -266,10 +269,7 @@ export function checkEventsInputs(
   host_info = isValidHostInfo(host_info, "host_info");
 
   if (image_urls) {
-    for(let image_url of image_urls) {
-      image_url = isValidString(image_url);
-      image_url = isValidImageUrl(image_url);
-    }
+    image_urls = isValidImageUrls(image_urls);
   }
 
   if (stories.length !== 0) {

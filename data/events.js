@@ -107,10 +107,8 @@ const exportedMethods = {
     }
 
     if (eventInfo.image_urls) {
-      for(let image_url of eventInfo.image_url) {
-        image_url = validation.isValidImageUrl(image_url);
-      }
-      updatedEventData.image_urls = eventInfo.image_url;
+      image_urls = validation.isValidImageUrls(image_urls);
+      updatedEventData.image_urls = eventInfo.image_urls;
     }
 
     const eventCollection = await events();
@@ -123,26 +121,6 @@ const exportedMethods = {
       throw [404, `Could not update the event with id ${_id}`];
 
     return newEvent.value;
-  },
-
-  async addImageUrlByEventId(event_id, image_url) {
-    validation.isValidId(event_id);
-    event_id = event_id.trim();
-
-    const event = await this.getEventByEventId(event_id);
-    image_url = validation.isValidString(image_url);
-    image_url = validation.isValidImageUrl(image_url);
-    event.image_urls.push(image_url);
-
-    let newEvent = await eventCollection.findOneAndUpdate(
-      { _id: new ObjectId(event_id) },
-      { $set: {image_urls: event.image_urls} },
-      { returnDocument: "after" }
-    );
-    if (newEvent.lastErrorObject.n === 0)
-      throw [404, `Could not update the event with id ${_id}`];
-
-    return newEvent.value.image_urls;
   },
 
   async checkIfHost(event_id, host_id) {
