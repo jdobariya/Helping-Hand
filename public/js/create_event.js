@@ -109,7 +109,7 @@ submitBtn.on("click", function (e) {
           `<span class="text-success">Event Created successfully!</span>`
         );
         resultDiv.show();
-        window.location.href = `${event_id}`;
+        window.location.href = `${responseMessage.event_id}`;
       } else {
         resultDiv.empty();
         resultDiv.append(
