@@ -107,10 +107,8 @@ const exportedMethods = {
     }
 
     if (eventInfo.image_urls) {
-      for(let image_url of eventInfo.image_url) {
-        image_url = validation.isValidImageUrl(image_url);
-      }
-      updatedEventData.image_urls = eventInfo.image_url;
+      image_urls = validation.isValidImageUrls(image_urls);
+      updatedEventData.image_urls = eventInfo.image_urls;
     }
 
     const eventCollection = await events();
