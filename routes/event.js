@@ -246,7 +246,7 @@ router.route("/:id/story").post(async (req, res) => {
           const story = validation.isValidString(req.body.story);
           validation.isValidStoryString(story);
 
-          await eventData.addStory(eventId, userId, story);
+          await eventData.upsertStory(eventId, userId, story);
           
           res.json({ success: true });
         }else{
@@ -261,5 +261,29 @@ router.route("/:id/story").post(async (req, res) => {
         return res.json({ success: false, error: e });
     }
 });
+
+router.route("/:id/feedback").post(async (req, res) => {
+  try{
+    if (req.session.loggedIn){
+      const eventId = req.params.id.trim();
+      validation.isValidId(eventId);
+      const userId = req.session.user_id.trim();
+      validation.isValidId(userId);
+
+      const feedback = validation.isValidString(req.body.feedback);
+      validation.isValidFeedbackString(feedback);
+
+      await eventData.upsertLoggedInUserFeedback(eventId, userId, feedback);
+      
+      res.json({ success: true });
+
+    }else{
+      res.json({ success: false, error: "You must be logged in to submit a story"})
+    }
+
+  }catch(e){
+      return res.json({ success: false, error: e });
+  }
+})
 
 export default router;

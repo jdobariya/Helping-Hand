@@ -1,3 +1,11 @@
+const host_time = new Date(window.host_time).getTime()
+console.log(host_time)
+const now = new Date().getTime()
+
+if(host_time > now){
+  document.getElementById("story_feedback_section").remove()
+}
+
 function onSubmitStory(){
     let url = window.location.pathname + "/story";
     event.preventDefault();
@@ -66,9 +74,72 @@ function onEditStory(){
     )
 }
 function onSubmitFeedback(){
+    let url = window.location.pathname + "/feedback";
     event.preventDefault();
-    let feedback = document.getElementById("feedback").value;
-    console.log(feedback);
+    let errorDiv = $("#div_feedback_error");
+    errorDiv.empty();
+    
+    try{
+        let feedback = $('#feedback').val();
+        let feedbackDiv = $("#div_feedback");
+
+        feedback = isValidString(feedback);
+        isValidFeedbackString(feedback);
+
+        let requestConfig = {
+            method: "POST",
+            url: url,
+            dataType: "json",
+            data: {feedback: feedback}
+        }
+
+        $.ajax(requestConfig).then(function(responseMessage){
+            if(responseMessage.success){
+                feedbackDiv.empty();
+                feedbackDiv.append(`<p class="fs-5 fw-bolder">Your Feedback</p>`);
+                feedbackDiv.append(`<p class="fst-italic feedback" >${feedback}</p>`);
+                feedbackDiv.append(`<btn class="btn btn-primary" onclick="onEditFeedback()">Edit</btn>`);
+            }else{
+                errorDiv.empty()
+                errorDiv.append(`<span class="text-danger">${responseMessage.error}</span>`);
+                errorDiv.show();
+                console.log(responseMessage.error);
+            }
+        })
+
+    }catch(error){
+        errorDiv.empty()
+        errorDiv.append(`<span class="text-danger">${error}</span>`);
+        errorDiv.show();
+    }
+}
+
+function onEditFeedback(){
+    let feedbackDiv = $("#div_feedback");
+    let feedback = feedbackDiv.find("p.feedback").text();
+    feedbackDiv.empty();
+    feedbackDiv.append(`
+        <form id="feedback_form" action="/feedback" method="POST" onsubmit="onSubmitFeedback()" >
+            <label class="labels" for="feedback">Feedback (will only be seen by the host)</label>
+            <textarea
+            rows="5"
+            class="form-control"
+            name="feedback"
+            id="feedback"
+            placeholder="Share any feedback you have for the host"
+            ></textarea>
+            <div id="div_feedback_error" class="m-2 text-center"></div>
+
+            <div class="m-2 text-center">
+                <button
+                    class="btn btn-primary profile-button"
+                    type="submit"
+                    id="btn_submit_feedback"
+                    value="submit"
+                >Submit Feedback</button>
+            </div>
+        </form>
+    `)
 }
 
 function isValidString(str) {
@@ -88,5 +159,11 @@ function isValidString(str) {
 function isValidStoryString(story){
     if(story.split(" ").length < 20){
         throw "Error: story must be at least 20 words long";
+    }
+}
+
+function isValidFeedbackString(story){
+    if(story.split(" ").length < 10){
+        throw "Error: story must be at least 10 words long";
     }
 }

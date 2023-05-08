@@ -173,8 +173,9 @@
                 class="form-control"
                 name="feedback"
                 id="feedback"
-                placeholder="Share any feeback you have for the host"
+                placeholder="Share any feedback you have for the host"
               ></textarea>
+              <div id="div_feedback_error" class="m-2 text-center"></div>
 
               <div class="m-2 text-center">
                 <button
@@ -192,13 +193,7 @@
 
   </div>
   <script>
-    const host_time = new Date('{{event.host_time}}').getTime()
-    console.log(host_time)
-    const now = new Date().getTime()
-
-    if(host_time > now){
-      document.getElementById("story_feedback_section").remove()
-    }
+    window.host_time = '{{event.host_time}}'
   </script>
 
 <script src="/public/js/event.js"></script>

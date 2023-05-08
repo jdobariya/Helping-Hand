@@ -224,6 +224,13 @@ export function isValidFeedback(feedback) {
   return feedback;
 }
 
+
+export function isValidFeedbackString(story){
+  if(story.split(" ").length < 10){
+      throw "Error: story must be at least 10 words long";
+  }
+}
+
 export function isValidImageUrl(image_url) {
 
   const imageRegex = /\.(gif|jpg|jpeg|tiff|png|avif)$/i; 
