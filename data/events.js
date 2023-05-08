@@ -346,12 +346,12 @@ const exportedMethods = {
     }
   },
 
-  async getAllStoriesByEventId() {
+  async getAllStoriesByEventId(_id) {
     validation.isValidId(_id);
     _id = _id.trim();
 
     const eventCollection = await events();
-    const event = eventCollection.findOne({ _id: new ObjectId(_id) });
+    const event = await eventCollection.findOne({ _id: new ObjectId(_id) });
     if (!event) {
       throw `Error: event with ${_id} not found`;
     }
@@ -501,76 +501,88 @@ const exportedMethods = {
     return event.likes.length;
   },
 
-  async addLoggedInUserFeedback(eventId, userId, feedback_comment) {
+  async upsertLoggedInUserFeedback(eventId, userId, feedback_comment) {
     eventId = eventId.toString().trim();
     validation.isValidId(eventId);
 
     userId = userId.toString().trim();
     validation.isValidId(userId);
 
+    feedback_comment = validation.isValidString(feedback_comment);
+    validation.isValidFeedbackString(feedback_comment);
+    
     const eventsCollection = await events();
 
-    let userData = await userInfo.getUserById(userId);
-    feedback_comment = validation.isValidString(feedback_comment);
-
-    let newFeedback = {
-      _id: new ObjectId(),
-      volunteer_id: userId,
-      email: userData.email,
-      firstname: userData.first_name,
-      lastname: userData.last_name,
-      feedback_comment: feedback_comment,
-    };
-
-    let insertFeedback = await eventsCollection.findOneAndUpdate(
-      { _id: new ObjectId(eventId) },
-      { $push: { feedback: newFeedback } }
+    let updateInfo = await eventsCollection.updateOne(
+      {
+        _id: new ObjectId(eventId),
+        "feedbacks.volunteer_id": userId,
+      },
+      { $set: { "feedbacks.$.feedback_comment": feedback_comment } }
     );
 
-    if (insertFeedback.lastErrorObject.n === 0) {
-      throw "Error: could not update feedback";
+    if(updateInfo.modifiedCount === 0){
+      let userData = await userInfo.getUserById(userId);
+
+      let newFeedback = {
+        _id: new ObjectId(),
+        volunteer_id: userId,
+        email: userData.email,
+        firstname: userData.first_name,
+        lastname: userData.last_name,
+        feedback_comment: feedback_comment,
+      };
+
+      let insertFeedback = await eventsCollection.findOneAndUpdate(
+        { _id: new ObjectId(eventId) },
+        { $push: { feedbacks: newFeedback } }
+      );
+
+      if (insertFeedback.lastErrorObject.n === 0) {
+        throw "Error: could not update feedback";
+      }
     }
 
     return { updatedFeedback: true };
   },
 
-  async addNonLoggedInUserFeedback(eventId, feedbackWithEmailAndName) {
+  async addNonLoggedInUserFeedback(eventId, feedbackObj) {
     eventId = eventId.toString().trim();
     validation.isValidId(eventId);
 
-    feedbackWithEmailAndName.feedback_comment = validation.isValidString(
-      feedbackWithEmailAndName.feedback_comment
-    );
-    feedbackWithEmailAndName.email = validation.isValidEmail(
-      feedbackWithEmailAndName.email
-    );
-    feedbackWithEmailAndName.lastName = validation.isValidString(
-      feedbackWithEmailAndName.lastName
-    );
-    feedbackWithEmailAndName.lastName = validation.isValidName(
-      feedbackWithEmailAndName.lastName
-    );
-    feedbackWithEmailAndName.firstName = validation.isValidString(
-      feedbackWithEmailAndName.firstName
-    );
-    feedbackWithEmailAndName.firstName = validation.isValidName(
-      feedbackWithEmailAndName.firstName
-    );
+    feedbackObj.firstname = validation.isValidString(feedbackObj.firstname)
+    validation.isValidName(feedbackObj.firstname)
+
+    feedbackObj.lastname = validation.isValidString(feedbackObj.lastname)
+    validation.isValidName(feedbackObj.lastname)
+
+    feedbackObj.email = validation.isValidString(feedbackObj.email)
+    validation.isValidEmail(feedbackObj.email)
+
+    feedbackObj.feedback_comment = validation.isValidString(feedbackObj.feedback_comment)
+    validation.isValidFeedbackString(feedbackObj.feedback_comment)
 
     const eventsCollection = await events();
+
+    let feedbackSearch = await eventsCollection.findOne({
+      _id: new ObjectId(eventId),
+      "feedbacks.email": feedbackObj.email
+    })
+
+    if(feedbackSearch) throw `Feedback already submitted with email ${feedbackObj.email} !`
 
     let newFeedback = {
       _id: new ObjectId(),
       volunteer_id: "",
-      email: feedbackWithEmailAndName.email,
-      firstname: feedbackWithEmailAndName.first_name,
-      lastname: feedbackWithEmailAndName.last_name,
-      feedback_comment: feedbackWithEmailAndName.feedback_comment,
+      email: feedbackObj.email,
+      firstname: feedbackObj.firstname,
+      lastname: feedbackObj.lastname,
+      feedback_comment: feedbackObj.feedback_comment,
     };
 
     let insertFeedback = await eventsCollection.findOneAndUpdate(
       { _id: new ObjectId(eventId) },
-      { $push: { feedback: newFeedback } }
+      { $push: { feedbacks: newFeedback } }
     );
 
     if (insertFeedback.lastErrorObject.n === 0) {
@@ -580,29 +592,43 @@ const exportedMethods = {
     return { updatedFeedback: true };
   },
 
-  async addStory(eventId, userId, story) {
+  async upsertStory(eventId, userId, story) {
     eventId = eventId.toString().trim();
     validation.isValidId(eventId);
     userId = userId.toString().trim();
     validation.isValidId(userId);
+    story = validation.isValidString(story);
+    validation.isValidStoryString(story);
 
     const eventsCollection = await events();
-    let userData = await userInfo.getUserById(userId.toString());
 
-    let newStory = {
-      _id: new ObjectId(),
-      volunteer_fname: userData.first_name,
-      volunteer_lname: userData.last_name,
-      story_comment: story,
-    };
+      let updateInfo = await eventsCollection.updateOne(
+        { 
+          _id: new ObjectId(eventId),
+          'stories.volunteer_id': userId
+        },
+        { $set: { 'stories.$.story_comment': story } }
+      );
+      if (updateInfo.modifiedCount === 0) {
+        let userData = await userInfo.getUserById(userId);
+  
+        let newStory = {
+          _id: new ObjectId(),
+          volunteer_id: userId,
+          volunteer_fname: userData.first_name,
+          volunteer_lname: userData.last_name,
+          story_comment: story,
+        };
+  
+        let insertInfo = await eventsCollection.findOneAndUpdate({
+          _id: new ObjectId(eventId)
+        },
+        { $push: { stories: newStory }})
 
-    let insertStory = await eventsCollection.findOneAndUpdate(
-      { _id: new ObjectId(eventId) },
-      { $push: { story: newStory } }
-    );
-    if (insertStory.lastErrorObject.n === 0) {
-      throw "Error: could not update story";
-    }
+        if (insertInfo.lastErrorObject.n === 0) {
+          throw "Error: could not insert story";
+        }
+      }
 
     return { updatedStory: true };
   },
