@@ -481,43 +481,43 @@ const exportedMethods = {
     return { updatedFeedback: true };
   },
 
-  async addNonLoggedInUserFeedback(eventId, feedbackWithEmailAndName) {
+  async addNonLoggedInUserFeedback(eventId, feedbackObj) {
     eventId = eventId.toString().trim();
     validation.isValidId(eventId);
 
-    feedbackWithEmailAndName.feedback_comment = validation.isValidString(
-      feedbackWithEmailAndName.feedback_comment
-    );
-    feedbackWithEmailAndName.email = validation.isValidEmail(
-      feedbackWithEmailAndName.email
-    );
-    feedbackWithEmailAndName.lastName = validation.isValidString(
-      feedbackWithEmailAndName.lastName
-    );
-    feedbackWithEmailAndName.lastName = validation.isValidName(
-      feedbackWithEmailAndName.lastName
-    );
-    feedbackWithEmailAndName.firstName = validation.isValidString(
-      feedbackWithEmailAndName.firstName
-    );
-    feedbackWithEmailAndName.firstName = validation.isValidName(
-      feedbackWithEmailAndName.firstName
-    );
+    feedbackObj.firstname = validation.isValidString(feedbackObj.firstname)
+    validation.isValidName(feedbackObj.firstname)
+
+    feedbackObj.lastname = validation.isValidString(feedbackObj.lastname)
+    validation.isValidName(feedbackObj.lastname)
+
+    feedbackObj.email = validation.isValidString(feedbackObj.email)
+    validation.isValidEmail(feedbackObj.email)
+
+    feedbackObj.feedback_comment = validation.isValidString(feedbackObj.feedback_comment)
+    validation.isValidFeedbackString(feedbackObj.feedback_comment)
 
     const eventsCollection = await events();
+
+    let feedbackSearch = await eventsCollection.findOne({
+      _id: new ObjectId(eventId),
+      "feedbacks.email": feedbackObj.email
+    })
+
+    if(feedbackSearch) throw `Feedback already submitted with email ${feedbackObj.email} !`
 
     let newFeedback = {
       _id: new ObjectId(),
       volunteer_id: "",
-      email: feedbackWithEmailAndName.email,
-      firstname: feedbackWithEmailAndName.first_name,
-      lastname: feedbackWithEmailAndName.last_name,
-      feedback_comment: feedbackWithEmailAndName.feedback_comment,
+      email: feedbackObj.email,
+      firstname: feedbackObj.firstname,
+      lastname: feedbackObj.lastname,
+      feedback_comment: feedbackObj.feedback_comment,
     };
 
     let insertFeedback = await eventsCollection.findOneAndUpdate(
       { _id: new ObjectId(eventId) },
-      { $push: { feedback: newFeedback } }
+      { $push: { feedbacks: newFeedback } }
     );
 
     if (insertFeedback.lastErrorObject.n === 0) {

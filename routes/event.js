@@ -264,21 +264,40 @@ router.route("/:id/story").post(async (req, res) => {
 
 router.route("/:id/feedback").post(async (req, res) => {
   try{
+    const eventId = req.params.id.trim();
+    validation.isValidId(eventId);
+
+    const feedback = validation.isValidString(req.body.feedback);
+    validation.isValidFeedbackString(feedback);
+
     if (req.session.loggedIn){
-      const eventId = req.params.id.trim();
-      validation.isValidId(eventId);
       const userId = req.session.user_id.trim();
       validation.isValidId(userId);
-
-      const feedback = validation.isValidString(req.body.feedback);
-      validation.isValidFeedbackString(feedback);
 
       await eventData.upsertLoggedInUserFeedback(eventId, userId, feedback);
       
       res.json({ success: true });
 
     }else{
-      res.json({ success: false, error: "You must be logged in to submit a story"})
+      let first_name = validation.isValidString(req.body.first_name);
+      validation.isValidName(first_name)
+
+      let last_name = validation.isValidString(req.body.last_name)
+      validation.isValidName(last_name)
+
+      let email = validation.isValidString(req.body.email)
+      validation.isValidEmail(email)
+
+      const feedbackObj = {
+        firstname: first_name,
+        lastname: last_name,
+        email: email,
+        feedback_comment: feedback
+      }
+
+      await eventData.addNonLoggedInUserFeedback(eventId, feedbackObj)
+
+      res.json({success: true})
     }
 
   }catch(e){

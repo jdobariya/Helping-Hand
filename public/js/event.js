@@ -1,5 +1,4 @@
 const host_time = new Date(window.host_time).getTime()
-console.log(host_time)
 const now = new Date().getTime()
 
 if(host_time > now){
@@ -35,7 +34,6 @@ function onSubmitStory(){
                 errorDiv.empty()
                 errorDiv.append(`<span class="text-danger">${responseMessage.error}</span>`);
                 errorDiv.show();
-                console.log(responseMessage.error);
             }
         }) 
     }catch(error){
@@ -75,10 +73,12 @@ function onEditStory(){
 }
 function onSubmitFeedback(){
     let url = window.location.pathname + "/feedback";
+    let isUser = window.isUser
     event.preventDefault();
     let errorDiv = $("#div_feedback_error");
     errorDiv.empty();
-    
+    let data = {}
+
     try{
         let feedback = $('#feedback').val();
         let feedbackDiv = $("#div_feedback");
@@ -86,24 +86,48 @@ function onSubmitFeedback(){
         feedback = isValidString(feedback);
         isValidFeedbackString(feedback);
 
+        if(isUser){
+            data ={feedback: feedback}
+        }else{
+            let first_name = $('#first_name').val()
+            first_name = isValidString(first_name)
+            checkName(first_name)
+
+            let last_name = $('#last_name').val()
+            last_name = isValidString(last_name)
+            checkName(last_name)
+
+            let email = $('#email').val()
+            email = isValidString(email.toLowerCase())
+            checkEmail(email)
+            
+            data ={
+                first_name: first_name,
+                last_name: last_name,
+                email: email,
+                feedback: feedback
+            }
+
+        }
+
         let requestConfig = {
             method: "POST",
             url: url,
             dataType: "json",
-            data: {feedback: feedback}
+            data: data
         }
 
         $.ajax(requestConfig).then(function(responseMessage){
             if(responseMessage.success){
                 feedbackDiv.empty();
-                feedbackDiv.append(`<p class="fs-5 fw-bolder">Your Feedback</p>`);
-                feedbackDiv.append(`<p class="fst-italic feedback" >${feedback}</p>`);
-                feedbackDiv.append(`<btn class="btn btn-primary" onclick="onEditFeedback()">Edit</btn>`);
+                feedbackDiv.append(`<span class="text-success">Thank you for submitting feedback!</span>`)
+                // feedbackDiv.append(`<p class="fs-5 fw-bolder">Your Feedback</p>`);
+                // feedbackDiv.append(`<p class="fst-italic feedback" >${feedback}</p>`);
+                // feedbackDiv.append(`<btn class="btn btn-primary" onclick="onEditFeedback()">Edit</btn>`);
             }else{
                 errorDiv.empty()
                 errorDiv.append(`<span class="text-danger">${responseMessage.error}</span>`);
                 errorDiv.show();
-                console.log(responseMessage.error);
             }
         })
 
@@ -167,3 +191,20 @@ function isValidFeedbackString(story){
         throw "Error: story must be at least 10 words long";
     }
 }
+
+function checkName(name){
+    if(name.length < 2) throw "Name cannot be less than 2 characters";
+    if(name.length > 25) throw "Name cannot be more than 25 characters";
+    if(name.trim().length === 0) throw "Name cannot be empty";
+    if(!isNaN(name)) throw "Name cannot be a number";
+}
+
+function checkEmail(email){
+    email = email.toLowerCase();
+    if(email.length < 5) throw "Email cannot be less than 5 characters";
+    if(email.length > 50) throw "Email cannot be more than 50 characters";
+    if(email.trim().length === 0) throw "Email cannot be empty";
+    if(!isNaN(email)) throw "Email cannot be a number";
+    if(!email.includes("@")) throw "Email must contain @";
+    if(!email.includes(".")) throw "Email must contain .";  
+  }

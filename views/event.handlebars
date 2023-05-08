@@ -167,6 +167,40 @@
 
           <div id="div_feedback" class="col-md-6">
             <form id="feedback_form" action="/feedback" method="POST" onsubmit="onSubmitFeedback()" >
+              {{#unless user}}
+                <div class="row mt-2">
+                  <div class="col-md-4">
+                    <label class="labels" for="first_name">First Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="first_name"
+                      id="first_name"
+                      placeholder="First Name"
+                    >
+                  </div>
+                  <div class="col-md-4">
+                    <label class="labels" for="last_name">Last Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="last_name"
+                      id="last_name"
+                      placeholder="Last Name"
+                    >
+                  </div>
+                  <div class="col-md-4">
+                    <label class="labels" for="email">Email ID</label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      name="email"
+                      id="email"
+                      placeholder="Enter Email"
+                    >
+                  </div>
+                </div>
+              {{/unless}}
               <label class="labels" for="feedback">Feedback (will only be seen by the host)</label>
               <textarea
                 rows="5"
@@ -194,6 +228,7 @@
   </div>
   <script>
     window.host_time = '{{event.host_time}}'
+    window.isUser = {{user}}
   </script>
 
 <script src="/public/js/event.js"></script>
