@@ -12,6 +12,7 @@ router.route("/create").get(async (req, res) => {
         title: "Create Event",
         user: true,
         first_name: req.session.first_name,
+        isHost: req.session.isHost,
       });
     } else {
       res.status(403).render("error", { error: 403 });
@@ -20,7 +21,11 @@ router.route("/create").get(async (req, res) => {
     res.status(500).render("error", { error: 500 });
   }
 });
-
+function toTitleCase(str) {
+  return str.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
+}
 router.route("/create").post(async (req, res) => {
   try {
     if (req.session.isHost) {
@@ -47,9 +52,10 @@ router.route("/create").post(async (req, res) => {
       const hostInfo = {
         host_id: userId,
         host_name: userInfo.first_name + " " + userInfo.last_name,
-        contact: userInfo.contact,
+        contact: userInfo.email,
       };
 
+      hostInfo.host_name = toTitleCase(hostInfo.host_name);
       const location = {
         address: streetAddress,
         city: city,
@@ -67,7 +73,7 @@ router.route("/create").post(async (req, res) => {
         image_url
       );
 
-      return res.redirect("/event/" + event._id);
+      return res.status(200).json({ success: true, event_id: event._id });
     } else {
       return res.status(403).render("error", { error: 403 });
     }
@@ -131,8 +137,8 @@ router.route("/:id").get(async (req, res) => {
             email: user.email,
           };
         }
-      } catch {
-        console.log("something went wrong");
+      } catch (e) {
+        console.log(e);
       }
 
       return res.render("event", {
@@ -205,6 +211,7 @@ router.route("/edit/:id").get(async (req, res) => {
           event: eventDetail,
           user: true,
           first_name: req.session.first_name,
+          isHost: req.session.isHost
         });
       } else {
         res.status(403).render("error", { error: 403 });

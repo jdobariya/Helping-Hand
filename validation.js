@@ -73,7 +73,7 @@ export function isUserAdult(birth_date) {
 export function isValidEmail(email) {
   const r = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (r.test(email)) {
-    return true;
+    return email;
   }
   throw "Error: invalid email";
 }
@@ -148,7 +148,7 @@ export function isValidHostInfo(hostInfo) {
 
   hostInfo.host_name = isValidString(hostInfo.host_name);
 
-  hostInfo.contact = isValidString(hostInfo.contact);
+  isValidEmail(hostInfo.contact);
 
   return hostInfo;
 }
