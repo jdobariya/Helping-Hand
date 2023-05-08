@@ -133,6 +133,16 @@ const exportedMethods = {
     image_url = validation.isValidString(image_url);
     image_url = validation.isValidImageUrl(image_url);
     event.image_urls.push(image_url);
+
+    let newEvent = await eventCollection.findOneAndUpdate(
+      { _id: new ObjectId(event_id) },
+      { $set: {image_urls: event.image_urls} },
+      { returnDocument: "after" }
+    );
+    if (newEvent.lastErrorObject.n === 0)
+      throw [404, `Could not update the event with id ${_id}`];
+
+    return newEvent.value.image_urls;
   },
 
   async checkIfHost(event_id, host_id) {
