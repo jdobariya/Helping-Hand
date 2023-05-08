@@ -1,8 +1,60 @@
-const host_time = new Date(window.host_time).getTime()
-const now = new Date().getTime()
+const pathnames = window.location.pathname.split("/")
+let detailsURL = "/event/details/" + pathnames[pathnames.length - 1]
 
-if(host_time > now){
-  document.getElementById("story_feedback_section").remove()
+let requestConfig = {
+    method: "GET",
+    url: detailsURL
+}
+
+$.ajax(requestConfig).then(function(responseMessage){
+    if(responseMessage.event_details){
+        sessionStorage.setItem("event_details", JSON.stringify(responseMessage.event_details))
+        sessionStorage.setItem("user_details", JSON.stringify(responseMessage.user_details))
+
+        loadPage()
+    }else{
+        console.log("ERROR receiving details")
+    }
+})
+
+function loadPage(){
+    const event_details = JSON.parse(sessionStorage.getItem("event_details"))
+    const host_time = new Date(event_details.host_time).getTime()
+    const now = new Date().getTime()
+
+    if(host_time > now){
+        document.getElementById("story_feedback_section").remove()
+    }
+
+    let user_details = JSON.parse(sessionStorage.getItem("user_details"))
+    if(user_details.isUser){
+        let story_card = document.getElementById("story_card_" + user_details.user_id)
+        
+        if(story_card){
+            let story = $("#story_" + user_details.user_id).text()
+            let storyDiv = $("#div_story");
+            storyDiv.empty();
+            storyDiv.append(`<p class="fs-5 fw-bolder">Your Story</p>`);
+            storyDiv.append(`<p class="fst-italic story" >${story}</p>`);
+            storyDiv.append(`<btn class="btn btn-primary" onclick="onEditStory()">Edit</btn>`);
+            story_card.remove()
+        }
+        
+        let feedbackStr = ""
+        event_details.feedbacks.find(feedback => {
+            if(feedback.volunteer_id === user_details.user_id){
+                feedbackStr = feedback.feedback_comment
+            }
+        })
+        if(feedbackStr){
+            let feedbackDiv = $("#div_feedback");
+            feedbackDiv.empty();
+            feedbackDiv.append(`<p class="fs-5 fw-bolder">Your Feedback</p>`);
+            feedbackDiv.append(`<p class="fst-italic feedback" >${feedbackStr}</p>`);
+            feedbackDiv.append(`<btn class="btn btn-primary" onclick="onEditFeedback()">Edit</btn>`);
+        }
+
+    }
 }
 
 function onSubmitStory(){
@@ -14,7 +66,7 @@ function onSubmitStory(){
         let story = $("#story").val();
         let storyDiv = $("#div_story");   
 
-        story = isValidString(story);
+        story = isValidString(story, 'Story');
         isValidStoryString(story);
 
         const requestConfig = {
@@ -73,7 +125,7 @@ function onEditStory(){
 }
 function onSubmitFeedback(){
     let url = window.location.pathname + "/feedback";
-    let isUser = window.isUser
+    let isUser = JSON.parse(sessionStorage.getItem("user_details")).isUser
     event.preventDefault();
     let errorDiv = $("#div_feedback_error");
     errorDiv.empty();
@@ -83,22 +135,22 @@ function onSubmitFeedback(){
         let feedback = $('#feedback').val();
         let feedbackDiv = $("#div_feedback");
 
-        feedback = isValidString(feedback);
+        feedback = isValidString(feedback, 'Feedback');
         isValidFeedbackString(feedback);
 
         if(isUser){
             data ={feedback: feedback}
         }else{
             let first_name = $('#first_name').val()
-            first_name = isValidString(first_name)
+            first_name = isValidString(first_name, 'First Name')
             checkName(first_name)
 
             let last_name = $('#last_name').val()
-            last_name = isValidString(last_name)
+            last_name = isValidString(last_name, 'Last Name')
             checkName(last_name)
 
             let email = $('#email').val()
-            email = isValidString(email.toLowerCase())
+            email = isValidString(email.toLowerCase(), 'Email')
             checkEmail(email)
             
             data ={
@@ -120,10 +172,11 @@ function onSubmitFeedback(){
         $.ajax(requestConfig).then(function(responseMessage){
             if(responseMessage.success){
                 feedbackDiv.empty();
-                feedbackDiv.append(`<span class="text-success">Thank you for submitting feedback!</span>`)
-                // feedbackDiv.append(`<p class="fs-5 fw-bolder">Your Feedback</p>`);
-                // feedbackDiv.append(`<p class="fst-italic feedback" >${feedback}</p>`);
-                // feedbackDiv.append(`<btn class="btn btn-primary" onclick="onEditFeedback()">Edit</btn>`);
+                if(isUser){
+                    feedbackDiv.append(`<p class="fs-5 fw-bolder">Your Feedback</p>`);
+                    feedbackDiv.append(`<p class="fst-italic feedback" >${feedback}</p>`);
+                    feedbackDiv.append(`<btn class="btn btn-primary" onclick="onEditFeedback()">Edit</btn>`);
+                }else feedbackDiv.append(`<span class="text-success">Thank you for submitting feedback!</span>`)
             }else{
                 errorDiv.empty()
                 errorDiv.append(`<span class="text-danger">${responseMessage.error}</span>`);
@@ -151,7 +204,7 @@ function onEditFeedback(){
             name="feedback"
             id="feedback"
             placeholder="Share any feedback you have for the host"
-            ></textarea>
+            >${feedback}</textarea>
             <div id="div_feedback_error" class="m-2 text-center"></div>
 
             <div class="m-2 text-center">
@@ -166,16 +219,16 @@ function onEditFeedback(){
     `)
 }
 
-function isValidString(str) {
+function isValidString(str, name) {
     if (!str) {
-      throw "Story cannot be empty";
+      throw `${name} cannot be empty`;
     }
     if (typeof str !== "string") {
-      throw "Story must be a string";
+      throw `${name} must be a string`;
     }
     str = str.trim();
     if (str.length == 0) {
-      throw "Story cannot be empty string";
+      throw `${name} cannot be empty string`;
     }
     return str;
   }

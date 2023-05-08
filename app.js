@@ -29,30 +29,30 @@ app.use(rewriteUnsupportedBrowserMethods);
 
 
 app.engine('handlebars', exphbs.engine({defaultLayout: 'main',helpers:{
-  ifCond: function(v1, operator, v2, options) {
+  ifCond: function(v1, operator, v2) {
     switch (operator) {
       case '==':
-        return (v1 == v2) ? options.fn(this) : options.inverse(this);
+        return (v1 == v2)
       case '===':
-        return (v1 === v2) ? options.fn(this) : options.inverse(this);
+        return (v1 === v2)
       case '!=':
-        return (v1 != v2) ? options.fn(this) : options.inverse(this);
+        return (v1 != v2)
       case '!==':
-        return (v1 !== v2) ? options.fn(this) : options.inverse(this);
+        return (v1 !== v2)
       case '<':
-        return (v1 < v2) ? options.fn(this) : options.inverse(this);
+        return (v1 < v2)
       case '<=':
-        return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+        return (v1 <= v2)
       case '>':
-        return (v1 > v2) ? options.fn(this) : options.inverse(this);
+        return (v1 > v2)
       case '>=':
-        return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+        return (v1 >= v2)
       case '&&':
-        return (v1 && v2) ? options.fn(this) : options.inverse(this);
+        return (v1 && v2)
       case '||':
-        return (v1 || v2) ? options.fn(this) : options.inverse(this);
+        return (v1 || v2)
       default:
-        return options.inverse(this);
+        return false;
     }}}}))
 
 app.set('view engine', 'handlebars');

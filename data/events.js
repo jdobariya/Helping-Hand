@@ -286,12 +286,12 @@ const exportedMethods = {
     }
   },
 
-  async getAllStoriesByEventId() {
+  async getAllStoriesByEventId(_id) {
     validation.isValidId(_id);
     _id = _id.trim();
 
     const eventCollection = await events();
-    const event = eventCollection.findOne({ _id: new ObjectId(_id) });
+    const event = await eventCollection.findOne({ _id: new ObjectId(_id) });
     if (!event) {
       throw `Error: event with ${_id} not found`;
     }

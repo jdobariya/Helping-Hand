@@ -231,6 +231,32 @@ router.route("/edit/:id").patch(async (req, res) => {
   }
 });
 
+router.route("/details/:id").get(async (req, res) => {
+    try{
+      if(req.xhr){
+        let eventId = req.params.id.trim();
+        validation.isValidId(eventId);
+        const event_details = await eventData.getEventByEventId(eventId);
+
+        let user_details = {
+          isUser: false
+        };
+        if (req.session.user_id){
+          user_details ={
+            isUser: true,
+            user_id: req.session.user_id.trim()
+          }
+        }
+        
+        res.json({event_details: event_details, user_details: user_details})
+      }else{
+        res.render("error", {error: 404})
+      }
+    }catch(e){
+      res.status(500).render("error", {error: 500});
+    }
+})
+
 router.route("/:id/story").post(async (req, res) => {
     try{
       if (req.session.loggedIn){
