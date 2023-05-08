@@ -183,6 +183,12 @@ export function isValidStory(story) {
   return story;
 }
 
+export function isValidStoryString(story){
+  if(story.split(" ").length < 20){
+    throw "Error: story must be at least 20 words long";
+  }
+}
+
 export function isValidFeedback(feedback) {
   const keys = Object.keys(feedback);
 

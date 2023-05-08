@@ -520,24 +520,38 @@ const exportedMethods = {
     validation.isValidId(eventId);
     userId = userId.toString().trim();
     validation.isValidId(userId);
+    story = validation.isValidString(story);
+    validation.isValidStoryString(story);
 
     const eventsCollection = await events();
-    let userData = await userInfo.getUserById(userId.toString());
 
-    let newStory = {
-      _id: new ObjectId(),
-      volunteer_fname: userData.first_name,
-      volunteer_lname: userData.last_name,
-      story_comment: story,
-    };
+      let updateInfo = await eventsCollection.updateOne(
+        { 
+          _id: new ObjectId(eventId),
+          'stories.volunteer_id': userId
+        },
+        { $set: { 'stories.$.story_comment': story } }
+      );
+      if (updateInfo.modifiedCount === 0) {
+        let userData = await userInfo.getUserById(userId);
+  
+        let newStory = {
+          _id: new ObjectId(),
+          volunteer_id: userId,
+          volunteer_fname: userData.first_name,
+          volunteer_lname: userData.last_name,
+          story_comment: story,
+        };
+  
+        let insertInfo = await eventsCollection.findOneAndUpdate({
+          _id: new ObjectId(eventId)
+        },
+        { $push: { stories: newStory }})
 
-    let insertStory = await eventsCollection.findOneAndUpdate(
-      { _id: new ObjectId(eventId) },
-      { $push: { story: newStory } }
-    );
-    if (insertStory.lastErrorObject.n === 0) {
-      throw "Error: could not update story";
-    }
+        if (insertInfo.lastErrorObject.n === 0) {
+          throw "Error: could not insert story";
+        }
+      }
 
     return { updatedStory: true };
   },

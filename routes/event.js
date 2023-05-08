@@ -231,4 +231,35 @@ router.route("/edit/:id").patch(async (req, res) => {
   }
 });
 
+router.route("/:id/story").post(async (req, res) => {
+    try{
+      if (req.session.loggedIn){
+        const eventId = req.params.id.trim();
+        validation.isValidId(eventId);
+        const userId = req.session.user_id.trim();
+        validation.isValidId(userId);
+        
+        const event = await eventData.getEventByEventId(eventId);
+        const isRegistered = event.volunteers.indexOf(userId)
+
+        if(isRegistered !== -1){
+          const story = validation.isValidString(req.body.story);
+          validation.isValidStoryString(story);
+
+          await eventData.addStory(eventId, userId, story);
+          
+          res.json({ success: true });
+        }else{
+          res.json({ success: false, error: "You must be registered for this event to submit a story"})
+        }
+
+      }else{
+        res.json({ success: false, error: "You must be logged in to submit a story"})
+      }
+
+    }catch(e){
+        return res.json({ success: false, error: e });
+    }
+});
+
 export default router;

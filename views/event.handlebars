@@ -133,6 +133,74 @@
         {{/each}}
       </div>
     {{/if}}
+
+
+    <div id="story_feedback_section" class="d-flex flex-column">
+      <div class="row mt-2 my-5">
+      {{#if user}}
+        {{#if isRegistered}}
+          <div id="div_story" class="col-md-6">
+            <form id="story_form" action="/story" method="POST" onsubmit="onSubmitStory()" >
+              <label class="labels" for="story">Share your Experience</label>
+              <textarea
+                rows="5"
+                class="form-control"
+                name="story"
+                id="story"
+                placeholder="Describe your experience with the event"
+              ></textarea>
+
+              <div id="div_story_error" class="m-2 text-center"></div>
+
+              <div class="m-2 text-center">
+                <button
+                  class="btn btn-primary profile-button"
+                  type="submit"
+                  id="btn_submit_story"
+                  value="submit"
+                >Submit</button>
+              </div>
+            </form>
+          </div>
+        {{/if}}
+      {{/if}}
+
+          <div id="div_feedback" class="col-md-6">
+            <form id="feedback_form" action="/feedback" method="POST" onsubmit="onSubmitFeedback()" >
+              <label class="labels" for="feedback">Feedback (will only be seen by the host)</label>
+              <textarea
+                rows="5"
+                class="form-control"
+                name="feedback"
+                id="feedback"
+                placeholder="Share any feeback you have for the host"
+              ></textarea>
+
+              <div class="m-2 text-center">
+                <button
+                  class="btn btn-primary profile-button"
+                  type="submit"
+                  id="btn_submit_feedback"
+                  value="submit"
+                >Submit Feedback</button>
+              </div>
+            </form>
+          </div>
+
+      </div>
+    </div>
+
   </div>
+  <script>
+    const host_time = new Date('{{event.host_time}}').getTime()
+    console.log(host_time)
+    const now = new Date().getTime()
+
+    if(host_time > now){
+      document.getElementById("story_feedback_section").remove()
+    }
+  </script>
+
+<script src="/public/js/event.js"></script>
 
 </main>
