@@ -22,6 +22,10 @@ export function changeDateFormat(events) {
     events[i].release_time = longEnUSFormatter
       .format(new Date(events[i].release_time))
       .toString();
+
+    events[i].host_time = longEnUSFormatter
+      .format(new Date(events[i].host_time))
+      .toString();
   }
 
   return events;
@@ -43,6 +47,7 @@ router.route("/").get(async (req, res) => {
       allEvents: eventRows,
       totalEventsCount,
       currEventCount,
+      isHost: req.session.isHost,
     });
   } else {
     return res.render("events", {
@@ -98,14 +103,12 @@ router.route("/loadevents").get(async (req, res) => {
 </div>`;
   }
 
-  res
-    .status(200)
-    .json({
-      success: true,
-      eventStr,
-      returneventsLength: events.length,
-      totalEventsCount,
-    });
+  res.status(200).json({
+    success: true,
+    eventStr,
+    returneventsLength: events.length,
+    totalEventsCount,
+  });
 });
 
 router.route("/").patch(async (req, res) => {

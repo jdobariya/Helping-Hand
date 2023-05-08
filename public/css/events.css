@@ -4,8 +4,8 @@
 }
 
 #events .event-row-container .card {
-  max-width: 33.33% !important;
-  min-width: 33.33% !important;
+  max-width: 33.33%;
+  min-width: 33.33%;
   padding: 20px 20px 20px 20px;
 }
 
@@ -36,16 +36,12 @@
   display: block;
 }
 .card-title {
-  font-size: 25px;
+  font-size: 20px;
   /* font-style: oblique; */
   color: rgb(5, 68, 25);
 }
 .card-title:hover {
-  color: darkblue;
-}
-.card-title:hover
-{
-  color:rgb(5, 121, 42)
+  color: rgb(5, 121, 42);
 }
 @media screen and (max-width: 768px) {
   .col {
@@ -122,9 +118,8 @@
     margin-left: -18px;
   }
 
-  .card-container .card {
-    min-width: 100%;
-    max-width: 100%;
+  #events .event-row-container .card {
+    min-width: 100% !important;
   }
 }
 

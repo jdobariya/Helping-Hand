@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 
   <head>
@@ -82,6 +81,12 @@
         <div id="myNavbar">
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
+              {{#if isHost}}
+                <li class="nav-item"><a
+                    class="nav-link"
+                    href="/event/create"
+                  >Create Event</a></li>
+              {{/if}}
               <li class="nav-item"><a
                   class="nav-link"
                   href="/home"
@@ -91,8 +96,11 @@
                   href="/events"
                 >Events</a></li>
 
-              <li class="nav-item"><a href="/about" aria-label="About us"class="nav-link"
-              >About</a></li>
+              <li class="nav-item"><a
+                  href="/about"
+                  aria-label="About us"
+                  class="nav-link"
+                >About</a></li>
 
               {{#if user}}
 
@@ -108,27 +116,19 @@
                     Welcome,
                     {{first_name}}
                   </a>
-                  <ul
-                    class="dropdown-menu"
-                  >
+                  <ul class="dropdown-menu">
                     <li><a
                         class="dropdown-item"
                         href="/profile"
                       >Profile</a></li>
-                    <li><a
-                        class="dropdown-item"
-                        href="/landing"
-                      >Your events</a></li>
-                    <li><a
-                        class="dropdown-item"
-                        href="/logout"
-                      >Log out</a></li>
+                    <li><a class="dropdown-item" href="/landing">Your events</a></li>
+                    <li><a class="dropdown-item" href="/logout">Log out</a></li>
 
                   </ul>
                 </li>
               {{else}}
                 <li class="nav-item"><a
-                class="nav-link"
+                    class="nav-link"
                     href="/login"
                   >Login</a></li>
 

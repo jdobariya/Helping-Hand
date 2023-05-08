@@ -57,16 +57,10 @@ footer {
   font-size: 13px;
 }
 
-#searchValue {
-  width: 70%;
-  padding: 10px;
-  float: left;
-}
 li.search input[type="text"] {
   padding: 10px;
   float: left;
 }
-
 
 @media (max-width: 768px) {
   #myNavbar {
@@ -76,42 +70,43 @@ li.search input[type="text"] {
     border-bottom: 1px solid white;
   }
 }
-.navbar-brand{
+.navbar-brand {
   position: relative;
 }
 
 .navbar-brand:hover::before {
   content: "\1F64C"; /* Unicode value for hands emoji */
-  position: absolute;
   left: 120%;
+  top: 0;
   transform: translateX(-50%);
   font-size: 30px;
 }
 
-.dropdown-item
-{
+.dropdown-item {
   text-decoration: none;
   font-size: 13px;
 }
 
-
-#searchValue
-{
-  width:70%;
-  padding: 10px;
+#searchValue {
+  width: 70%;
+  padding: 5px;
   float: left;
 }
 #searchForm {
-  padding-left: 150px;
+  justify-content: center;
+  display: flex;
+  margin: 0;
+}
+.navbar-nav li {
+  min-width: fit-content;
 }
 
 #searchButton {
   float: left;
-  width: 10%;
   padding: 10px;
-  background: #2196F3;
+  background: #2196f3;
   color: white;
-  font-size: 17px;
+  font-size: 16px;
   border: 1px solid grey;
   border-left: none;
   cursor: pointer;
