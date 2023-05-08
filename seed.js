@@ -2216,7 +2216,7 @@ async function seedEvents() {
         host_time,
         location,
         host_info,
-        "No_Image_Available.jpg"
+        ["No_Image_Available.jpg"]
       );
 
       event_ids.push(event._id.toString());

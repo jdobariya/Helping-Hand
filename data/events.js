@@ -12,7 +12,7 @@ const exportedMethods = {
     host_time,
     location,
     host_info,
-    image_url,
+    image_urls,
   ) {
     let tempEvent = validation.checkEventsInputs(
       event_name,
@@ -21,7 +21,7 @@ const exportedMethods = {
       host_time,
       location,
       host_info,
-      image_url,
+      image_urls,
     );
 
     const release_time = new Date().getTime();
@@ -37,7 +37,7 @@ const exportedMethods = {
       stories: tempEvent.stories,
       feedbacks: tempEvent.feedbacks,
       likes: tempEvent.likes,
-      image_url: tempEvent.image_url,
+      image_urls: tempEvent.image_urls,
     };
 
     const eventsCollection = await events();
@@ -106,10 +106,11 @@ const exportedMethods = {
       );
     }
 
-    if (eventInfo.image_url) {
-      updatedEventData.image_url = validation.isValidImageUrl(
-        eventInfo.image_url
-      );
+    if (eventInfo.image_urls) {
+      for(let image_url of eventInfo.image_url) {
+        image_url = validation.isValidImageUrl(image_url);
+      }
+      updatedEventData.image_urls = eventInfo.image_url;
     }
 
     const eventCollection = await events();
@@ -122,6 +123,16 @@ const exportedMethods = {
       throw [404, `Could not update the event with id ${_id}`];
 
     return newEvent.value;
+  },
+
+  async addImageUrlByEventId(event_id, image_url) {
+    validation.isValidId(event_id);
+    event_id = event_id.trim();
+
+    const event = await this.getEventByEventId(event_id);
+    image_url = validation.isValidString(image_url);
+    image_url = validation.isValidImageUrl(image_url);
+    event.image_urls.push(image_url);
   },
 
   async checkIfHost(event_id, host_id) {

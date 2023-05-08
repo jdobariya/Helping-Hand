@@ -250,7 +250,7 @@ export function checkEventsInputs(
   host_time,
   location,
   host_info,
-  image_url,
+  image_urls = [],
   volunteers = [],
   stories = [],
   feedbacks = [],
@@ -264,9 +264,12 @@ export function checkEventsInputs(
 
   location = isValidLocation(location, "location");
   host_info = isValidHostInfo(host_info, "host_info");
-  if (image_url) {
-    image_url = isValidString(image_url);
-    image_url = isValidImageUrl(image_url);
+
+  if (image_urls) {
+    for(let image_url of image_urls) {
+      image_url = isValidString(image_url);
+      image_url = isValidImageUrl(image_url);
+    }
   }
 
   if (stories.length !== 0) {
@@ -292,7 +295,7 @@ export function checkEventsInputs(
     stories,
     feedbacks,
     likes,
-    image_url,
+    image_urls,
   };
 }
 
