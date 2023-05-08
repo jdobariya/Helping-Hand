@@ -147,7 +147,6 @@ export function isValidHostInfo(hostInfo) {
   isValidId(hostInfo.host_id);
 
   hostInfo.host_name = isValidString(hostInfo.host_name);
-
   hostInfo.contact = isValidString(hostInfo.contact);
 
   return hostInfo;
@@ -221,14 +220,12 @@ export function isValidFeedback(feedback) {
 }
 
 export function isValidImageUrl(image_url) {
-  const imageRegex = /\.(gif|jpg|jpeg|tiff|png|avif)$/i;
+  const imageRegex = /\.(gif|jpg|jpeg|tiff|png|avif)/i;
 
   if (imageRegex.test(image_url)) {
     return image_url;
   } else {
-    image_url = "No-image-found.jpg";
-    return image_url;
-    // throw "Invalid image URL";
+    throw "Invalid image URL";
   }
 }
 
@@ -240,6 +237,7 @@ export function checkEventsInputs(
   location,
   host_info,
   image_url,
+  image_file,
   volunteers = [],
   stories = [],
   feedbacks = [],
@@ -253,10 +251,8 @@ export function checkEventsInputs(
 
   location = isValidLocation(location, "location");
   host_info = isValidHostInfo(host_info, "host_info");
-
-  image_url = isValidString(image_url);
-
   if (image_url) {
+    image_url = isValidString(image_url);
     image_url = isValidImageUrl(image_url);
   }
 
@@ -284,8 +280,10 @@ export function checkEventsInputs(
     feedbacks,
     likes,
     image_url,
+    image_file,
   };
 }
+
 export function searchObject(obj, regex) {
   for (const prop in obj) {
     if (typeof obj[prop] === "object") {

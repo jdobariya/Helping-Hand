@@ -12,7 +12,8 @@ const exportedMethods = {
     host_time,
     location,
     host_info,
-    image_url
+    image_url,
+    image_file
   ) {
     let tempEvent = validation.checkEventsInputs(
       event_name,
@@ -21,7 +22,8 @@ const exportedMethods = {
       host_time,
       location,
       host_info,
-      image_url
+      image_url,
+      image_file
     );
 
     const release_time = new Date().getTime();
@@ -32,13 +34,13 @@ const exportedMethods = {
       application_deadline: tempEvent.application_deadline,
       host_time: tempEvent.host_time,
       location: tempEvent.location,
-      image_url: tempEvent.image_url,
       volunteers: tempEvent.volunteers,
       host_info: tempEvent.host_info,
       stories: tempEvent.stories,
       feedbacks: tempEvent.feedbacks,
       likes: tempEvent.likes,
       image_url: tempEvent.image_url,
+      image_file: tempEvent.image_file
     };
 
     const eventsCollection = await events();

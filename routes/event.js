@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { BSON } from "mongodb";
 import * as validation from "../validation.js";
 import { eventData } from "../data/index.js";
 import { userData } from "../data/index.js";
@@ -37,12 +38,26 @@ router.route("/create").post(async (req, res) => {
       let city = validation.isValidString(req.body.city);
       let state = validation.isValidString(req.body.state);
       let zipcode = validation.isValidString(req.body.zipcode);
-      let image_url = req.body.image_url
-        ? req.body.image_url
-        : "No_Image_Available.jpg";
+
+      if (req.body.image_url) {
+        req.body.image_url = validation.isValidImageUrl(req.body.image_url);
+        var image_url = req.body.image_url;
+        var image_file = null;
+      } else if (req.body.image_file) {
+        var image_url = "";
+        var image_file = req.body.image_file;
+        image_file = BSON.Binary(image_file);
+      } else {
+        var image_url = "No_Image_Available.jpg";
+        var image_file = null;
+      }
 
       if (host_time < application_deadline)
         throw "Error: Event Date & Time should be after Registration Deadline";
+
+      if (!userInfo.contact) {
+        throw "Error: As a host, You should update your contact message in your profile firstly";
+      }
 
       const hostInfo = {
         host_id: userId,
@@ -64,7 +79,8 @@ router.route("/create").post(async (req, res) => {
         host_time,
         location,
         hostInfo,
-        image_url
+        image_url,
+        image_file
       );
 
       return res.redirect("/event/" + event._id);
@@ -122,7 +138,7 @@ router.route("/:id").get(async (req, res) => {
       let volunteers = {};
       let eventVolunteer = eventDetail.volunteers;
       try {
-        for (let i = 0; i <= eventVolunteer.length; i++) {
+        for (let i = 0; i < eventVolunteer.length; i++) {
           let user = await userData.getUserById(eventVolunteer[i]);
           volunteers[eventVolunteer[i]] = {
             first_name: user.first_name,
