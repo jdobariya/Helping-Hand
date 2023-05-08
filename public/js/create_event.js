@@ -1,5 +1,3 @@
-import * as BSON from "../node_modules/bson\src\bson.ts";
-
 var submitBtn = $("#submit_btn");
 let release_time = new Date().getTime();
 
@@ -7,7 +5,7 @@ submitBtn.on("click", function (e) {
   e.preventDefault();
 
   let imageUrlInput = $("#image-url-input");
-  let imageFileInput = $("#image-input");
+  // let imageFileInput = $("#image-input");
   let eventNameInput = $("#event_name");
   let descriptionInput = $("#description");
   let applicationDeadlineInput = $("#app_deadline");
@@ -21,10 +19,11 @@ submitBtn.on("click", function (e) {
 
   try {
     let imageUrl = imageUrlInput.val();
-    if (imageFileInput.prop("files")) {
-      var imageFile = imageFileInput.prop("files")[0];
-      imageFile = BSON.Binary(imageFile);
-    }
+    // if (imageFileInput.prop("files")) {
+    //   var imageFile = imageFileInput.prop("files")[0];
+    //   var formData = new FormData();
+    //   formData.append('image_file', imageFile);
+    // }
 
     let eventName = eventNameInput.val();
     eventName = isValidString(eventName);
@@ -57,7 +56,6 @@ submitBtn.on("click", function (e) {
       throw "Error: Event Date & Time should be after Registration Deadline";
 
     if (imageUrl) {
-      console.log(imageUrl);
       imageUrl = isValidImageUrl(imageUrl);
       var data = {
         image_url: imageUrl,
@@ -70,19 +68,20 @@ submitBtn.on("click", function (e) {
         state: state,
         zipcode: zipCode,
       };
-    } else if (imageFile) {
-      var data = {
-        image_file: imageFile,
-        event_name: eventName,
-        description: description,
-        application_deadline: applicationDeadline,
-        host_time: hostTime,
-        streetAddress: streetAddress,
-        city: city,
-        state: state,
-        zipcode: zipCode,
-      };
-    } else {
+    }
+    //  else if (imageFileInput.prop("files")) {
+    //   var data = {
+    //     image_file: formData,
+    //     event_name: eventName,
+    //     description: description,
+    //     application_deadline: applicationDeadline,
+    //     host_time: hostTime,
+    //     streetAddress: streetAddress,
+    //     city: city,
+    //     state: state,
+    //     zipcode: zipCode,
+    //   };
+     else {
       var data = {
         event_name: eventName,
         description: description,

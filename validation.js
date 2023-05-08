@@ -237,7 +237,6 @@ export function checkEventsInputs(
   location,
   host_info,
   image_url,
-  image_file,
   volunteers = [],
   stories = [],
   feedbacks = [],
@@ -280,7 +279,6 @@ export function checkEventsInputs(
     feedbacks,
     likes,
     image_url,
-    image_file,
   };
 }
 

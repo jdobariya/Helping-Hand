@@ -25,6 +25,7 @@ router.route("/create").get(async (req, res) => {
 router.route("/create").post(async (req, res) => {
   try {
     if (req.session.isHost) {
+      console.log(req.body.event_name);
       const userId = req.session.user_id;
       const userInfo = await userData.getUserById(userId);
 
@@ -42,14 +43,13 @@ router.route("/create").post(async (req, res) => {
       if (req.body.image_url) {
         req.body.image_url = validation.isValidImageUrl(req.body.image_url);
         var image_url = req.body.image_url;
-        var image_file = null;
-      } else if (req.body.image_file) {
+      } /*else if (req.body.image_file) {
         var image_url = "";
+        console.log(image.file);
         var image_file = req.body.image_file;
         image_file = BSON.Binary(image_file);
-      } else {
+      }*/ else {
         var image_url = "No_Image_Available.jpg";
-        var image_file = null;
       }
 
       if (host_time < application_deadline)
@@ -80,7 +80,6 @@ router.route("/create").post(async (req, res) => {
         location,
         hostInfo,
         image_url,
-        image_file
       );
 
       return res.redirect("/event/" + event._id);
@@ -213,7 +212,7 @@ router.route("/edit/:id").get(async (req, res) => {
     if (req.session.isHost) {
       const eventId = req.params.id;
       const userId = req.session.user_id;
-      let eventDetail = await eventData.getEventByEventId(req.params.id);
+      let eventDetail = await eventData.getEventByEventId(eventId);
 
       if (eventDetail.host_info.host_id === userId) {
         return res.render("edit_event", {
@@ -253,12 +252,25 @@ router.route("/edit/:id").patch(async (req, res) => {
         let state = validation.isValidString(req.body.state);
         let zipcode = validation.isValidString(req.body.zipcode);
 
+        if (req.body.image_url) {
+          req.body.image_url = validation.isValidImageUrl(req.body.image_url);
+          var image_url = req.body.image_url;
+        } /*else if (req.body.image_file) {
+          var image_url = "";
+          console.log(image.file);
+          var image_file = req.body.image_file;
+          image_file = BSON.Binary(image_file);
+        }*/ else {
+          var image_url = "No_Image_Available.jpg";
+        }
+
         if (host_time < application_deadline)
           throw "Error: Event Date & Time should be after Registration Deadline";
 
         eventDetail.description = description;
         eventDetail.application_deadline = application_deadline;
         eventDetail.host_time = host_time;
+        eventDetail.image_url = image_url;
         eventDetail.location = {
           address: streetAddress,
           city: city,

@@ -5,14 +5,25 @@
 
     <div class="d-flex flex-column w-100 align-items-center p-2">
     {{#if image_url}}
-      <img
-        src="/public/images/{{image_url}}"
-      />
+      <div class="url-input-wrapper"></div>
+        <input type="text" id="image-url-input" placeholder="Enter the image URL">
+        <button id="display-image-btn" onclick="validateImageUrl()">Display Image</button>
+      </div>
+      <br>  
+
+      <div class="d-flex flex-column w-100 align-items-center p-2">
+        <img id="event-image" src= {{image_url}} alt="No Image Available for this event" />
+      </div>
     {{else}}
-      <img
-        src="/public/images/No_Image_Available.jpg"
-        alt="No Image Available for this event"
-      />
+      <div class="url-input-wrapper"></div>
+        <input type="text" id="image-url-input" placeholder="Enter the image URL">
+        <button id="display-image-btn" onclick="validateImageUrl()">Display Image</button>
+      </div>
+      <br>  
+
+      <div class="d-flex flex-column w-100 align-items-center p-2">
+        <img id="event-image" src= "/public/images/No_Image_Available.jpg" alt="No Image Available for this event" />
+      </div>
     {{/if}}
     </div>
 
@@ -187,6 +198,82 @@
       </form>
     </div>
   </div>
+
+    <script>
+      /*function validateImage() {
+        var fileInput = document.getElementById("image-input");
+
+        if (fileInput.files && fileInput.files[0]) {
+          var file = fileInput.files[0];
+          if (file.size <= 8 * 1024 * 1024) {
+            displayImage(file);
+          } else {
+            fileNameSpan.textContent = "";
+            alert("The selected image file exceeds the size limit of 8MB.");
+          }
+        }
+      }*/
+
+      function validateImageUrl() {
+        var urlInput = document.getElementById("image-url-input");
+
+        urlInput.value = urlInput.value.trim();
+        if(urlInput.value) {
+          displayImage(urlInput.value);
+        }else {
+          urlInput.value = '';
+          alert("The image url must be non-empty string");
+        }
+      }
+
+      function displayImage(image) {
+        var imgElement = document.getElementById("event-image");
+        // var fileNameSpan = document.getElementById("file-name");
+        var urlInput = document.getElementById("image-url-input");
+
+        if (typeof image === "string") {
+          // replaceFile();
+          // fileNameSpan.textContent = "";
+          imgElement.src = image;
+        }/*else if (image instanceof File) {
+          urlInput.value = "";
+          var reader = new FileReader();
+          reader.onload = function(e) {
+            imgElement.src = e.target.result;
+          };
+          reader.readAsDataURL(image);
+        }*/
+      }
+
+      /* function chooseFile() {
+        var fileInput = document.getElementById("image-input");
+        fileInput.click();
+      }*/
+
+      /* function replaceFile() {
+        var fileInput = document.getElementById("image-input");
+        var newFileInput = document.createElement("input");
+
+        newFileInput.type = "file";
+        newFileInput.id = "image-input";
+        newFileInput.accept = "image/*";
+        newFileInput.style.display = "none";
+        newFileInput.onchange = validateImage;
+
+        // Replace the existing file input element
+        fileInput.parentNode.replaceChild(newFileInput, fileInput);
+      }*/ 
+
+      /*document.getElementById("image-input").addEventListener("change", function() {
+        var fileInput = document.getElementById("image-input");
+        var fileNameSpan = document.getElementById("file-name");
+        if (fileInput.files && fileInput.files[0]) {
+          fileNameSpan.textContent = fileInput.files[0].name;
+        } else {
+          fileNameSpan.textContent = "";
+        }
+      });*/
+    </script>
 
     <script src="/public/js/edit_event.js" ></script>
     <script>

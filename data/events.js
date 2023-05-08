@@ -13,7 +13,6 @@ const exportedMethods = {
     location,
     host_info,
     image_url,
-    image_file
   ) {
     let tempEvent = validation.checkEventsInputs(
       event_name,
@@ -23,7 +22,6 @@ const exportedMethods = {
       location,
       host_info,
       image_url,
-      image_file
     );
 
     const release_time = new Date().getTime();
@@ -40,7 +38,6 @@ const exportedMethods = {
       feedbacks: tempEvent.feedbacks,
       likes: tempEvent.likes,
       image_url: tempEvent.image_url,
-      image_file: tempEvent.image_file
     };
 
     const eventsCollection = await events();
@@ -95,10 +92,6 @@ const exportedMethods = {
       updatedEventData.host_time = validation.isValidEventTime(
         eventInfo.host_time
       );
-    }
-
-    if (eventInfo.tags) {
-      updatedEventData.tags = validation.isValidArray(eventInfo.tags);
     }
 
     if (eventInfo.location) {

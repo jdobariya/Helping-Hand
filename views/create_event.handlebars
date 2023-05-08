@@ -4,13 +4,13 @@
     <span class="h1 text-center">Create Event</span>
 
     <div class="d-flex flex-column w-100 align-items-center p-2">
-      <span>Image File or URL (up to 8MB):</span>
+      <span>Image URL:</span>
 
-      <div class="file-input-wrapper">
+      {{!-- <div class="file-input-wrapper">
         <input type="file" id="image-input" accept="image/*" onchange="validateImage()" style="display: none;">
         <span id="file-name"></span>
         <button id="choose-file-btn" onclick="chooseFile()">Choose File</button>
-      </div>
+      </div> --}}
 
       <div class="url-input-wrapper"></div>
         <input type="text" id="image-url-input" placeholder="Enter the image URL">
@@ -195,7 +195,7 @@
   </div>
 
   <script>
-    function validateImage() {
+    /*function validateImage() {
       var fileInput = document.getElementById("image-input");
 
       if (fileInput.files && fileInput.files[0]) {
@@ -207,7 +207,7 @@
           alert("The selected image file exceeds the size limit of 8MB.");
         }
       }
-    }
+    }*/
 
     function validateImageUrl() {
       var urlInput = document.getElementById("image-url-input");
@@ -223,29 +223,29 @@
 
     function displayImage(image) {
       var imgElement = document.getElementById("event-image");
-      var fileNameSpan = document.getElementById("file-name");
+      // var fileNameSpan = document.getElementById("file-name");
       var urlInput = document.getElementById("image-url-input");
 
       if (typeof image === "string") {
-        replaceFile();
-        fileNameSpan.textContent = "";
+        // replaceFile();
+        // fileNameSpan.textContent = "";
         imgElement.src = image;
-      } else if (image instanceof File) {
+      }/*else if (image instanceof File) {
         urlInput.value = "";
         var reader = new FileReader();
         reader.onload = function(e) {
           imgElement.src = e.target.result;
         };
         reader.readAsDataURL(image);
-      }
+      }*/
     }
 
-    function chooseFile() {
+    /* function chooseFile() {
       var fileInput = document.getElementById("image-input");
       fileInput.click();
-    }
+    }*/
 
-    function replaceFile() {
+    /* function replaceFile() {
       var fileInput = document.getElementById("image-input");
       var newFileInput = document.createElement("input");
 
@@ -257,9 +257,9 @@
 
       // Replace the existing file input element
       fileInput.parentNode.replaceChild(newFileInput, fileInput);
-    }
+    }*/ 
 
-    document.getElementById("image-input").addEventListener("change", function() {
+    /*document.getElementById("image-input").addEventListener("change", function() {
       var fileInput = document.getElementById("image-input");
       var fileNameSpan = document.getElementById("file-name");
       if (fileInput.files && fileInput.files[0]) {
@@ -267,10 +267,10 @@
       } else {
         fileNameSpan.textContent = "";
       }
-    });
+    });*/
   </script>
 
-  <script src="/public/js/create_event.js" type="module"></script>
+  <script src="/public/js/create_event.js"></script>
   <script>
     let currentDate = new Date();
     console.log(currentDate)
