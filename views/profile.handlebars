@@ -5,7 +5,8 @@
         <div class="d-flex flex-column align-items-center text-center p-3 py-5">
           <img
             class="rounded-circle mt-5"
-            width="150px"
+            width="150"
+            alt="Profile avatar"
             src="../public/images/avatar.png"
           />
           <span class="font-weight-bold">{{first_name}} {{last_name}}</span>
@@ -35,8 +36,8 @@
                   name="first_name"
                   id="first_name"
                   placeholder="First Name"
-                  value={{first_name}}
-                >
+                  value="{{ first_name }}"
+                />
               </div>
               <div class="col-md-6">
                 <label class="labels" for="last_name">Last Name</label>
@@ -46,8 +47,8 @@
                   name="last_name"
                   id="last_name"
                   placeholder="Last Name"
-                  value={{last_name}}
-                >
+                  value="{{ last_name }}"
+                />
               </div>
             </div>
 
@@ -60,7 +61,7 @@
                   name="email"
                   id="email"
                   placeholder="Enter Email"
-                  value={{email}}
+                  value="{{ email }}"
                 >
               </div>
             </div>
@@ -74,7 +75,7 @@
                   name="contact"
                   id="contact"
                   placeholder="Enter Mobile Number"
-                  value={{contact}}
+                  value="{{ contact }}"
                 >
               </div>
             </div>
@@ -88,7 +89,7 @@
                   name="bio"
                   id="bio"
                   placeholder="Tell the world something about yourself"
-                >{{bio}}</textarea>
+                >{{ bio }}</textarea>
               </div>
             </div>
 
@@ -156,7 +157,7 @@
                 <div class="col-md-12">
                     <div class="card" style="width: 18rem;">
                         <div class="card-body">
-                            <h5 class="card-title">{{this.event_name}}</h5>
+                            <h5 class="card-title"><a href="event/{{this._id}}">{{this.event_name}}</a></h5>
                             <h6 class="card-subtitle mb-2 text-muted text-end">{{this.location.city}}, {{this.location.state}}</h6>
                         </div>
                     </div>
@@ -169,5 +170,5 @@
     </div>
   </div>
 
-  <script src="../public/js/profile.js" >
+  <script src="../public/js/profile.js"></script>
 {{/with}}

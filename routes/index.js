@@ -8,38 +8,29 @@ import eventRoutes from "./event.js";
 import searchRoute from "./search.js";
 import landingRoute from "./landing.js";
 import profileRoute from "./profile.js";
-
+import { changeDateFormat } from "./events.js";
 const constructorMethod = (app) => {
   app.get("/", (req, res) => {
     return res.redirect("/home");
   });
 
   app.use("/home", async (req, res) => {
-    let events = await eventData.getAllAppEvents();
-    const longEnUSFormatter = new Intl.DateTimeFormat("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
-
-    events.forEach((eventDetail) => {
-      eventDetail.application_deadline = longEnUSFormatter
-        .format(new Date(eventDetail.application_deadline))
-        .toString();
-    });
+    let popularEvents = await eventData.getPopularEvents(10); //showing top 10 popular events
+    popularEvents = changeDateFormat(popularEvents);
 
     if (req.session && req.session.loggedIn) {
       return res.render("homepage", {
         title: "Helping Hands",
         user: true,
-        allEvents: events,
+        isHost: req.session.isHost,
+        allEvents: popularEvents,
         first_name: req.session.first_name,
       });
     } else {
       return res.render("homepage", {
         title: "Helping Hands",
         user: false,
-        allEvents: events,
+        allEvents: popularEvents,
       });
     }
   });
@@ -53,7 +44,7 @@ const constructorMethod = (app) => {
   app.use("/landing", landingRoute);
   app.use("/profile", profileRoute);
   app.use("*", (req, res) => {
-    res.status(404).render("error", {error: 404});
+    res.status(404).render("error", { error: 404 });
   });
 };
 export default constructorMethod;

@@ -83,8 +83,10 @@ const exportedMethods = {
     }
 
     if (eventInfo.application_deadline) {
-      updatedEventData.application_deadline =
-        validation.isValidEventTime(eventInfo.application_deadline, eventInfo.release_time);
+      updatedEventData.application_deadline = validation.isValidEventTime(
+        eventInfo.application_deadline,
+        eventInfo.release_time
+      );
     }
 
     if (eventInfo.host_time) {
@@ -110,7 +112,9 @@ const exportedMethods = {
     }
 
     if (eventInfo.image_url) {
-      updatedEventData.image_url = validation.isValidImageUrl(eventInfo.image_url);
+      updatedEventData.image_url = validation.isValidImageUrl(
+        eventInfo.image_url
+      );
     }
 
     const eventCollection = await events();
@@ -145,16 +149,72 @@ const exportedMethods = {
     return true;
   },
 
-  // will return all app's events
-  async getAllAppEvents() {
+  async getPopularEvents(limit, skip) {
     const eventCollection = await events();
 
-    let all = await eventCollection.find({}).toArray();
-    all = all.map((element) => {
-      element._id = element._id.toString();
-      return element;
-    });
-    return all;
+    if (!limit) limit = 0;
+    if (!skip) skip = 0;
+    let popularEvents = await eventCollection
+      .aggregate([
+        { $match: { application_deadline: { $gte: new Date().getTime() } } },
+
+        {
+          $project: {
+            event_name: 1,
+            description: 1,
+            release_time: 1,
+            application_deadline: 1,
+            host_time: 1,
+            location: 1,
+            image_url: 1,
+            volunteers: 1,
+            host_info: 1,
+            stories: 1,
+            feedbacks: 1,
+            likes: 1,
+            likeCount: { $size: { $ifNull: ["$likes", []] } },
+          },
+        },
+        {
+          $sort: { likeCount: -1 },
+        },
+      ])
+      .skip(skip)
+      .limit(limit)
+      .toArray();
+
+    return popularEvents;
+  },
+
+  // will return all app's events
+  async getAllAppEvents(limit, skip) {
+    const eventCollection = await events();
+
+    if (limit) {
+      if (!skip) skip = 0;
+      let all = await eventCollection
+        .find({})
+        .skip(skip)
+        .limit(limit)
+        .toArray();
+      all = all.map((element) => {
+        element._id = element._id.toString();
+        return element;
+      });
+      return all;
+    } else {
+      let all = await eventCollection.find({}).toArray();
+      all = all.map((element) => {
+        element._id = element._id.toString();
+        return element;
+      });
+      return all;
+    }
+  },
+
+  async getEventsCount() {
+    const eventCollection = await events();
+    return eventCollection.count();
   },
 
   async getEventByEventId(_id) {
@@ -407,7 +467,7 @@ const exportedMethods = {
     return updateInfo.value;
   },
 
-  async addLikes(event_id, volunteer_id) {
+  async addAndRemoveLikes(event_id, volunteer_id) {
     validation.isValidId(event_id);
     event_id = event_id.trim(event_id);
     validation.isValidId(volunteer_id);
@@ -421,10 +481,15 @@ const exportedMethods = {
     if (!event) throw `Error: event with id ${event_id} not found`;
 
     if (event.likes.includes(volunteer_id)) {
-      throw `Error: volunteer with ${volunteer_id} id is already in event.likes array`;
+      // throw `Error: volunteer with ${volunteer_id} id is already in event.likes array`;
+      const index = event.likes.indexOf(volunteer_id);
+      if (index > -1) {
+        event.likes.splice(index, 1);
+      }
+    } else {
+      event.likes.push(volunteer_id);
     }
 
-    event.likes.push(volunteer_id);
     let updateInfo = await eventCollection.findOneAndUpdate(
       { _id: new ObjectId(event_id) },
       { $set: { likes: event.likes } },
@@ -433,7 +498,7 @@ const exportedMethods = {
     if (updateInfo.lastErrorObject.n === 0)
       throw [404, `Could not update the event with id ${_id}`];
 
-    return updateInfo.value;
+    return event.likes.length;
   },
 
   async upsertLoggedInUserFeedback(eventId, userId, feedback_comment) {

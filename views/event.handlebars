@@ -1,17 +1,17 @@
 <main id="indi-event">
   <div class="event-img">
     {{#if event.image_url}}
-    <img
-      src="/public/images/{{event.image_url}}"
-      class="card-img-top"
-      alt="{{event.alt}}"
-    />
+      <img
+        src="/public/images/{{event.image_url}}"
+        class="card-img-top"
+        alt="{{event.alt}}"
+      />
     {{else}}
-    <img
-      src="/public/images/No_Image_Available.jpg"
-      class="image"
-      alt="No Image Available for this event"
-    />
+      <img
+        src="/public/images/No_Image_Available.jpg"
+        class="image"
+        alt="No Image Available for this event"
+      />
     {{/if}}
   </div>
   <div class="event-container">
@@ -30,6 +30,12 @@
         <a href="/event/edit/{{event._id}}">
           <button type="button">EDIT EVENT</button>
         </a>
+      </div>
+    {{else if event.isEventExpired}}
+      <div></div>
+    {{else if event.isRegistrationExpired}}
+      <div class="reg-closed-msg">
+        <p>Event Registration Closed</p>
       </div>
     {{else if user}}
       <div class="event-registeration" id="event-r-btn">
@@ -111,7 +117,7 @@
         <p class="event-sub-title">Volunteer List&nbsp;({{volunteersCount}})</p>
         {{#each volunteerList}}
 
-          <div class="card w-50">
+          <div class="card">
             <div class="card-body">
               <div class="volunteer">
                 {{#if (ifCond first_name "||" last_name)}}
