@@ -4,8 +4,11 @@ let release_time = new Date().getTime();
 submitBtn.on("click", function (e) {
   e.preventDefault();
 
+<<<<<<< HEAD
   let imageUrlInput = $("#image-url-input");
   // let imageFileInput = $("#image-input");
+=======
+>>>>>>> 2ed2e927bc361c9ff9490b2956653556bc131eb8
   let eventNameInput = $("#event_name");
   let descriptionInput = $("#description");
   let applicationDeadlineInput = $("#app_deadline");
@@ -55,6 +58,7 @@ submitBtn.on("click", function (e) {
     if (hostTime < applicationDeadline)
       throw "Error: Event Date & Time should be after Registration Deadline";
 
+<<<<<<< HEAD
     if (imageUrl) {
       imageUrl = isValidImageUrl(imageUrl);
       var data = {
@@ -102,6 +106,27 @@ submitBtn.on("click", function (e) {
       dataType: "json",
     };
 
+=======
+    let data = {
+      event_name: eventName,
+      description: description,
+      application_deadline: applicationDeadline,
+      host_time: hostTime,
+      streetAddress: streetAddress,
+      city: city,
+      state: state,
+      zipcode: zipCode,
+    };
+
+    console.log(data);
+
+    let requestConfig = {
+      method: "POST",
+      data: data,
+      dataType: "json",
+    };
+
+>>>>>>> 2ed2e927bc361c9ff9490b2956653556bc131eb8
     $.ajax(requestConfig).then(function (responseMessage) {
       if (responseMessage.success) {
         resultDiv.empty();
@@ -109,6 +134,10 @@ submitBtn.on("click", function (e) {
           `<span class="text-success">Event Created successfully!</span>`
         );
         resultDiv.show();
+<<<<<<< HEAD
+=======
+        window.location.href = `${event_id}`;
+>>>>>>> 2ed2e927bc361c9ff9490b2956653556bc131eb8
       } else {
         resultDiv.empty();
         resultDiv.append(
@@ -164,6 +193,7 @@ function isValidEventTime(timestamp, release_time) {
 
   return timestamp;
 }
+<<<<<<< HEAD
 
 function isValidImageUrl(image_url) {
   const imageRegex = /\.(gif|jpg|jpeg|tiff|png|avif)/i;
@@ -174,3 +204,5 @@ function isValidImageUrl(image_url) {
     throw "Invalid image URL";
   }
 }
+=======
+>>>>>>> 2ed2e927bc361c9ff9490b2956653556bc131eb8

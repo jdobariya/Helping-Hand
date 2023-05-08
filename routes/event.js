@@ -13,6 +13,7 @@ router.route("/create").get(async (req, res) => {
         title: "Create Event",
         user: true,
         first_name: req.session.first_name,
+        isHost: req.session.isHost,
       });
     } else {
       res.status(403).render("error", { error: 403 });
@@ -21,7 +22,11 @@ router.route("/create").get(async (req, res) => {
     res.status(500).render("error", { error: 500 });
   }
 });
-
+function toTitleCase(str) {
+  return str.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
+}
 router.route("/create").post(async (req, res) => {
   try {
     if (req.session.isHost) {
@@ -62,9 +67,10 @@ router.route("/create").post(async (req, res) => {
       const hostInfo = {
         host_id: userId,
         host_name: userInfo.first_name + " " + userInfo.last_name,
-        contact: userInfo.contact,
+        contact: userInfo.email,
       };
 
+      hostInfo.host_name = toTitleCase(hostInfo.host_name);
       const location = {
         address: streetAddress,
         city: city,
@@ -82,7 +88,7 @@ router.route("/create").post(async (req, res) => {
         image_url,
       );
 
-      return res.redirect("/event/" + event._id);
+      return res.status(200).json({ success: true, event_id: event._id });
     } else {
       return res.status(403).render("error", { error: 403 });
     }
@@ -146,8 +152,8 @@ router.route("/:id").get(async (req, res) => {
             email: user.email,
           };
         }
-      } catch {
-        console.log("something went wrong");
+      } catch (e) {
+        console.log(e);
       }
 
       return res.render("event", {
@@ -220,6 +226,7 @@ router.route("/edit/:id").get(async (req, res) => {
           event: eventDetail,
           user: true,
           first_name: req.session.first_name,
+          isHost: req.session.isHost
         });
       } else {
         res.status(403).render("error", { error: 403 });
@@ -291,5 +298,105 @@ router.route("/edit/:id").patch(async (req, res) => {
     return res.json({ success: false, error: e });
   }
 });
+
+router.route("/details/:id").get(async (req, res) => {
+    try{
+      if(req.xhr){
+        let eventId = req.params.id.trim();
+        validation.isValidId(eventId);
+        const event_details = await eventData.getEventByEventId(eventId);
+
+        let user_details = {
+          isUser: false
+        };
+        if (req.session.user_id){
+          user_details ={
+            isUser: true,
+            user_id: req.session.user_id.trim()
+          }
+        }
+        
+        res.json({event_details: event_details, user_details: user_details})
+      }else{
+        res.render("error", {error: 404})
+      }
+    }catch(e){
+      res.status(500).render("error", {error: 500});
+    }
+})
+
+router.route("/:id/story").post(async (req, res) => {
+    try{
+      if (req.session.loggedIn){
+        const eventId = req.params.id.trim();
+        validation.isValidId(eventId);
+        const userId = req.session.user_id.trim();
+        validation.isValidId(userId);
+        
+        const event = await eventData.getEventByEventId(eventId);
+        const isRegistered = event.volunteers.indexOf(userId)
+
+        if(isRegistered !== -1){
+          const story = validation.isValidString(req.body.story);
+          validation.isValidStoryString(story);
+
+          await eventData.upsertStory(eventId, userId, story);
+          
+          res.json({ success: true });
+        }else{
+          res.json({ success: false, error: "You must be registered for this event to submit a story"})
+        }
+
+      }else{
+        res.json({ success: false, error: "You must be logged in to submit a story"})
+      }
+
+    }catch(e){
+        return res.json({ success: false, error: e });
+    }
+});
+
+router.route("/:id/feedback").post(async (req, res) => {
+  try{
+    const eventId = req.params.id.trim();
+    validation.isValidId(eventId);
+
+    const feedback = validation.isValidString(req.body.feedback);
+    validation.isValidFeedbackString(feedback);
+
+    if (req.session.loggedIn){
+      const userId = req.session.user_id.trim();
+      validation.isValidId(userId);
+
+      await eventData.upsertLoggedInUserFeedback(eventId, userId, feedback);
+      
+      res.json({ success: true });
+
+    }else{
+      let first_name = validation.isValidString(req.body.first_name);
+      validation.isValidName(first_name)
+
+      let last_name = validation.isValidString(req.body.last_name)
+      validation.isValidName(last_name)
+
+      let email = validation.isValidString(req.body.email)
+      validation.isValidEmail(email)
+
+      const feedbackObj = {
+        firstname: first_name,
+        lastname: last_name,
+        email: email,
+        feedback_comment: feedback
+      }
+
+      await eventData.addNonLoggedInUserFeedback(eventId, feedbackObj)
+
+      res.json({success: true})
+    }
+
+  }catch(e){
+      return res.json({ success: false, error: e });
+  }
+})
 
 export default router;

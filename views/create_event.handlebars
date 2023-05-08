@@ -184,7 +184,7 @@
               type="submit"
               id="submit_btn"
               value="submit"
-            >Save Changes</button>
+            >Create</button>
           </div>
 
           <div id="result_div" class="m-2 text-center">
@@ -273,11 +273,11 @@
   <script src="/public/js/create_event.js"></script>
   <script>
     let currentDate = new Date();
-    console.log(currentDate)
+ 
     let minDate = new Date(currentDate.setDate(currentDate.getDate() + 15))
-    console.log(minDate)
+
     let maxDate = new Date(currentDate.setMonth(currentDate.getMonth() + 6))
-    console.log(maxDate)
+
 
     let app_deadline = document.getElementById("app_deadline");
     app_deadline.value = minDate.toISOString().slice(0,16)
