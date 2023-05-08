@@ -12,7 +12,7 @@ const exportedMethods = {
     host_time,
     location,
     host_info,
-    image_url
+    image_url,
   ) {
     let tempEvent = validation.checkEventsInputs(
       event_name,
@@ -21,7 +21,7 @@ const exportedMethods = {
       host_time,
       location,
       host_info,
-      image_url
+      image_url,
     );
 
     const release_time = new Date().getTime();
@@ -32,7 +32,6 @@ const exportedMethods = {
       application_deadline: tempEvent.application_deadline,
       host_time: tempEvent.host_time,
       location: tempEvent.location,
-      image_url: tempEvent.image_url,
       volunteers: tempEvent.volunteers,
       host_info: tempEvent.host_info,
       stories: tempEvent.stories,
@@ -93,10 +92,6 @@ const exportedMethods = {
       updatedEventData.host_time = validation.isValidEventTime(
         eventInfo.host_time
       );
-    }
-
-    if (eventInfo.tags) {
-      updatedEventData.tags = validation.isValidArray(eventInfo.tags);
     }
 
     if (eventInfo.location) {

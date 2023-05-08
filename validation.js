@@ -147,8 +147,12 @@ export function isValidHostInfo(hostInfo) {
   isValidId(hostInfo.host_id);
 
   hostInfo.host_name = isValidString(hostInfo.host_name);
+<<<<<<< HEAD
+  hostInfo.contact = isValidString(hostInfo.contact);
+=======
 
   isValidEmail(hostInfo.contact);
+>>>>>>> 2ed2e927bc361c9ff9490b2956653556bc131eb8
 
   return hostInfo;
 }
@@ -234,14 +238,12 @@ export function isValidFeedbackString(story){
 }
 
 export function isValidImageUrl(image_url) {
-  const imageRegex = /\.(gif|jpg|jpeg|tiff|png|avif)$/i;
+  const imageRegex = /\.(gif|jpg|jpeg|tiff|png|avif)/i;
 
   if (imageRegex.test(image_url)) {
     return image_url;
   } else {
-    image_url = "No-image-found.jpg";
-    return image_url;
-    // throw "Invalid image URL";
+    throw "Invalid image URL";
   }
 }
 
@@ -266,10 +268,8 @@ export function checkEventsInputs(
 
   location = isValidLocation(location, "location");
   host_info = isValidHostInfo(host_info, "host_info");
-
-  image_url = isValidString(image_url);
-
   if (image_url) {
+    image_url = isValidString(image_url);
     image_url = isValidImageUrl(image_url);
   }
 
@@ -299,6 +299,7 @@ export function checkEventsInputs(
     image_url,
   };
 }
+
 export function searchObject(obj, regex) {
   for (const prop in obj) {
     if (typeof obj[prop] === "object") {
