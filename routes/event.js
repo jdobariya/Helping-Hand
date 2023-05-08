@@ -30,7 +30,6 @@ function toTitleCase(str) {
 router.route("/create").post(async (req, res) => {
   try {
     if (req.session.isHost) {
-      console.log(req.body.event_name);
       const userId = req.session.user_id;
       const userInfo = await userData.getUserById(userId);
 
