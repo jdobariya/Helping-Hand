@@ -50,6 +50,7 @@ router.route("/").get(async (req, res) => {
           futureParticipated: future_participated_events,
           expiredHost: expired_hosted_events,
           futureHost: furture_hosted_events,
+          isHost: req.session.isHost,
         });
       } catch (e) {
         return res.render("landing", {

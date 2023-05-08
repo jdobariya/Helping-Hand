@@ -22,6 +22,7 @@ const constructorMethod = (app) => {
       return res.render("homepage", {
         title: "Helping Hands",
         user: true,
+        isHost: req.session.isHost,
         allEvents: popularEvents,
         first_name: req.session.first_name,
       });

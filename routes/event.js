@@ -78,6 +78,21 @@ router.route("/create").post(async (req, res) => {
 
 router.route("/:id").get(async (req, res) => {
   let eventDetail = await eventData.getEventByEventId(req.params.id);
+
+  eventDetail.isRegistrationExpired = false;
+  if (
+    new Date(eventDetail.application_deadline).getTime() -
+      new Date().getTime() <
+    0
+  ) {
+    eventDetail.isRegistrationExpired = true;
+  }
+  eventDetail.isEventExpired = false;
+
+  if (new Date(eventDetail.host_time).getTime() - new Date().getTime() < 0) {
+    eventDetail.isEventExpired = true;
+  }
+
   const longEnUSFormatter = new Intl.DateTimeFormat("en-US", {
     year: "numeric",
     month: "long",
@@ -102,19 +117,6 @@ router.route("/:id").get(async (req, res) => {
     let eventHostUser = eventDetail.host_info.host_id;
 
     if (eventDetail.volunteers.includes(user)) isRegistered = true;
-
-    eventDetail.isRegistrationExpired = false;
-    if (
-      new Date(eventDetail.application_deadline).getTime() -
-        new Date().getTime() <
-      0
-    ) {
-      eventDetail.isRegistrationExpired = true;
-    }
-    eventDetail.isEventExpired = false;
-    if (new Date(eventDetail.host_time).getTime() - new Date().getTime() < 0) {
-      eventDetail.isEventExpired = true;
-    }
 
     if (user === eventHostUser) {
       let volunteers = {};

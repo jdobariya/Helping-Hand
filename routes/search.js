@@ -21,8 +21,9 @@ router.route("/").post(async (req, res) => {
         title: "Browse Events",
         user: true,
         allEvents: eventsRow,
-        first_name:req.session.first_name,
+        first_name: req.session.first_name,
         text: `Results for ${req.body.searchValue} are`,
+        isHost: req.session.isHost,
       });
     } else {
       return res.render("events", {
