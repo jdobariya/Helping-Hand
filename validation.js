@@ -185,12 +185,6 @@ export function isValidStory(story) {
   return story;
 }
 
-export function isValidStoryString(story){
-  if(story.split(" ").length < 20){
-    throw "Error: story must be at least 20 words long";
-  }
-}
-
 export function isValidFeedback(feedback) {
   const keys = Object.keys(feedback);
 
@@ -224,13 +218,6 @@ export function isValidFeedback(feedback) {
   feedback.feedback_comment = isValidString(feedback.feedback_comment);
 
   return feedback;
-}
-
-
-export function isValidFeedbackString(story){
-  if(story.split(" ").length < 10){
-      throw "Error: story must be at least 10 words long";
-  }
 }
 
 export function isValidImageUrl(image_url) {

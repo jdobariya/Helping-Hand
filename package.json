@@ -28,8 +28,5 @@
     "mongodb": "^5.1.0",
     "sharp": "0.32.1",
     "xss": "1.0.14"
-  },
-  "nodemonConfig": {
-    "ignore": ["public/js/*.js"]
   }
 }
