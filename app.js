@@ -26,7 +26,7 @@ app.use("/public", staticDir);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(rewriteUnsupportedBrowserMethods);
-
+app.use('/uploads', express.static('uploads'));
 app.engine(
   "handlebars",
   exphbs.engine({

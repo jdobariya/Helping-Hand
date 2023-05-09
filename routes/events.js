@@ -77,13 +77,13 @@ router.route("/loadevents").get(async (req, res) => {
 
     if (event.image_url) {
       eventStr += `<img
-      src="/public/images/${event.image_url}"
+      src="/public/uploads/${event.image_url}"
       class="image"
       alt="{{alt}}"
   />`;
     } else {
       eventStr += `<img
-      src="/public/images/No_Image_Available.jpg"
+      src="/public/uploads/No_Image_Available.jpg"
       class="image"
       alt="No Image Available for this event"
   />`;

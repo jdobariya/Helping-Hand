@@ -2,13 +2,13 @@
   <div class="event-img">
     {{#if event.image_url}}
       <img
-        src="/public/images/{{event.image_url}}"
+        src="/public/{{event.image_url}}"
         class="card-img-top"
         alt="{{event.alt}}"
       />
     {{else}}
       <img
-        src="/public/images/No_Image_Available.jpg"
+        src="/public/uploads/No_Image_Available.jpg"
         class="image"
         alt="No Image Available for this event"
       />
@@ -24,20 +24,21 @@
     <div class="about-event">
       <p><span><strong>About:</strong>&nbsp;</span>{{event.description}}</p>
     </div>
-    {{#if isHost}}
-      <div class="event-edit">
 
-        <a href="/event/edit/{{event._id}}">
-          <button type="button">EDIT EVENT</button>
-        </a>
-      </div>
-    {{else if event.isEventExpired}}
+    {{#if event.isEventExpired}}
       <div></div>
     {{else if event.isRegistrationExpired}}
       <div class="reg-closed-msg">
         <p>Event Registration Closed</p>
       </div>
     {{else if user}}
+      {{#if isHost}}
+      <div class="event-edit">
+        <a href="/event/edit/{{event._id}}">
+          <button type="button">EDIT EVENT</button>
+        </a>
+      </div>
+      {{else}}
       <div class="event-registeration" id="event-r-btn">
         {{#if isRegistered}}
           <button
@@ -55,6 +56,7 @@
           >REGISTER NOW</button>
         {{/if}}
       </div>
+      {{/if}}
     {{else}}
       <div class="login-btn">
         <a href="/login">LOGIN FOR REGISTRATION</a>

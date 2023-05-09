@@ -222,7 +222,7 @@ export function isValidFeedback(feedback) {
 
 export function isValidImageUrl(image_url) {
   const imageRegex = /\.(gif|jpg|jpeg|tiff|png|avif)$/i;
-
+  
   if (imageRegex.test(image_url)) {
     return image_url;
   } else {
@@ -254,7 +254,6 @@ export function checkEventsInputs(
   location = isValidLocation(location, "location");
   host_info = isValidHostInfo(host_info, "host_info");
 
-  image_url = isValidString(image_url);
 
   if (image_url) {
     image_url = isValidImageUrl(image_url);

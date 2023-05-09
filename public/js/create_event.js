@@ -12,6 +12,7 @@ submitBtn.on("click", function (e) {
   let cityInput = $("#city");
   let stateInput = $("#state");
   let zipCodeInput = $("#zipcode");
+  let event_images = $("#event_images");
   let resultDiv = $("#result_div");
   resultDiv.empty();
 
@@ -46,6 +47,9 @@ submitBtn.on("click", function (e) {
     if (hostTime < applicationDeadline)
       throw "Error: Event Date & Time should be after Registration Deadline";
 
+    const files = $('#event_images')[0].files;
+
+
     let data = {
       event_name: eventName,
       description: description,
@@ -55,14 +59,34 @@ submitBtn.on("click", function (e) {
       city: city,
       state: state,
       zipcode: zipCode,
+      event_images: files
     };
 
-    console.log(data);
+
+    const formData = new FormData();
+    formData.append( "event_name", eventName);
+    formData.append("description", description);
+    formData.append("application_deadline", applicationDeadline);
+    formData.append("host_time", hostTime);
+    formData.append("streetAddress", streetAddress);
+    formData.append("city", city);
+    formData.append("state", state);
+    formData.append("zipcode", zipCode);
+    if (files.length > 0){
+     
+      for (let i = 0; i < files.length; i++) {
+        var file = files[i];
+        
+        formData.append('event_images', file);
+      }
+    }
 
     let requestConfig = {
       method: "POST",
-      data: data,
-      dataType: "json",
+      data: formData,
+      processData: false,
+      contentType: false,
+      cache: false,
     };
 
     $.ajax(requestConfig).then(function (responseMessage) {
@@ -72,7 +96,7 @@ submitBtn.on("click", function (e) {
           `<span class="text-success">Event Created successfully!</span>`
         );
         resultDiv.show();
-        window.location.href = `${event_id}`;
+        // window.location.href = `${responseMessage.event_id}`;
       } else {
         resultDiv.empty();
         resultDiv.append(

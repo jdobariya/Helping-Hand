@@ -3,20 +3,31 @@
 
     <span class="h1 text-center">Create Event</span>
 
-    <div class="d-flex flex-column w-100 align-items-center p-2">
+    {{!-- <div class="d-flex flex-column w-100 align-items-center p-2">
       <img
         src="/public/images/No_Image_Available.jpg"
         alt="No Image Available for this event"
       />
-    </div>
+    </div> --}}
 
     <div class="d-flex flex-column w-100 align-items-center p-2">
       <form
         id="event_form"
         class="d-flex flex-column w-75"
+        enctype="multipart/form-data"
       >
-        <div class="p-3 py-5">
-          <span class="text-center"> <h2>Edit Details</h2> </span>
+        <div class="p-3 pb-5 pt-2">
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <input
+                type="file"
+                class="form-control-file"
+                name="event_images"
+                id="event_images"
+                multiple
+              />
+            </div>
+          </div>
 
           <div class="row mt-2">
             <div class="col-md-12">
