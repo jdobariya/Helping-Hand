@@ -27,6 +27,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(rewriteUnsupportedBrowserMethods);
 
+
 app.engine('handlebars', exphbs.engine({defaultLayout: 'main',helpers:{
   ifCond: function(v1, operator, v2) {
     switch (operator) {

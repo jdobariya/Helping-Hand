@@ -77,9 +77,9 @@ router.route("/loadevents").get(async (req, res) => {
 
     if (event.image_url) {
       eventStr += `<img
-      src="/public/images/${event.image_url}"
+      src="/${event.image_url[0]}"
       class="image"
-      alt="{{alt}}"
+     
   />`;
     } else {
       eventStr += `<img

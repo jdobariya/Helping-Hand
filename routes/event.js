@@ -2,10 +2,34 @@ import { Router } from "express";
 import * as validation from "../validation.js";
 import { eventData } from "../data/index.js";
 import { userData } from "../data/index.js";
-
+import multer from "multer";
 const router = Router();
 
+const storage = multer.diskStorage({
+  destination: function(req, file, cb){
+    cb(null, "./public/uploads/")
+  },
+  filename: function(req, file , cb){
+    cb(null, new Date().toISOString() + file.originalname)
+  }
+
+})
+
+const fileFilter = (req, file, cb) => {
+  if(file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg"){
+    cb(null, true); 
+  }else{
+    cb(null, false);
+    const err = new Error('Only .png, .jpg and .jpeg format allowed!')
+    err.name = 'ExtensionError'
+    return cb(err);
+  }
+}
+const upload = multer({storage: storage, fileFilter:fileFilter, limits: {fileSize: 1024*1024*5}});
+
+
 router.route("/create").get(async (req, res) => {
+
   try {
     if (req.session.isHost) {
       return res.render("create_event", {
@@ -26,7 +50,7 @@ function toTitleCase(str) {
     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
   });
 }
-router.route("/create").post(async (req, res) => {
+router.post("/create",upload.array("event_images",10),async (req, res) => {
   try {
     if (req.session.isHost) {
       const userId = req.session.user_id;
@@ -42,9 +66,12 @@ router.route("/create").post(async (req, res) => {
       let city = validation.isValidString(req.body.city);
       let state = validation.isValidString(req.body.state);
       let zipcode = validation.isValidString(req.body.zipcode);
-      let image_url = req.body.image_url
-        ? req.body.image_url
-        : "No_Image_Available.jpg";
+      let image_url = [];
+      
+      for(let i=0; i < req.files.length; i++){
+        console.log(req.files[i].path);
+        image_url.push(req.files[i].path);
+      }
 
       if (host_time < application_deadline)
         throw "Error: Event Date & Time should be after Registration Deadline";
@@ -128,7 +155,7 @@ router.route("/:id").get(async (req, res) => {
       let volunteers = {};
       let eventVolunteer = eventDetail.volunteers;
       try {
-        for (let i = 0; i <= eventVolunteer.length; i++) {
+        for (let i = 0; i < eventVolunteer.length; i++) {
           let user = await userData.getUserById(eventVolunteer[i]);
           volunteers[eventVolunteer[i]] = {
             first_name: user.first_name,
