@@ -120,13 +120,26 @@ const exportedMethods = {
     const eventCollection = await events();
     let newEvent = await eventCollection.findOneAndUpdate(
       { _id: new ObjectId(_id) },
-      { $set: updatedEventData },
+      [{ $set: updatedEventData}, {$set: {'updateVolunteers': '$volunteers'}}],
       { returnDocument: "after" }
     );
     if (newEvent.lastErrorObject.n === 0)
       throw [404, `Could not update the event with id ${_id}`];
 
     return newEvent.value;
+  },
+
+  async updatedVolunteer(_id, volunteer_id) {
+    _id = _id.trim();
+    validation.isValidId(_id);
+
+    volunteer_id = volunteer_id.trim();
+    validation.isValidId(volunteer_id);
+
+    const eventCollection = await events();
+    await eventCollection.findOneAndUpdate(
+      {_id: new ObjectId(_id)},
+      {$pull: {updateVolunteers: volunteer_id}})
   },
 
   async checkIfHost(event_id, host_id) {

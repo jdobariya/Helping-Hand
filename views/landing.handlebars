@@ -5,17 +5,28 @@
       <div class="row">
         <h4 id ="future-upcoming">Upcoming Events</h4>
         {{#each futureParticipated}}
-
-          <div class="card">
-            <a class="eventA" href="event/{{_id}}">
-              <h5 class="card-title">{{event_name}}</h5>
-              <p class="updated_info">{{updated}}</p>
-              <p class="city-name">{{location.address}},
-                {{location.city}},
-                {{location.state}}</p>
-              <p><span>Registration Deadline:</span>&nbsp;{{application_deadline}}</p>
-            </a>
-          </div>
+          {{#if updated}}
+            <div class="card border-danger">
+              <div class="card-header">Updated</div>
+              <a class="card-body eventA" href="event/{{_id}}">
+                <h5 class="card-title text-danger">{{event_name}}</h5>
+                <p class="card-text text-danger city-name">{{location.address}},
+                  {{location.city}},
+                  {{location.state}}</p>
+                <p class="card-text text-danger"><span>Registration Deadline:</span>&nbsp;{{application_deadline}}</p>
+              </a>
+            </div>
+          {{else}}
+            <div class="card">
+              <a class="card-body eventA" href="event/{{_id}}">
+                <h5 class="card-title">{{event_name}}</h5>
+                <p class="card-text city-name">{{location.address}},
+                  {{location.city}},
+                  {{location.state}}</p>
+                <p class="card-text"><span>Registration Deadline:</span>&nbsp;{{application_deadline}}</p>
+              </a>
+            </div>
+          {{/if}}
 
         {{else}}
           <p class="empty">No upcoming events to show</p>
