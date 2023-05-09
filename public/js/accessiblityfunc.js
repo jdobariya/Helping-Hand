@@ -226,11 +226,11 @@ function fetchMoreEvents() {
 //img slider
 
 
-$("#indi-event .card").css({ "max-width": "100%", display: "none" });
+$("#indi-event .event-img .card").css({ "max-width": "100%", display: "none" });
 for (let card = 0; card < 1; card++) {
-  $(`#indi-event .img-${card}`).css("display", "");
+  $(`#indi-event .event-img .img-${card}`).css("display", "");
 }
-if($("#indi-event .card").length >= 2){
+if($("#indi-event .event-img .card").length >= 2){
   var imgRventSliderIndex = 0;
   $("#eventImgsliderControls #pre").html("<");
   $("#next").html(">");
@@ -245,7 +245,7 @@ function showNextEventImg(event) {
   $("#eventImgsliderControls #pre").prop("disabled", false);
   $("#eventImgsliderControls #pre").css("color", "black");
   imgRventSliderIndex++;
-  if ($("#indi-event .card").length - 1 === imgRventSliderIndex) {
+  if ($("#indi-event .event-img .card").length - 1 === imgRventSliderIndex) {
     $("#next").prop("disabled", true);
     $("#next").css("color", "#949494");
   }

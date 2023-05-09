@@ -169,7 +169,7 @@
 
       <div id="story_feedback_view" class="d-flex flex-column">
         <div class="row mt-2 my-5">
-          {{#if event.stories}}
+          {{#if event.stories.length}}
           <div class="col-md-6">
             <p class="fs-4">Volunteers Experiences</p>
               <div id="div_story_view">
@@ -189,7 +189,7 @@
           {{/if}}     
 
           <div class="col-md-6">
-            {{#if (ifCond event.feedbacks '&&' isHost)}}
+            {{#if (ifCond event.feedbacks.length '&&' isHost)}}
             <p class="fs-4">Feedbacks</p>
               <div id="div_feedback_view">
               {{#each event.feedbacks}}
