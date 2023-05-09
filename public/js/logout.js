@@ -6,3 +6,4 @@ logoutdiv.innerHTML="You are sucessfully loggedout"
     // Redirect to the home page
     window.location.href = '/home';
   }, 3000); // 5 seconds
+  

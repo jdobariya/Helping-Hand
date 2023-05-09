@@ -4,22 +4,21 @@
     data-recent="{{release_time}}"
     data-due="{{application_deadline}}"
 >
-
-    {{#if image_url}}
-    <img
-        src="/public/images/{{image_url}}"
+    {{#if image_url.length}}
+      <img
+        src="{{image_url.length}}"
         class="image"
-        alt="{{alt}}"
-    />
+      />
     {{else}}
-    <img
+      <img
         src="/public/images/No_Image_Available.jpg"
         class="image"
         alt="No Image Available for this event"
-    />
+      />
     {{/if}}
-    <div class="card-body">
 
+
+    <div class="card-body">
     <a class="eventA" href="event/{{_id}}">
 
     <p class="card-title">{{event_name}}</p></a>

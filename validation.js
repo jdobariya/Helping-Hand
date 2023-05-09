@@ -236,13 +236,12 @@ export function isValidFeedbackString(story){
 export function isValidImageUrl(image_url) {
   const imageRegex = /\.(gif|jpg|jpeg|tiff|png|avif)$/i;
 
-  if (imageRegex.test(image_url)) {
-    return image_url;
-  } else {
-    image_url = "No-image-found.jpg";
-    return image_url;
-    // throw "Invalid image URL";
+  for(let i=0; i < image_url.length; i++){
+    if (!imageRegex.test(image_url)) {
+      throw "Invalid image URL";
+    }
   }
+  return image_url
 }
 
 export function checkEventsInputs(
@@ -267,10 +266,10 @@ export function checkEventsInputs(
   location = isValidLocation(location, "location");
   host_info = isValidHostInfo(host_info, "host_info");
 
-  image_url = isValidString(image_url);
-
-  if (image_url) {
+  if (Array.isArray(image_url) && image_url.length > 0) {
     image_url = isValidImageUrl(image_url);
+  }else{
+    image_url = [];
   }
 
   if (stories.length !== 0) {

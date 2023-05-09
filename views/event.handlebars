@@ -1,11 +1,33 @@
 <main id="indi-event">
+
+
   <div class="event-img">
-    {{#if event.image_url}}
-      <img
-        src="/public/images/{{event.image_url}}"
-        class="card-img-top"
-        alt="{{event.alt}}"
-      />
+    {{#if event.image_url.length}}
+
+          <div class="row-container">
+      <div class="row">
+        {{#each event.image_url}}
+          <div class="card img-{{@index}}">
+                <img
+                  src="/{{this}}"
+                />
+          </div>
+        {{/each}}
+      </div>
+      <div id="sliderControls">
+        <button
+          id="pre"
+          class="control-btn"
+          onclick="showPreEventImg(event)"
+        ></button>
+        <button
+          id="next"
+          class="control-btn"
+          onclick="showNextEventImg(event)"
+        ></button>
+      </div>
+    </div>
+
     {{else}}
       <img
         src="/public/images/No_Image_Available.jpg"
@@ -24,20 +46,24 @@
     <div class="about-event">
       <p><span><strong>About:</strong>&nbsp;</span>{{event.description}}</p>
     </div>
-    {{#if isHost}}
-      <div class="event-edit">
-
-        <a href="/event/edit/{{event._id}}">
-          <button type="button">EDIT EVENT</button>
-        </a>
-      </div>
-    {{else if event.isEventExpired}}
+    {{#if event.isEventExpired}}
       <div></div>
-    {{else if event.isRegistrationExpired}}
+    {{else if (ifCond event.isRegistrationExpired "&&" (ifCond user "==" false))}}
       <div class="reg-closed-msg">
         <p>Event Registration Closed</p>
       </div>
     {{else if user}}
+      {{#if isHost}}
+      <div class="event-edit">
+        <a href="/event/edit/{{event._id}}">
+          <button type="button">EDIT EVENT</button>
+        </a>
+      </div>
+      {{else if event.isRegistrationExpired}}
+          <div class="reg-closed-msg">
+            <p>Event Registration Closed</p>
+          </div>
+      {{else}}
       <div class="event-registeration" id="event-r-btn">
         {{#if isRegistered}}
           <button
@@ -55,6 +81,7 @@
           >REGISTER NOW</button>
         {{/if}}
       </div>
+      {{/if}}
     {{else}}
       <div class="login-btn">
         <a href="/login">LOGIN FOR REGISTRATION</a>
@@ -281,3 +308,8 @@
   <script src="/public/js/event.js"></script>
 
 </main>
+
+
+
+
+

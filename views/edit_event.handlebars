@@ -4,10 +4,9 @@
     <span class="h1 text-center">{{event_name}}</span>
 
     <div class="d-flex flex-column w-100 align-items-center p-2">
-    {{#if image_url}}
+    {{#if image_url.length}}
       <img
-        src="/public/images/{{image_url}}"
-        alt="no image available"
+        src="/{{image_url.[0]}}"
       />
     {{else}}
       <img

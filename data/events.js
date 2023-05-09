@@ -24,6 +24,7 @@ const exportedMethods = {
       image_url
     );
 
+    
     const release_time = new Date().getTime();
     const newEvent = {
       event_name: tempEvent.event_name,

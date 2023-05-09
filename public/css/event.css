@@ -144,3 +144,9 @@
   font-size: 20px;
   color: rgb(183, 61, 61);
 }
+
+
+
+#indi-event .card{
+  border: 0;
+}

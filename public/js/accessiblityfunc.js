@@ -177,7 +177,7 @@ function likeEvent(ele, event_id) {
     method: "PATCH",
     data: { reqType: "like", event_id },
   };
-  if (localStorage.getItem("status") === "loggedIn") {
+  if (sessionStorage.getItem("status") === "loggedIn") {
     $.ajax(requestConfig).then(function (responseMessage) {
       if (responseMessage.success) {
         ele.parentElement.getElementsByClassName("likeCount")[0].innerHTML =
@@ -218,4 +218,45 @@ function fetchMoreEvents() {
       alert("Something went wrong! Please try again later.");
     }
   });
+}
+
+//img slider
+
+
+$("#indi-event .card").css({ "max-width": "100%", display: "none" });
+for (let card = 0; card < 1; card++) {
+  $(`#indi-event .img-${card}`).css("display", "");
+}
+if($("#indi-event .card").length >= 2){
+  var imgRventSliderIndex = 0;
+  $("#pre").html("<");
+  $("#next").html(">");
+  $("#pre").prop("disabled", true);
+  $("#pre").css("color", "#949494");
+}else{
+  let controlsbtn =   document.getElementById("sliderControls");
+  if(controlsbtn) controlsbtn.remove();
+}
+
+function showNextEventImg(event) {
+  $("#pre").prop("disabled", false);
+  $("#pre").css("color", "black");
+  imgRventSliderIndex++;
+  if ($("#indi-event .card").length - 1 === imgRventSliderIndex) {
+    $("#next").prop("disabled", true);
+    $("#next").css("color", "#949494");
+  }
+  $(`#indi-event .img-${imgRventSliderIndex}`).css("display", "");
+  $(`#indi-event .img-${imgRventSliderIndex - 1}`).css("display", "none");
+}
+function showPreEventImg(event) {
+  $("#next").prop("disabled", false);
+  $("#next").css("color", "black");
+  if (imgRventSliderIndex === 1) {
+    $("#pre").prop("disabled", true);
+    $("#pre").css("color", "#949494");
+  }
+  $(`#indi-event .img-${imgRventSliderIndex}`).css("display", "none");
+  $(`#indi-event .img-${imgRventSliderIndex - 1}`).css("display", "");
+  imgRventSliderIndex--;
 }
