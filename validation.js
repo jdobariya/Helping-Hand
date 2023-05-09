@@ -10,6 +10,7 @@ export function isValidString(str) {
     throw "Error: Type should be string";
   }
   str = str.trim();
+ 
   if (str.length == 0) {
     throw "Error: inputs can't be empty";
   }
@@ -258,7 +259,12 @@ export function checkEventsInputs(
   likes = []
 ) {
   event_name = isValidString(event_name);
+ event_name=event_name.toLowerCase()
+  event_name=event_name[0].toUpperCase()+event_name.slice(1)
+
   description = isValidString(description);
+  description=description.toLowerCase()
+  description=description[0].toUpperCase()+description.slice(1)
 
   application_deadline = isValidEventTime(application_deadline);
   host_time = isValidEventTime(host_time);
