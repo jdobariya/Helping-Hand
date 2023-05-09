@@ -16,6 +16,7 @@
 
           <div class="card card-{{@index}}">
             <a class="eventA" href="event/{{_id}}">
+
               {{#if event.image_url.length}}
                 <img
                   src="/{{event.image_url.[0]}}"
@@ -34,7 +35,6 @@
                 {{event_name}}</h2>
               <p class="city-name">{{location.city}}</p>
               <p class="card-text">{{description}}</p>
-              </a>
                 {{> like_partial }}
               <p><span>Registration Deadline:</span>&nbsp;{{application_deadline}}</p>
 
