@@ -6,8 +6,9 @@
 >
     {{#if image_url.length}}
       <img
-        src="{{image_url}}"
+        src="{{image_url.[0]}}"
         class="image"
+        alt=""
       />
     {{else}}
       <img
