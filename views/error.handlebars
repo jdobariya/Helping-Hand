@@ -9,7 +9,9 @@
 </div>
 <script>
     let error = {{error}}
-    if (error === 404){
+    if(error === 400){
+        document.getElementById("message").innerHTML = "400: Bad Request";
+    }else if (error === 404){
         document.getElementById("message").innerHTML = "404: Page not found";
     } else if (error === 403){
         document.getElementById("message").innerHTML = "403: Forbidden";
