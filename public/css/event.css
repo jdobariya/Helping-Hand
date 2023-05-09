@@ -150,3 +150,8 @@
 #indi-event .card{
   border: 0;
 }
+
+#eventImgsliderControls{
+  justify-content: center;
+  display: flex;
+}

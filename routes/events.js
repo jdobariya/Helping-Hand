@@ -75,7 +75,7 @@ router.route("/loadevents").get(async (req, res) => {
     data-recent="${event.release_time}"
     data-due="${event.application_deadline}">`;
 
-    if (event.image_url) {
+    if (event.image_url.length) {
       eventStr += `<img
       src="/${event.image_url[0]}"
       class="image"
@@ -111,14 +111,15 @@ router.route("/loadevents").get(async (req, res) => {
   });
 });
 
-router.route("/").patch(async (req, res) => {
+router.route("/like").patch(async (req, res) => {
   if (req.body.reqType === "like") {
     try {
       let updatedEventLikeCount = await eventData.addAndRemoveLikes(
         req.body.event_id,
         req.session.user_id
       );
-      if (updatedEventLikeCount)
+
+      if (updatedEventLikeCount > -1)
         res
           .status(200)
           .json({ success: true, likeCount: updatedEventLikeCount });

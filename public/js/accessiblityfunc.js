@@ -14,14 +14,14 @@ $(".homepage-events .card").css({ "max-width": "33%", display: "none" });
 for (let card = 0; card < 3; card++) {
   $(`.homepage-events .card-${card}`).css("display", "");
 }
-$("#pre").html("<");
+$("#sliderControls #pre").html("<");
 $("#next").html(">");
-$("#pre").prop("disabled", true);
-$("#pre").css("color", "#949494");
+$("#sliderControls #pre").prop("disabled", true);
+$("#sliderControls #pre").css("color", "#949494");
 
 function showNextEvent(event) {
-  $("#pre").prop("disabled", false);
-  $("#pre").css("color", "black");
+  $("#sliderControls #pre").prop("disabled", false);
+  $("#sliderControls #pre").css("color", "black");
   eventSliderIndex++;
   if ($(".homepage-events .card").length - 1 === eventSliderIndex) {
     $("#next").prop("disabled", true);
@@ -36,8 +36,8 @@ function showPreEvent(event) {
   $("#next").prop("disabled", false);
   $("#next").css("color", "black");
   if (eventSliderIndex === 3) {
-    $("#pre").prop("disabled", true);
-    $("#pre").css("color", "#949494");
+    $("#sliderControls #pre").prop("disabled", true);
+    $("#sliderControls #pre").css("color", "#949494");
   }
   $(`.homepage-events .card-${eventSliderIndex}`).css("display", "none");
   $(`.homepage-events .card-${eventSliderIndex - 3}`).css("display", "");
@@ -173,17 +173,20 @@ function likeEvent(ele, event_id) {
   if (!event_id) alert("Must provide event id");
   if (typeof event_id !== "string") alert("Event id must be of type string");
   let requestConfig = {
-    url: `events`,
+    url: `events/like`,
     method: "PATCH",
     data: { reqType: "like", event_id },
   };
+  ele.style.pointerEvents = "none";
   if (sessionStorage.getItem("status") === "loggedIn") {
     $.ajax(requestConfig).then(function (responseMessage) {
       if (responseMessage.success) {
         ele.parentElement.getElementsByClassName("likeCount")[0].innerHTML =
           responseMessage.likeCount;
+          ele.style.pointerEvents = "";
       } else {
         alert("Something went wrong! Please try again later.");
+        ele.style.pointerEvents = "";
       }
     });
   } else {
@@ -229,18 +232,18 @@ for (let card = 0; card < 1; card++) {
 }
 if($("#indi-event .card").length >= 2){
   var imgRventSliderIndex = 0;
-  $("#pre").html("<");
+  $("#eventImgsliderControls #pre").html("<");
   $("#next").html(">");
-  $("#pre").prop("disabled", true);
-  $("#pre").css("color", "#949494");
+  $("#eventImgsliderControls #pre").prop("disabled", true);
+  $("#eventImgsliderControls #pre").css("color", "#949494");
 }else{
-  let controlsbtn =   document.getElementById("sliderControls");
+  let controlsbtn =   document.getElementById("eventImgsliderControls");
   if(controlsbtn) controlsbtn.remove();
 }
 
 function showNextEventImg(event) {
-  $("#pre").prop("disabled", false);
-  $("#pre").css("color", "black");
+  $("#eventImgsliderControls #pre").prop("disabled", false);
+  $("#eventImgsliderControls #pre").css("color", "black");
   imgRventSliderIndex++;
   if ($("#indi-event .card").length - 1 === imgRventSliderIndex) {
     $("#next").prop("disabled", true);
@@ -253,8 +256,8 @@ function showPreEventImg(event) {
   $("#next").prop("disabled", false);
   $("#next").css("color", "black");
   if (imgRventSliderIndex === 1) {
-    $("#pre").prop("disabled", true);
-    $("#pre").css("color", "#949494");
+    $("#eventImgsliderControls #pre").prop("disabled", true);
+    $("#eventImgsliderControls #pre").css("color", "#949494");
   }
   $(`#indi-event .img-${imgRventSliderIndex}`).css("display", "none");
   $(`#indi-event .img-${imgRventSliderIndex - 1}`).css("display", "");
