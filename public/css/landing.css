@@ -30,7 +30,7 @@
 }
 
 #link_to_events,
-#link_to {
+#link_to,#link_to1,#link_to2 {
   display: block;
   margin-top: 20px;
   text-align: center;
