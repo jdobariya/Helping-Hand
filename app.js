@@ -77,8 +77,8 @@ import {
   sanitizeUserInput,
 } from "./middleware.js";
 
-app.use(logger);
 app.use(sanitizeUserInput);
+app.use(logger);
 app.get("/login", redirectLogin);
 app.get("/signup", redirectSignup);
 app.get("/landing", (req, res, next) => {
