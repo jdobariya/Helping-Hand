@@ -57,7 +57,7 @@ function loadPage(){
     }
 }
 
-function onSubmitStory(event){
+function onSubmitStory(){
     let url = window.location.pathname + "/story";
     event.preventDefault();
     let errorDiv = $("#div_story_error");
@@ -124,7 +124,7 @@ function onEditStory(){
             </form>`
     )
 }
-function onSubmitFeedback(event){
+function onSubmitFeedback(){
     event.preventDefault();
     let url = window.location.pathname + "/feedback";
     let isUser = JSON.parse(sessionStorage.getItem("user_details")).isUser
