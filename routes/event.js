@@ -215,7 +215,7 @@ router.route("/:id").get(async (req, res) => {
         try {
           for (let i = 0; i < eventVolunteer.length; i++) {
             let user = await userData.getUserById(eventVolunteer[i]);
-            volunteers[eventVolunteer[i]] = {
+            volunteers[i] = {
               first_name: user.first_name,
               last_name: user.last_name,
               contact: user.contact,
@@ -225,7 +225,7 @@ router.route("/:id").get(async (req, res) => {
         } catch (e) {
           console.log(e);
         }
-
+        console.log(volunteers)
         return res.render("event", {
           title: "Event Details",
           event: eventDetail,

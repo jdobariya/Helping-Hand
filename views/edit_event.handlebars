@@ -7,12 +7,14 @@
     {{#if image_url.length}}
       <img
         src="/{{image_url.[0]}}"
-      />
+        alt=""
+      >
     {{else}}
       <img
         src="/public/images/No_Image_Available.jpg"
+  
         alt="No Image Available for this event"
-      />
+      >
     {{/if}}
     </div>
 
@@ -35,7 +37,7 @@
                 placeholder="Event Name"
                 value="{{event_name}}"
                 disabled
-              />
+              >
             </div>
           </div>
 
@@ -60,7 +62,8 @@
                 class="form-control"
                 name="app_deadline"
                 id="app_deadline"
-              />
+              
+              >
             </div>
           </div>
 
@@ -72,7 +75,7 @@
                 class="form-control"
                 name="host_time"
                 id="host_time"
-              />
+              >
             </div>
           </div>
 
@@ -86,7 +89,7 @@
                 id="street_address"
                 placeholder="Enter Street Address of Event Location"
                 value="{{location.address}}"
-              />
+              >
             </div>
             <div class="col-md-4">
               <label class="labels" for="city">City</label>
@@ -97,7 +100,7 @@
                 id="city"
                 placeholder="Enter City of Event Location"
                 value="{{location.city}}"
-              />
+              >
             </div>
 
             <div class="col-md-4">
@@ -167,7 +170,7 @@
                 id="zipcode"
                 placeholder="Enter Zipcode of Event Location"
                 value="{{location.zipcode}}"
-              />
+              >
             </div>
 
           </div>
