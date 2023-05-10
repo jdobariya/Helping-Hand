@@ -29,10 +29,5 @@
     "multer": "^1.4.5-lts.1",
     "sharp": "0.32.1",
     "xss": "1.0.14"
-  },
-  "nodemonConfig": {
-    "ignore": [
-      "public/js/*.js"
-    ]
   }
 }

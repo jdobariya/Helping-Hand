@@ -1,18 +1,30 @@
-# Helping-Hand
+# Helping-Hand (https://github.com/jdobariya/Helping-Hand)
+
+## How to run the application
+#### Install all dependencies
+$ npm install
+
+#### Seed the Database (using seed.js)
+$ npm run seed
+
+#### Run the Web application
+$ npm start
+
+
 Helping Hand is a web application that facilitates the organization and participation of events for public welfare. 
 
-#Team members:
+# Team members:
 
 • Weijin Liu
 • Nikhil Varma Bandaru
 • Jay Talekar
 • Jaydeep Maganbhai Dobariya
 
-#Introduction
+# Introduction
 
 Welcome to the world of Helping Hand, a web application that aims to bring people together for a greater cause. In this project, we will be developing a website that serves as a platform for individuals to organize and participate in events for public welfare. The website will also facilitate crowdfunding for these events, enabling people to contribute to causes they believe in. The core value of this platform is to encourage volunteerism and to empower individuals to make a difference in their community. We believe that Helping Hand has the potential to create a significant impact, and we are excited to embark on this web development project.
 
-#Core Features
+# Core Features
 
 • Home Page
 
