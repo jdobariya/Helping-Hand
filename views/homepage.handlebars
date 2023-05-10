@@ -20,12 +20,13 @@
               {{#if event.image_url.length}}
                 <img
                   src="/{{event.image_url.[0]}}"
+                  alt=""
                 />
               {{else}}
                 <img
                   src="/public/images/No_Image_Available.jpg"
                   alt="No Image Available for this event"
-                />
+                >
               {{/if}}
 
             </a>

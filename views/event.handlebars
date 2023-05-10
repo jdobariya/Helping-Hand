@@ -10,7 +10,8 @@
           <div class="card img-{{@index}}">
                 <img
                   src="/{{this}}"
-                />
+                  alt=""
+                >
           </div>
         {{/each}}
       </div>
@@ -33,7 +34,7 @@
         src="/public/images/No_Image_Available.jpg"
         class="image"
         alt="No Image Available for this event"
-      />
+      >
     {{/if}}
   </div>
   <div class="event-container">
@@ -56,7 +57,7 @@
       {{#if isHost}}
       <div class="event-edit">
         <a href="/event/edit/{{event._id}}">
-          <button type="button">EDIT EVENT</button>
+          EDIT EVENT
         </a>
       </div>
       {{else if event.isRegistrationExpired}}
