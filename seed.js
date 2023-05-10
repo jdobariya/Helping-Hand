@@ -2226,7 +2226,7 @@ async function seedEvents() {
 
   try {
     for (const event_id of event_ids) {
-      const numVolunteers = Math.floor(Math.random() * 15) + 1;
+      const numVolunteers = Math.floor(Math.random() * 25) + 1;
       const volunteers = [];
 
       while (volunteers.length < numVolunteers) {
@@ -2239,6 +2239,7 @@ async function seedEvents() {
 
       for (const volunteer_id of volunteers) {
         await eventData.addVolunteers(event_id, volunteer_id);
+        await eventData.addAndRemoveLikes(event_id, volunteer_id);
       }
     }
   } catch (e) {
@@ -2246,7 +2247,12 @@ async function seedEvents() {
   }
 }
 
+console.log("Seeding users")
 await seedUsers();
+console.log("Done Seeding users")
+
+console.log("Seeding events")
 await seedEvents();
+console.log("Done Seeding events")
 
 await closeConnection();
