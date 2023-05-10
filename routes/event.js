@@ -202,6 +202,10 @@ router.route("/:id").get(async (req, res) => {
       let eventHostUser = eventDetail.host_info.host_id;
 
       if (eventDetail.volunteers.includes(userId)) isRegistered = true;
+      
+      if(eventDetail.updateVolunteers){
+         if (eventDetail.updateVolunteers.includes(user)) eventData.updatedVolunteer(req.params.id, user)
+      }
 
       if (userId === eventHostUser) {
         let volunteers = [];
@@ -402,7 +406,7 @@ router.route("/edit/:id").patch(async (req, res) => {
 
         await eventData.updateEventPatch(eventId, eventDetail);
 
-        res.json({ success: true });
+        res.json({ success: true, event_id: eventId });
       } else {
         if (req.session && req.session.loggedIn)
           res.status(403).render("error", {

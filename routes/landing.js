@@ -42,6 +42,13 @@ router.route("/").get(async (req, res) => {
             false
           );
 
+        future_participated_events.forEach(event => {
+          if(event.updateVolunteers) {
+            if(event.updateVolunteers.indexOf(id) !== -1)event.updated = true;
+            else event.updated = false;
+          }
+        });
+
         return res.render("landing", {
           title: "Your Events",
           user: true,

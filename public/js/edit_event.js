@@ -63,6 +63,9 @@ submitBtn.on("click", function (e) {
             resultDiv.empty();
             resultDiv.append(`<span class="text-success">Event updated successfully!</span>`);
             resultDiv.show();
+            setTimeout(function(){
+                window.location.href = "/event/" + responseMessage.event_id;
+            }, 2000)
         }else{
             resultDiv.empty();
             resultDiv.append(`<span class="text-danger">${responseMessage.error}</span>`);
