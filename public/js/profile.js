@@ -16,7 +16,7 @@
         addBtn.on('click', function(e){
             e.preventDefault();
 
-            let skill = skillsInput.val().trim();
+            let skill = skillsInput.val().trim().replaceAll(" ", "-");
 
             if(skill){
                 skillBadges.append(`

@@ -27,6 +27,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(rewriteUnsupportedBrowserMethods);
 
+
 app.engine('handlebars', exphbs.engine({defaultLayout: 'main',helpers:{
   ifCond: function(v1, operator, v2) {
     switch (operator) {
@@ -73,11 +74,9 @@ import {
   redirectProfile,
   redirectEditEvent,
   redirectCreateEvent,
-  sanitizeUserInput,
 } from "./middleware.js";
 
 app.use(logger);
-app.use(sanitizeUserInput);
 app.get("/login", redirectLogin);
 app.get("/signup", redirectSignup);
 app.get("/landing", (req, res, next) => {

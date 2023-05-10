@@ -6,22 +6,39 @@ import * as validation from "../validation.js";
 const router = Router();
 
 router.route("/").get(async (req, res) => {
-  const id = req.session.user_id;
+  try{
+    const id = req.session.user_id;
 
-  const user = await usersData.getUserById(id);
+    const user = await usersData.getUserById(id);
 
-  const events = user.isHost
-    ? await eventsData.getAllEventsByHostId(id)
-    : await eventsData.getAllEventsByVolunteerId(id);
+    const events = user.isHost
+      ? await eventsData.getAllEventsByHostId(id)
+      : await eventsData.getAllEventsByVolunteerId(id);
 
-  return res.render("profile", {
-    title: "Profile",
-    first_name: user.first_name,
-    user: user,
-    events: events,
-    first_name: req.session.first_name,
-    isHost: req.session.isHost,
-  });
+    return res.render("profile", {
+      title: "Profile",
+      first_name: user.first_name,
+      user: user,
+      events: events,
+      first_name: req.session.first_name,
+      isHost: req.session.isHost,
+    });
+  }catch(e){
+    if(req.session && req.session.loggedIn)
+    res.status(500).render("error", { 
+      title: "Error", 
+      error: 500,
+      user: true,
+      first_name: req.session.first_name,
+      isHost: req.session.isHost
+    });
+  else 
+    res.status(500).render("error", {
+      title: "Error",
+      error: 500,
+      user: false
+    });
+  }
 });
 
 router.route("/").patch(async (req, res) => {

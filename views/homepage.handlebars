@@ -16,20 +16,26 @@
 
           <div class="card card-{{@index}}">
             <a class="eventA" href="event/{{_id}}">
-              <img
-                src="/public/images/{{image_url}}"
-                class="image"
-                alt="{{alt}}"
-              />
 
-            
+              {{#if event.image_url.length}}
+                <img
+                  src="/{{event.image_url.[0]}}"
+                  alt=""
+                />
+              {{else}}
+                <img
+                  src="/public/images/No_Image_Available.jpg"
+                  alt="No Image Available for this event"
+                >
+              {{/if}}
+
+            </a>
             <div class="card-body">
-
+              <a class="eventA" href="event/{{_id}}">  
               <h2 class="card-title">
-                {{event_name}}</h2>
+             {{event_name}}</h2></a>
               <p class="city-name">{{location.city}}</p>
               <p class="card-text">{{description}}</p>
-              </a>
                 {{> like_partial }}
               <p><span>Registration Deadline:</span>&nbsp;{{application_deadline}}</p>
 

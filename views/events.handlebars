@@ -25,11 +25,10 @@
     </div>
     
   </div>
-  {{#ifCond totalEventsCount '>' currEventCount}}
+  {{#if (ifCond totalEventsCount '>' currEventCount)}}
   <div id="load-event-btn" >
       <button onclick="fetchMoreEvents()">See More</button>
   </div>
-
-  {{/ifCond}}
+  {{/if}}
 
 </main>

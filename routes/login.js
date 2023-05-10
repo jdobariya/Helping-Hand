@@ -5,6 +5,7 @@ import {
   validatePassword,
 } from "../validation.js";
 import usersData from "../data/users.js";
+import xss from "xss";
 
 const router = Router();
 
@@ -15,8 +16,10 @@ router.route("/").get((req, res) => {
 });
 
 router.route("/").post(async (req, res) => {
-  let email = req.body.email;
+  let email = req.body.email.trim();
+  email = xss(email);
   let password = req.body.password;
+  password = xss(password);
 
   try {
     email = isValidString(email);

@@ -4,19 +4,26 @@
     <span class="h1 text-center">Create Event</span>
 
     <div class="d-flex flex-column w-100 align-items-center p-2">
-      <img
-        src="/public/images/No_Image_Available.jpg"
-        alt="No Image Available for this event"
-      />
-    </div>
-
-    <div class="d-flex flex-column w-100 align-items-center p-2">
       <form
         id="event_form"
         class="d-flex flex-column w-75"
+        enctype="multipart/form-data"
       >
-        <div class="p-3 py-5">
-          <span class="text-center"> <h2>Edit Details</h2> </span>
+
+        <div class="p-3 pb-5 pt-2">
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <label class="labels" for="event_images">Upload Event Images (Accepted format .jpg .jpeg and .png)</label>
+              <input
+                type="file"
+                class="form-control-file"
+                name="event_images"
+                id="event_images"
+                multiple
+              >
+            </div>
+          </div>
+
 
           <div class="row mt-2">
             <div class="col-md-12">
@@ -28,7 +35,7 @@
                 id="event_name"
                 placeholder="Event Name"
                 value=""
-              />
+              >
             </div>
           </div>
 
@@ -53,7 +60,7 @@
                 class="form-control"
                 name="app_deadline"
                 id="app_deadline"
-              />
+              >
             </div>
           </div>
 
@@ -65,7 +72,7 @@
                 class="form-control"
                 name="host_time"
                 id="host_time"
-              />
+              >
             </div>
           </div>
 
@@ -79,7 +86,7 @@
                 id="street_address"
                 placeholder="Enter Street Address of Event Location"
                 value=""
-              />
+              >
             </div>
             <div class="col-md-4">
               <label class="labels" for="city">City</label>
@@ -90,7 +97,7 @@
                 id="city"
                 placeholder="Enter City of Event Location"
                 value=""
-              />
+              >
             </div>
 
             <div class="col-md-4">
@@ -160,7 +167,7 @@
                 id="zipcode"
                 placeholder="Enter Zipcode of Event Location"
                 value=""
-              />
+              >
             </div>
 
           </div>

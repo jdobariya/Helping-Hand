@@ -8,6 +8,7 @@ import {
   validatePassword,
 } from "../validation.js";
 import usersData from "../data/users.js";
+import xss from "xss";
 
 const router = Router();
 
@@ -29,9 +30,11 @@ router.route("/").post(async (req, res) => {
   try {
     firstName = isValidString(firstName);
     isValidName(firstName);
+    firstName = xss(firstName);
 
     lastName = isValidString(lastName);
     isValidName(lastName);
+    lastName = xss(lastName);
 
     if(!isValidTimeStamp(birth_date)) {
       throw " Invalid birth_date timeStamp"
@@ -41,11 +44,14 @@ router.route("/").post(async (req, res) => {
     email = isValidString(email);
     email = email.toLowerCase();
     isValidEmail(email);
+    email = xss(email);
 
     password = isValidString(password);
     validatePassword(password);
+    password = xss(password);
 
     repeatPassword = isValidString(repeatPassword);
+    repeatPassword = xss(repeatPassword);
     if (repeatPassword !== password) throw "Passwords do not match";
 
     role = isValidString(role);

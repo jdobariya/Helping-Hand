@@ -24,6 +24,7 @@ const exportedMethods = {
       image_url
     );
 
+    
     const release_time = new Date().getTime();
     const newEvent = {
       event_name: tempEvent.event_name,
@@ -494,24 +495,27 @@ const exportedMethods = {
     if (!event) throw `Error: event with id ${event_id} not found`;
 
     if (event.likes.includes(volunteer_id)) {
-      // throw `Error: volunteer with ${volunteer_id} id is already in event.likes array`;
-      const index = event.likes.indexOf(volunteer_id);
-      if (index > -1) {
-        event.likes.splice(index, 1);
-      }
+      let updateInfo = await eventCollection.findOneAndUpdate(
+        { _id: new ObjectId(event_id) },
+        { $pull: { likes: volunteer_id } },
+        { returnDocument: "after" }
+      );
+      if (updateInfo.lastErrorObject.n === 0)
+        throw [404, `Could not update the event with id ${_id}`];
+  
+      return event.likes.length-1;
+      
     } else {
-      event.likes.push(volunteer_id);
+      let updateInfo = await eventCollection.findOneAndUpdate(
+        { _id: new ObjectId(event_id) },
+        { $push: { likes: volunteer_id } },
+        { returnDocument: "after" }
+      );
+      if (updateInfo.lastErrorObject.n === 0)
+        throw [404, `Could not update the event with id ${_id}`];
+  
+      return event.likes.length+1;
     }
-
-    let updateInfo = await eventCollection.findOneAndUpdate(
-      { _id: new ObjectId(event_id) },
-      { $set: { likes: event.likes } },
-      { returnDocument: "after" }
-    );
-    if (updateInfo.lastErrorObject.n === 0)
-      throw [404, `Could not update the event with id ${_id}`];
-
-    return event.likes.length;
   },
 
   async upsertLoggedInUserFeedback(eventId, userId, feedback_comment) {

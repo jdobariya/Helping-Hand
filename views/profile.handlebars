@@ -7,8 +7,8 @@
             class="rounded-circle mt-5"
             width="150"
             alt="Profile avatar"
-            src="../public/images/avatar.png"
-          />
+            src="../public/images/avatars/avatar.png"
+          >
           <span class="font-weight-bold">{{first_name}} {{last_name}}</span>
           <span class="text-black-50">{{email}}</span>
           <span>{{#if isHost}}HOST{{else}}VOLUNTEER{{/if}}</span>
@@ -37,7 +37,7 @@
                   id="first_name"
                   placeholder="First Name"
                   value="{{ first_name }}"
-                />
+                >
               </div>
               <div class="col-md-6">
                 <label class="labels" for="last_name">Last Name</label>
@@ -48,7 +48,7 @@
                   id="last_name"
                   placeholder="Last Name"
                   value="{{ last_name }}"
-                />
+                >
               </div>
             </div>
 
@@ -151,17 +151,17 @@
                <h4>Past Attended Events</h4>
             {{/if}}
           </div>
-          <br/>
+          
 
             {{#each ../events}}
-                <div class="col-md-12">
+                <div class="col-md-12 mb-2">
                     <div class="card" style="width: 18rem;">
                         <div class="card-body">
                             <h5 class="card-title"><a href="event/{{this._id}}">{{this.event_name}}</a></h5>
                             <h6 class="card-subtitle mb-2 text-muted text-end">{{this.location.city}}, {{this.location.state}}</h6>
                         </div>
                     </div>
-                    <br/>
+                    
                 </div>
             {{/each}}
           

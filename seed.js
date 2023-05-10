@@ -1,6 +1,5 @@
 import { userData, eventData } from "./data/index.js";
-import { dbConnection, closeConnection } from "./config/mongoConnection.js";
-import { imageToAlt } from "./validation.js";
+import { dbConnection, closeConnection } from "./config/mongoConnection.js";;
 
 const db = await dbConnection();
 await db.dropDatabase();
@@ -319,7 +318,7 @@ const users_data = [
     email: "rclaasen4@parallels.com",
     password: "Test@1234",
     bio: "I'm a minimalist who believes in living a simple and clutter-free life.",
-    skills: ["Stress management", "Recognition"],
+    skills: ["Stress-management", "Recognition"],
     address: "42 Old Shore Terrace",
     isHost: true,
   },
@@ -352,7 +351,7 @@ const users_data = [
     email: "dcinavas7@marketwatch.com",
     password: "Test@1234",
     bio: "I'm a collector who has a passion for vintage items and antiques.",
-    skills: ["Time management", "Networking", "Leadership"],
+    skills: ["Time-management", "Networking", "Leadership"],
     address: "9 Jana Drive",
     isHost: true,
   },
@@ -385,7 +384,7 @@ const users_data = [
     email: "jedgintona@cocolog-nifty.com",
     password: "Test@1234",
     bio: "I'm a movie buff who watches at least one movie a day.",
-    skills: ["Active listening", "Honesty"],
+    skills: ["Active-listening", "Honesty"],
     address: "1175 Bashford Circle",
     isHost: false,
   },
@@ -566,9 +565,9 @@ const users_data = [
     password: "Test@1234",
     bio: "I'm a movie buff who watches at least one movie a day.",
     skills: [
-      "Constructive criticism",
-      "Stress management",
-      "Active participation",
+      "Constructive-criticism",
+      "Stress-management",
+      "Active-participation",
       "Celebration",
       "Self-awareness",
     ],
@@ -629,7 +628,7 @@ const users_data = [
     skills: [
       "Honesty",
       "Integrity",
-      "Time management",
+      "Time-management",
       "Negotiation",
       "Trustworthiness",
     ],
@@ -654,7 +653,7 @@ const users_data = [
     email: "rgerbelt@dropbox.com",
     password: "Test@1234",
     bio: "I'm a passionate traveler who has visited over 20 countries.",
-    skills: ["Stress management", "Accountability", "Patience"],
+    skills: ["Stress-management", "Accountability", "Patience"],
     address: "16 Russell Avenue",
     isHost: false,
   },
@@ -666,7 +665,7 @@ const users_data = [
     password: "Test@1234",
     bio: "I'm a fashionista who enjoys keeping up with the latest trends.",
     skills: [
-      "Constructive criticism",
+      "Constructive-criticism",
       "Patience",
       "Problem-solving",
       "Gratitude",
@@ -759,7 +758,7 @@ const users_data = [
     email: "lbeidebeke12@gmpg.org",
     password: "Test@1234",
     bio: "I'm a history buff who enjoys learning about different cultures and civilizations.",
-    skills: ["Cultural sensitivity"],
+    skills: ["Cultural-sensitivity"],
     address: "73957 Northwestern Road",
     isHost: false,
   },
@@ -816,7 +815,7 @@ const users_data = [
     bio: "I'm a beach bum who loves to soak up the sun and swim in the ocean.",
     skills: [
       "Decision-making",
-      "Active listening",
+      "Active-listening",
       "Influencing",
       "Patience",
       "Constructive criticism",
@@ -848,7 +847,7 @@ const users_data = [
     email: "ssawden19@bluehost.com",
     password: "Test@1234",
     bio: "I'm a DIY enthusiast who enjoys crafting and home improvement projects.",
-    skills: ["Diplomacy", "Conflict resolution"],
+    skills: ["Diplomacy", "Conflict-resolution"],
     address: "3 Hollow Ridge Center",
     isHost: false,
   },
@@ -928,9 +927,9 @@ const users_data = [
     bio: "I'm a bookworm who reads at least one book a week.",
     skills: [
       "Patience",
-      "Conflict resolution",
+      "Conflict-resolution",
       "Influencing",
-      "Active participation",
+      "Active-participation",
       "Celebration",
     ],
     address: "3 Northport Circle",
@@ -989,9 +988,9 @@ const users_data = [
     bio: "I'm a sports fan who loves to watch and play basketball and football.",
     skills: [
       "Stress management",
-      "Constructive criticism",
+      "Constructive-criticism",
       "Influencing",
-      "Conflict resolution",
+      "Conflict-resolution",
     ],
     address: "86292 Lunder Court",
     isHost: false,
@@ -1076,7 +1075,7 @@ const users_data = [
     email: "sgirault1q@state.tx.us",
     password: "Test@1234",
     bio: "I'm a teacher who loves to inspire and educate young minds.",
-    skills: ["Gratitude", "Positive attitude", "Patience", "Tact"],
+    skills: ["Gratitude", "Positive-attitude", "Patience", "Tact"],
     address: "48916 Tennessee Street",
     isHost: false,
   },
@@ -1087,7 +1086,7 @@ const users_data = [
     email: "ztearle1r@psu.edu",
     password: "Test@1234",
     bio: "I'm a fashionista who enjoys keeping up with the latest trends.",
-    skills: ["Humility", "Time management", "Tact", "Celebration"],
+    skills: ["Humility", "Time-management", "Tact", "Celebration"],
     address: "05135 Westport Crossing",
     isHost: false,
   },
@@ -1098,7 +1097,7 @@ const users_data = [
     email: "rprantoni1s@indiatimes.com",
     password: "Test@1234",
     bio: "I'm a writer who enjoys expressing my thoughts and ideas through words.",
-    skills: ["Teaching", "Active listening", "Stress management"],
+    skills: ["Teaching", "Active-listening", "Stress-management"],
     address: "9 Fallview Park",
     isHost: false,
   },
@@ -1225,7 +1224,7 @@ const users_data = [
     email: "cbouette23@alibaba.com",
     password: "Test@1234",
     bio: "I'm a language learner who speaks four languages fluently.",
-    skills: ["Honesty", "Assertiveness", "Active listening", "Encouragement"],
+    skills: ["Honesty", "Assertiveness", "Active-listening", "Encouragement"],
     address: "47791 Namekagon Place",
     isHost: false,
   },
@@ -1236,7 +1235,7 @@ const users_data = [
     email: "pchippin24@stumbleupon.com",
     password: "Test@1234",
     bio: "I'm a sports fan who loves to watch and play basketball and football.",
-    skills: ["Constructive criticism", "Self-awareness", "Honesty"],
+    skills: ["Constructive-criticism", "Self-awareness", "Honesty"],
     address: "43 Hooker Center",
     isHost: false,
   },
@@ -1250,8 +1249,8 @@ const users_data = [
     skills: [
       "Collaboration",
       "Feedback",
-      "Active listening",
-      "Relationship building",
+      "Active-listening",
+      "Relationship-building",
       "Patience",
     ],
     address: "4 Maple Wood Trail",
@@ -1264,7 +1263,7 @@ const users_data = [
     email: "yeginton26@un.org",
     password: "Test@1234",
     bio: "I'm a DIY enthusiast who enjoys crafting and home improvement projects.",
-    skills: ["Persuasion", "Active participation"],
+    skills: ["Persuasion", "Active-participation"],
     address: "2 Knutson Alley",
     isHost: false,
   },
@@ -1341,7 +1340,7 @@ const users_data = [
     email: "vjenicke2c@xinhuanet.com",
     password: "Test@1234",
     bio: "I'm a teacher who loves to inspire and educate young minds.",
-    skills: ["Cultural sensitivity"],
+    skills: ["Cultural-sensitivity"],
     address: "06 Michigan Plaza",
     isHost: false,
   },
@@ -1352,7 +1351,7 @@ const users_data = [
     email: "etamplin2d@apple.com",
     password: "Test@1234",
     bio: "I'm a scientist who is fascinated by the mysteries of the universe.",
-    skills: ["Tact", "Constructive criticism", "Feedback", "Assertiveness"],
+    skills: ["Tact", "Constructive-criticism", "Feedback", "Assertiveness"],
     address: "498 Clove Plaza",
     isHost: false,
   },
@@ -1385,7 +1384,7 @@ const users_data = [
     email: "rtween2g@diigo.com",
     password: "Test@1234",
     bio: "I'm a language learner who speaks four languages fluently.",
-    skills: ["Leadership", "Cultural sensitivity", "Patience"],
+    skills: ["Leadership", "Cultural-sensitivity", "Patience"],
     address: "822 Norway Maple Hill",
     isHost: false,
   },
@@ -1396,7 +1395,7 @@ const users_data = [
     email: "fhitscher2h@columbia.edu",
     password: "Test@1234",
     bio: "I'm a writer who enjoys expressing my thoughts and ideas through words.",
-    skills: ["Active participation", "Negotiation"],
+    skills: ["Active-participation", "Negotiation"],
     address: "8138 Delladonna Point",
     isHost: false,
   },
@@ -1408,7 +1407,7 @@ const users_data = [
     password: "Test@1234",
     bio: "I'm a chef who enjoys experimenting with different cuisines and flavors.",
     skills: [
-      "Active listening",
+      "Active-listening",
       "Teamwork",
       "Tact",
       "Decision-making",
@@ -1446,7 +1445,7 @@ const users_data = [
     email: "vheikkinen2l@ca.gov",
     password: "Test@1234",
     bio: "I'm a fitness enthusiast who enjoys running and weightlifting.",
-    skills: ["Mentoring", "Accountability", "Positive attitude"],
+    skills: ["Mentoring", "Accountability", "Positive-attitude"],
     address: "23 Valley Edge Pass",
     isHost: false,
   },
@@ -1507,7 +1506,7 @@ const users_data = [
     email: "usleith2q@last.fm",
     password: "Test@1234",
     bio: "I'm a pet lover who has two dogs and a cat.",
-    skills: ["Active participation", "Persuasion"],
+    skills: ["Active-participation", "Persuasion"],
     address: "72 Merchant Drive",
     isHost: false,
   },
@@ -1573,7 +1572,7 @@ const users_data = [
     email: "nivins2w@issuu.com",
     password: "Test@1234",
     bio: "I'm a photographer who loves to capture beautiful moments and landscapes.",
-    skills: ["Feedback", "Persuasion", "Time management"],
+    skills: ["Feedback", "Persuasion", "Time-management"],
     address: "91 Lillian Center",
     isHost: false,
   },
@@ -1584,7 +1583,7 @@ const users_data = [
     email: "ssharple2x@hp.com",
     password: "Test@1234",
     bio: "I'm a minimalist who believes in living a simple and clutter-free life.",
-    skills: ["Gratitude", "Constructive criticism"],
+    skills: ["Gratitude", "Constructive-criticism"],
     address: "01549 Johnson Parkway",
     isHost: false,
   },
@@ -1617,7 +1616,7 @@ const users_data = [
     email: "sbagnold30@printfriendly.com",
     password: "Test@1234",
     bio: "I'm a photographer who loves to capture beautiful moments and landscapes.",
-    skills: ["Dependability", "Positive attitude", "Networking"],
+    skills: ["Dependability", "Positive-attitude", "Networking"],
     address: "0338 Oak Pass",
     isHost: false,
   },
@@ -1628,7 +1627,7 @@ const users_data = [
     email: "belcombe31@oracle.com",
     password: "Test@1234",
     bio: "I'm a fitness enthusiast who enjoys running and weightlifting.",
-    skills: ["Stress management", "Motivation"],
+    skills: ["Stress-management", "Motivation"],
     address: "0 Rockefeller Terrace",
     isHost: false,
   },
@@ -1666,7 +1665,7 @@ const users_data = [
       "Teamwork",
       "Patience",
       "Networking",
-      "Active listening",
+      "Active-listening",
     ],
     address: "2 Coleman Drive",
     isHost: false,
@@ -1678,7 +1677,7 @@ const users_data = [
     email: "amacer35@google.ru",
     password: "Test@1234",
     bio: "I'm a fashionista who enjoys keeping up with the latest trends.",
-    skills: ["Active listening", "Trustworthiness"],
+    skills: ["Active-listening", "Trustworthiness"],
     address: "64 Milwaukee Trail",
     isHost: false,
   },
@@ -1703,7 +1702,7 @@ const users_data = [
     skills: [
       "Stress management",
       "Self-confidence",
-      "Active listening",
+      "Active-listening",
       "Problem-solving",
     ],
     address: "3 Vermont Pass",
@@ -1763,9 +1762,9 @@ const users_data = [
     skills: [
       "Time management",
       "Encouragement",
-      "Relationship building",
+      "Relationship-building",
       "Humility",
-      "Active participation",
+      "Active-participation",
     ],
     address: "916 Debs Hill",
     isHost: false,
@@ -1777,7 +1776,7 @@ const users_data = [
     email: "msplevin3d@usnews.com",
     password: "Test@1234",
     bio: "I'm a fashionista who enjoys keeping up with the latest trends.",
-    skills: ["Tact", "Active participation", "Networking"],
+    skills: ["Tact", "Active-participation", "Networking"],
     address: "44 Westend Center",
     isHost: false,
   },
@@ -1816,7 +1815,7 @@ const users_data = [
     email: "ofellnee3g@mlb.com",
     password: "Test@1234",
     bio: "I'm a DIY enthusiast who enjoys crafting and home improvement projects.",
-    skills: ["Cultural sensitivity", "Time management"],
+    skills: ["Cultural-sensitivity", "Time-management"],
     address: "002 La Follette Avenue",
     isHost: true,
   },
@@ -1838,7 +1837,7 @@ const users_data = [
     email: "spiatto3i@shutterfly.com",
     password: "Test@1234",
     bio: "I'm a photographer who loves to capture beautiful moments and landscapes.",
-    skills: ["Support", "Problem-solving", "Active participation"],
+    skills: ["Support", "Problem-solving", "Active-participation"],
     address: "16200 Superior Place",
     isHost: false,
   },
@@ -1849,7 +1848,7 @@ const users_data = [
     email: "kdommerque3j@stumbleupon.com",
     password: "Test@1234",
     bio: "I'm a movie buff who watches at least one movie a day.",
-    skills: ["Self-awareness", "Cultural sensitivity", "Positive attitude"],
+    skills: ["Self-awareness", "Cultural-sensitivity", "Positive-attitude"],
     address: "38 Loeprich Junction",
     isHost: false,
   },
@@ -1877,7 +1876,7 @@ const users_data = [
     email: "isheehan3l@amazon.co.uk",
     password: "Test@1234",
     bio: "I'm a software engineer who loves to code and solve problems.",
-    skills: ["Communication", "Responsibility", "Active participation"],
+    skills: ["Communication", "Responsibility", "Active-participation"],
     address: "169 Lukken Way",
     isHost: true,
   },
@@ -1902,7 +1901,7 @@ const users_data = [
     skills: [
       "Support",
       "Empowerment",
-      "Constructive criticism",
+      "Constructive-criticism",
       "Teaching",
       "Tact",
     ],
@@ -1916,7 +1915,7 @@ const users_data = [
     email: "dpapaccio3o@networkadvertising.org",
     password: "Test@1234",
     bio: "I'm a coffee addict who can't start my day without a cup of joe.",
-    skills: ["Conflict resolution"],
+    skills: ["Conflict-resolution"],
     address: "04 Golden Leaf Pass",
     isHost: true,
   },
@@ -1927,7 +1926,7 @@ const users_data = [
     email: "wantonchik3p@mysql.com",
     password: "Test@1234",
     bio: "I'm a pet lover who has two dogs and a cat.",
-    skills: ["Conflict resolution", "Self-motivation", "Integrity"],
+    skills: ["Conflict-resolution", "Self-motivation", "Integrity"],
     address: "41 Sage Lane",
     isHost: true,
   },
@@ -1960,7 +1959,7 @@ const users_data = [
     email: "sriddlesden3s@bloglovin.com",
     password: "Test@1234",
     bio: "I'm a minimalist who believes in living a simple and clutter-free life.",
-    skills: ["Active listening"],
+    skills: ["Active-listening"],
     address: "9143 Miller Center",
     isHost: false,
   },
@@ -1982,7 +1981,7 @@ const users_data = [
     email: "crobrow3u@yellowbook.com",
     password: "Test@1234",
     bio: "I'm a software engineer who loves to code and solve problems.",
-    skills: ["Cultural sensitivity", "Collaboration", "Persuasion"],
+    skills: ["Cultural-sensitivity", "Collaboration", "Persuasion"],
     address: "8 Columbus Avenue",
     isHost: false,
   },
@@ -1993,7 +1992,7 @@ const users_data = [
     email: "mlindelof3v@admin.ch",
     password: "Test@1234",
     bio: "I'm a fashionista who enjoys keeping up with the latest trends.",
-    skills: ["Open-mindedness", "Accountability", "Positive attitude"],
+    skills: ["Open-mindedness", "Accountability", "Positive-attitude"],
     address: "00 Lawn Drive",
     isHost: false,
   },
@@ -2050,10 +2049,10 @@ const users_data = [
     password: "Test@1234",
     bio: "I'm a bookworm who reads at least one book a week.",
     skills: [
-      "Positive attitude",
+      "Positive-attitude",
       "Empowerment",
       "Decision-making",
-      "Conflict resolution",
+      "Conflict-resolution",
       "Accountability",
     ],
     address: "0 Judy Park",
@@ -2066,7 +2065,7 @@ const users_data = [
     email: "jcorneck40@shinystat.com",
     password: "Test@1234",
     bio: "I'm a pet lover who has two dogs and a cat.",
-    skills: ["Teaching", "Stress management", "Persuasion", "Counseling"],
+    skills: ["Teaching", "Stress-management", "Persuasion", "Counseling"],
     address: "5 Arrowood Road",
     isHost: false,
   },
@@ -2079,7 +2078,7 @@ const users_data = [
     bio: "I'm a sports fan who loves to watch and play basketball and football.",
     skills: [
       "Encouragement",
-      "Cultural sensitivity",
+      "Cultural-sensitivity",
       "Self-awareness",
       "Recognition",
       "Negotiation",
@@ -2096,7 +2095,7 @@ const users_data = [
     bio: "I'm a fitness enthusiast who enjoys running and weightlifting.",
     skills: [
       "Assertiveness",
-      "Constructive criticism",
+      "Constructive-criticism",
       "Self-confidence",
       "Patience",
     ],
@@ -2126,7 +2125,7 @@ const users_data = [
       "Patience",
       "Open-mindedness",
       "Self-confidence",
-      "Positive attitude",
+      "Positive-attitude",
     ],
     address: "58132 Dorton Plaza",
     isHost: true,
@@ -2215,8 +2214,7 @@ async function seedEvents() {
         application_deadline,
         host_time,
         location,
-        host_info,
-        "No_Image_Available.jpg"
+        host_info
       );
 
       event_ids.push(event._id.toString());
@@ -2228,7 +2226,7 @@ async function seedEvents() {
 
   try {
     for (const event_id of event_ids) {
-      const numVolunteers = Math.floor(Math.random() * 15) + 1;
+      const numVolunteers = Math.floor(Math.random() * 25) + 1;
       const volunteers = [];
 
       while (volunteers.length < numVolunteers) {
@@ -2241,6 +2239,7 @@ async function seedEvents() {
 
       for (const volunteer_id of volunteers) {
         await eventData.addVolunteers(event_id, volunteer_id);
+        await eventData.addAndRemoveLikes(event_id, volunteer_id);
       }
     }
   } catch (e) {
@@ -2248,7 +2247,12 @@ async function seedEvents() {
   }
 }
 
+console.log("Seeding users")
 await seedUsers();
+console.log("Done Seeding users")
+
+console.log("Seeding events")
 await seedEvents();
+console.log("Done Seeding events")
 
 await closeConnection();

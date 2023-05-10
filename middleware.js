@@ -1,15 +1,3 @@
-import xss from 'xss';
-
-export const sanitizeUserInput = (req, res, next) => {
-     const inputString = JSON.stringify(req.body);
-    // console.log(inputString)
-    const sanitizedInput = xss(inputString);
-    const outputObject = JSON.parse(sanitizedInput);
-    //console.log(outputObject)
-    req.body = outputObject;
-    next();
-  };
-  
 export function logger(req, res, next) {
     let userRole = 'Non-Authenticated User';
     if (req.session && req.session.loggedIn) {

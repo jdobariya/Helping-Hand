@@ -36,7 +36,7 @@
   display: flex;
 }
 .event-registeration button,
-.event-edit button {
+.event-edit a {
   background-color: rgb(80, 174, 80);
   padding: 10px 25px;
   border: 2px solid greenyellow;
@@ -44,6 +44,7 @@
   font-size: 20px;
   color: ghostwhite;
 }
+
 .login-btn a {
   background-color: rgb(132, 65, 194);
   padding: 10px 25px;
@@ -56,9 +57,13 @@
 .login-btn a:hover {
   color: wheat;
 }
-.event-edit button {
+.event-edit a {
   background-color: rgb(183, 61, 61);
   border: 2px solid rgb(255, 64, 47);
+  text-decoration: none;
+}
+.event-edit a:hover {
+  color: white;
 }
 
 .time-loc-wrapper {
@@ -143,4 +148,15 @@
   text-align: center;
   font-size: 20px;
   color: rgb(183, 61, 61);
+}
+
+
+
+#indi-event .card{
+  border: 0;
+}
+
+#eventImgsliderControls{
+  justify-content: center;
+  display: flex;
 }

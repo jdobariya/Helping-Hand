@@ -4,14 +4,14 @@
     <h1>Oops!</h1>
     <h2 id="message"></h2>
 
-    <img src="/public/images/page_eat.webp">
+    <img src="/public/images/page_eat.jpg">
     <a href="/home">Click here to redirect to homepage</a>
 </div>
 <script>
     let error = {{error}}
-    console.log(error);
-
-    if (error === 404){
+    if(error === 400){
+        document.getElementById("message").innerHTML = "400: Bad Request";
+    }else if (error === 404){
         document.getElementById("message").innerHTML = "404: Page not found";
     } else if (error === 403){
         document.getElementById("message").innerHTML = "403: Forbidden";
