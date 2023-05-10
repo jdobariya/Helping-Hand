@@ -57,9 +57,9 @@ function loadPage(){
     }
 }
 
-function onSubmitStory(){
+function onSubmitStory(event){
     let url = window.location.pathname + "/story";
-    //event.preventDefault();
+    event.preventDefault();
     let errorDiv = $("#div_story_error");
     errorDiv.empty();
     try{
@@ -128,7 +128,7 @@ function onSubmitFeedback(event){
     event.preventDefault();
     let url = window.location.pathname + "/feedback";
     let isUser = JSON.parse(sessionStorage.getItem("user_details")).isUser
-    
+    event.preventDefault();
     let errorDiv = $("#div_feedback_error");
     errorDiv.empty();
     let data = {}
