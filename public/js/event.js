@@ -59,7 +59,7 @@ function loadPage(){
 
 function onSubmitStory(){
     let url = window.location.pathname + "/story";
-    event.preventDefault();
+    //event.preventDefault();
     let errorDiv = $("#div_story_error");
     errorDiv.empty();
     try{
@@ -124,10 +124,11 @@ function onEditStory(){
             </form>`
     )
 }
-function onSubmitFeedback(){
+function onSubmitFeedback(event){
+    event.preventDefault();
     let url = window.location.pathname + "/feedback";
     let isUser = JSON.parse(sessionStorage.getItem("user_details")).isUser
-    event.preventDefault();
+    
     let errorDiv = $("#div_feedback_error");
     errorDiv.empty();
     let data = {}
@@ -243,7 +244,7 @@ function isValidStoryString(story){
 
 function isValidFeedbackString(story){
     if(story.split(" ").length < 10){
-        throw "Error: story must be at least 10 words long";
+        throw "Error: feedback must be at least 10 words long";
     }
 }
 

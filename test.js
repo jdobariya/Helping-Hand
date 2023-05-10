@@ -1,4 +1,4 @@
-import { imageToAlt } from "./validation.js"
+import * as validation from "./validation.js"
 import {dirname} from 'path';
 import path from "path";
 

@@ -10,3 +10,7 @@
 #skill_badges {
   justify-content: initial;
 }
+.text-right,.hosted-events
+{
+  font-size: 25px;
+}

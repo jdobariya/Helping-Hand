@@ -36,6 +36,10 @@ const upload = multer({
 });
 
 router.route("/create").get(async (req, res) => {
+if(!req.session.loggedIn)
+{
+  return res.redirect('/login')
+}
   try {
     if (req.session.isHost) {
       return res.render("create_event", {
