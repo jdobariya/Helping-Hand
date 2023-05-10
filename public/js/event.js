@@ -80,6 +80,7 @@ function onSubmitStory(){
             if(responseMessage.success){
                 storyDiv.empty();
                 storyDiv.append(`<p class="fs-5 fw-bolder">Your Story</p>`);
+                if(responseMessage.story) story = responseMessage.story;
                 storyDiv.append(`<p class="fst-italic story" >${story}</p>`);
                 storyDiv.append(`<btn class="btn btn-primary" onclick="onEditStory()">Edit</btn>`);
             }else{
@@ -174,6 +175,7 @@ function onSubmitFeedback(){
                 feedbackDiv.empty();
                 if(isUser){
                     feedbackDiv.append(`<p class="fs-5 fw-bolder">Your Feedback</p>`);
+                    if(responseMessage.feedback) feedback = responseMessage.feedback;
                     feedbackDiv.append(`<p class="fst-italic feedback" >${feedback}</p>`);
                     feedbackDiv.append(`<btn class="btn btn-primary" onclick="onEditFeedback()">Edit</btn>`);
                 }else feedbackDiv.append(`<span class="text-success">Thank you for submitting feedback!</span>`)

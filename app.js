@@ -74,10 +74,8 @@ import {
   redirectProfile,
   redirectEditEvent,
   redirectCreateEvent,
-  sanitizeUserInput,
 } from "./middleware.js";
 
-app.use(sanitizeUserInput);
 app.use(logger);
 app.get("/login", redirectLogin);
 app.get("/signup", redirectSignup);

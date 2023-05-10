@@ -3,6 +3,7 @@ import * as validation from "../validation.js";
 import { eventData } from "../data/index.js";
 import { userData } from "../data/index.js";
 import multer from "multer";
+import xss from "xss";
 const router = Router();
 
 const storage = multer.diskStorage({
@@ -89,7 +90,9 @@ router.post("/create", upload.array("event_images", 10), async (req, res) => {
         const userInfo = await userData.getUserById(userId);
 
         let eventName = validation.isValidString(req.body.event_name);
+        eventName = xss(eventName);
         let description = validation.isValidString(req.body.description);
+        description = xss(description);
         let application_deadline = validation.isValidEventTime(
           parseInt(req.body.application_deadline)
         );
@@ -97,7 +100,9 @@ router.post("/create", upload.array("event_images", 10), async (req, res) => {
           parseInt(req.body.host_time)
         );
         let streetAddress = validation.isValidString(req.body.streetAddress);
+        streetAddress = xss(streetAddress);
         let city = validation.isValidString(req.body.city);
+        city = xss(city);
         let state = validation.isValidString(req.body.state);
         let zipcode = validation.isValidString(req.body.zipcode);
         let image_url = [];
@@ -499,12 +504,13 @@ router.route("/:id/story").post(async (req, res) => {
       const isRegistered = event.volunteers.indexOf(userId);
 
       if (isRegistered !== -1) {
-        const story = validation.isValidString(req.body.story);
+        let story = validation.isValidString(req.body.story);
+        story = xss(story);
         validation.isValidStoryString(story);
 
         await eventData.upsertStory(eventId, userId, story);
 
-        res.json({ success: true });
+        res.json({ success: true, story: story });
       } else {
         res.json({
           success: false,
@@ -527,7 +533,8 @@ router.route("/:id/feedback").post(async (req, res) => {
     const eventId = req.params.id.trim();
     validation.isValidId(eventId);
 
-    const feedback = validation.isValidString(req.body.feedback);
+    let feedback = validation.isValidString(req.body.feedback);
+    feedback = xss(feedback);
     validation.isValidFeedbackString(feedback);
 
     if (req.session.loggedIn) {
@@ -536,7 +543,7 @@ router.route("/:id/feedback").post(async (req, res) => {
 
       await eventData.upsertLoggedInUserFeedback(eventId, userId, feedback);
 
-      res.json({ success: true });
+      res.json({ success: true, feedback: feedback });
     } else {
       let first_name = validation.isValidString(req.body.first_name);
       validation.isValidName(first_name);

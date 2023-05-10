@@ -2,17 +2,20 @@ import { Router } from "express";
 import {} from "../validation.js";
 import { eventData } from "../data/index.js";
 import { changeDateFormat } from "./events.js";
+import xss from "xss";
 const router = Router();
 router.route("/").get((req, res) => {
   return res.redirect("/events");
 });
 router.route("/").post(async (req, res) => {
   try {
+    let searchValue = req.body.searchValue.trim();
+    searchValue = xss(searchValue);
     if (!req.body.searchValue.trim()) {
       return res.redirect("/events");
     }
     let event = await eventData.getEventByKeyword(
-      req.body.searchValue.trim().toLowerCase()
+      searchValue.trim().toLowerCase()
     );
     let eventsRow = changeDateFormat(event);
 
@@ -22,7 +25,7 @@ router.route("/").post(async (req, res) => {
         user: true,
         allEvents: eventsRow,
         first_name: req.session.first_name,
-        text: `Results for ${req.body.searchValue} are`,
+        text: `Results for ${searchValue} are`,
         isHost: req.session.isHost,
       });
     } else {
@@ -30,7 +33,7 @@ router.route("/").post(async (req, res) => {
         title: "Browse Events",
         user: false,
         allEvents: eventsRow,
-        text: `results for ${req.body.searchValue} are`,
+        text: `results for ${searchValue} are`,
       });
     }
   } catch (e) {
