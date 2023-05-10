@@ -207,9 +207,7 @@ router.route("/:id").get(async (req, res) => {
 
       if (eventDetail.volunteers.includes(userId)) isRegistered = true;
       
-      if(eventDetail.updateVolunteers){
-         if (eventDetail.updateVolunteers.includes(user)) eventData.updatedVolunteer(req.params.id, user)
-      }
+      if (eventDetail.updateVolunteers.includes(userId)) eventData.updatedVolunteer(req.params.id, userId)
 
       if (userId === eventHostUser) {
         let volunteers = [];
